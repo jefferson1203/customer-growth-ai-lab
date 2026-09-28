@@ -12,7 +12,15 @@
 - Date : 2026-09-28
 - Fait : Implémentation de `get_stratified_sample()` dans `voc/sample.py`.
 - Ce que j'ai compris : Utilité de l'échantillonnage stratifié pour maîtriser les coûts de traitement LLM (FinOps AI) et importance du `random_state` pour la reproductibilité.
-- Points où j'ai été aidé (niveau d'aide) : Niveau 1 (conseil syntaxique `groupby().sample()`).
+- Points où j'ai été aidé (niveau d'aide) : Niveau 1.
 - Résultats obtenus (chiffres réels) : Échantillon exact de 1 500 avis (300 avis par note de 1 à 5).
 - Questions d'entretien travaillées : Redressement des proportions par la pondération réelle des notes.
-- Prochaine étape : Étape 3 - Classification par LLM (implémentation de `common/llm.py` et `voc/classify.py`).
+
+## [Projet 1 : Voix du Client IA] - Étape 3 : Classification par LLM
+- Date : 2026-09-28
+- Fait : Implémentation du client `LLMClient` dans `common/llm.py` (avec le SDK `google-genai`, cache disque JSONL, schéma Pydantic `ReviewLabel`) et du processeur de lot `classify_batch()` dans `voc/classify.py`.
+- Ce que j'ai compris : Intérêt des sorties structurées (Pydantic), du typage strict (`Literal`) et du cache disque pour éviter la facturation redondante.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (migration SDK Gemini et gestion du cache).
+- Résultats obtenus (chiffres réels) : Test validé sur 5 avis réels avec génération de résumés FR et classification d'irritants/sentiment/urgence.
+- Questions d'entretien travaillées : Pourquoi imposer une sortie JSON Pydantic plutôt qu'un texte libre (robustesse, parsing automatique sans échec).
+- Prochaine étape : Étape 4 - Validation manuelle de 100 avis (mesure de la précision et du rappel par irritant).

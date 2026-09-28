@@ -19,7 +19,7 @@ LLM = {
 VOC = {
     "sample_per_score": 300,           # [choix] 5 notes × 300 = 1 500 avis
     "manual_labels": 100,              # [choix] taille de l'échantillon de validation
-    "detractor_max_score": 3,          # [choix] convention du NPS proxy sur une note de 1 à 5
+    "detractor_max_score": 3,          # [choix] convention du NPS (Net Promoter Score) proxy sur une note de 1 à 5
     "seed": 42,                        # [choix]
 }
 
