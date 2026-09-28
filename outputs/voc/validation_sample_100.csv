@@ -1,0 +1,122 @@
+review_id,review_comment_message,resume_fr,manual_irritants
+390474a97348d1d96684c7b2db1c3c34,"Produto lindo, muito bom, gostei muito. acima do esperado ","Le client est très satisfait du produit, qu'il trouve magnifique, de très bonne qualité et au-delà de ses attentes.",POSITIF
+cfc3afd1bc1bb2c4d47fffec623001b2,"A loja entregou antes do prazo.
+Parabéns, voltarei a comprar.",La boutique a livré la commande avant la date limite. Le client félicite le service et prévoit de racheter.,POSITIF
+7b36905f84d4f18f84aa570b0b54f0db,"Os quadros são de baixa qualidade.
+A resolução das imagens deixa muito a desejar.",Le client se plaint de la faible qualité des tableaux et de la mauvaise résolution d'image.,PROD_QUALITE
+3b7d55d2bf5c68d6125138ea91391cbf,Bonito,Le client apprécie le produit et le trouve joli.,POSITIF
+af4730fbd920cb1c1d08faf9f3ba0438,"Comprei dois produtos, mas recebi somente um.
+
+Entrei em contato e ainda não recebi resposta
+",Le client n'a reçu qu'un seul des deux articles commandés et reste sans réponse après avoir contacté le service client.,"SAV, LIV_NONRECU"
+ea794cb64052a4d5fc5958a01abf9f57,"Somente algumas panelas um pouco amassadas, mas tirando isso super recomendo, as panelas são ótimas.","Malgré quelques casseroles légèrement bosselées, le client est très satisfait et recommande vivement le produit.","PROD_ENDOMMAGE, POSITIF"
+1ef0ec54c244033b87c650f170e7da58,Compro a varios anos não tenho do que reclamar.,Le client commande depuis plusieurs années et n'a rien à reprocher.,POSITIF
+536066886ed04d342d836ee67f09ef9c,"Produto chego certo, só meu outro produto ainda não chego , ","L'un des produits est bien arrivé, mais un autre article de la commande n'a pas encore été reçu.",LIV_NONRECU
+d2ae1de40fdace7428e716702eb44dc9,"Muito bom recomendo , foi muito fácil de comprar , fui sendo informada de todo processo da compra e chegou muito rápido bem antes do prazo previsto ...","Le client est très satisfait de son achat, louant la facilité de commande, la communication tout au long du processus et une livraison bien en avance.",POSITIF
+30750bb8735814aa5da58ed7e7285201,"Recebi o produto no dia 16/03/2018.
+Ocorre que, ao abrir a caixa esperando encontrar duas capas de notebook, conforme a compra que realizei, eu só encontrei uma e ainda um produto de péssima qualidad","Le client n'a reçu qu'une seule housse d'ordinateur portable sur les deux commandées, et l'article reçu est de très mauvaise qualité.","PROD_QUALITE, LIV_NONRECU"
+3f841e447f9df2b2fa75cf163826f8d5,"Produto conforme o esperado e entregue no prazo, continuem assim. ",Le produit est conforme aux attentes et a été livré dans les délais.,POSITIF
+43e7a2ff618df217bbf4f8a09023894d,"fiz uma ótima compra e entrega antes do prazo, só a capa que não me informou os passos da entrega pra acompanhar.","Le client est très satisfait de son achat et de la livraison en avance, mais regrette le manque de notifications pour suivre les étapes de livraison.","POSITIF, AUTRE"
+4b4f1f1ad3fcac5ed98109ed67b1d072,"So recebemos um relogio pelo correio
+
+att
+","Le client indique n'avoir reçu qu'une seule montre par la poste, signalant ainsi une commande incomplète.",LIV_NONRECU
+1c4cf5fa7aa44ff92447ee8b3e231edd,Td ótimo,Le client indique que tout est parfait et est pleinement satisfait.,POSITIF
+93fed3bfeceaecc1ee4888ae3d347d64,Comprei esse celular na targaryen.mas não é produto nacional e sim da china.quero o cancelamento aguardo o número de postagem é o estorno no cartão.targaryen nunca mais compro nada.,"Le client se plaint d'avoir reçu un téléphone provenant de Chine au lieu d'un produit national. Il demande l'annulation de la commande, une étiquette de retour et un remboursement par carte bancaire.","PROD_NONCONFORME, SAV"
+dbb7834c8d29e116fbf3c68a34cc3ff8,produto dentro do esperado...,Le produit est conforme aux attentes du client.,POSITIF
+70d81a9e4d91e67dd9bd3edfc9174f63,Ótimo ,Le client est très satisfait et qualifie simplement son expérience d'excellente.,POSITIF
+8649aa1fe0b4342c615195bcafe2a16d,"bom dia, infelismenti tivi que cancelar devido a situaçao em q o governo,estao colocando nos professores contratados,assim q as coisas forem resolvidadas quero comprar,mas obrigada,","La cliente explique devoir annuler sa commande en raison de sa situation professionnelle précaire en tant qu'enseignante contractuelle, tout en exprimant son souhait de commander à nouveau plus tard.","POSITIF, SAV, AUTRE"
+efd40569b71600fdb9dc77ec5c6b7e1b,produto e baixa qualidade pelo preço. Não gostei. ,Le client est mécontent en raison de la faible qualité du produit par rapport à son prix.,PROD_QUALITE
+74d3ddaeada7d93ce7c3bf5486d14bce,"Faltou a metade do pedido, ou seja, as fronhas em número de oito da cor bronze não foram enviadas.","La moitié de la commande est manquante, les huit taies d'oreiller de couleur bronze n'ayant pas été expédiées.",LIV_NONRECU
+c0265861e99c15db943db6d3910ac9fe,"otimo
+",Le client est pleinement satisfait et qualifie son expérience d'excellente.,POSITIF
+ca71d4f707c57dfdf7cd7937889d9628,O.K!!! TUDO CERTO.,Le client confirme que tout s'est bien passé et que tout est en ordre.,POSITIF
+377566325dfbac1117791903a7a45167,"Relógio bonito, design moderno e resistente.
+Apenas o ponteiro de temperatura não veio funcionando.","Le client apprécie l'esthétique et la robustesse de la montre, mais déplore que l'aiguille de température ne fonctionne pas à la réception.",PROD_ENDOMMAGE
+f54494a15b78e4babbf17a0a50d1e985,Obrigada pelo excelente atendimento e seriedade,Le client remercie pour l'excellent service client et le grand sérieux de l'entreprise.,POSITIF
+b8e44af3ab79cf792eb316e8ae88232e,Ótimo produto e qualidade. Chegou no prazo estipulado.,Le client est très satisfait de la qualité du produit et indique que la livraison a été effectuée dans les délais prévus.,POSITIF
+b0319c16620bae9000357087e29442ac,"Produto de qualidade ruim, não cabe na cama queen, que foi o tamanho adquirido.",Le client signale que le produit est de mauvaise qualité et ne convient pas au lit queen-size pourtant commandé.,"PROD_NONCONFORME, PROD_QUALITE"
+941ff3771d8666e3a7bc9b671262099e,Fixação excelente para qualquer tipo de cabelo!!!,"Le client souligne l'excellente fixation du produit, adaptée à tous les types de cheveux.",POSITIF
+9f6e1f0c8bc2ca774054a794df2e909f,Eu recomendo 👏🏽👏🏽👏🏽,Le client recommande vivement le service ou le produit.,POSITIF
+21da84a2bc0bde257426dcddc95d931b,"Muito linda deu um charme na minha sala.
+",Le client est très satisfait et trouve que le produit est très beau et apporte du charme à son salon.,POSITIF
+f79cec431f88ff973b6099d5b7ba4e8e,Top,Le client exprime sa satisfaction de manière concise.,POSITIF
+3cfd046b53dbe27e3ba800103b97936b,Muito bom o produto. Recomendo.,Le client est très satisfait du produit et le recommande.,POSITIF
+81bb707285914f2c46b84f7af8d0a2b4,FORAM ADQUIRIDAS 4 UNIDADES. ATÉ O MOMENTO SÓ FORAM ENTREGUES 2 UNIDADES,Le client a acheté quatre unités mais n'en a reçu que deux jusqu'à présent.,LIV_NONRECU
+038a29e98a217096d4ceb88481a5c9ec,"recomendo, papel de parede lindo e facil colocação. só a cola que veio é dificil diluir na agua.","Le client recommande ce papier peint magnifique et facile à poser, tout en signalant que la colle fournie est difficile à diluer dans l'eau.","POSITIF, AUTRE"
+c9f0bfda9d080bf370410ac7029c5bd5,Gostei da compra. Deu tudo certo.,Le client est satisfait de son achat et confirme que tout s'est bien passé.,POSITIF
+3c0eae2c688926aeacb3f4bd8a8a1944,Não recebi o produto e o prazo acabou ,Le client n'a pas reçu sa commande alors que le délai de livraison est dépassé.,"LIV_RETARD, LIV_NONRECU"
+a4b3d03adc02b2974a3b68f00de46be4,Comprei dois conjuntos de 30 cabides mas recebi apenas um. Aguardo contato referente ao segundo conjunto. Obrigada.,La cliente a commandé deux lots de cintres mais n'en a reçu qu'un seul. Elle attend d'être contactée au sujet du lot manquant.,"SAV, LIV_NONRECU"
+48bec7b6f7d385e9d648d5f4ea72b6c9,"Bom dia, o frete foi o dobro do valor do produto e o demorou quase dois meses para ser entregue, não vou mais comprar desse fornecedor e vou tomar mais cuidado com os periodos e valores do frente.","Le client déplore des frais de port équivalant au double du prix du produit ainsi qu'un délai de livraison de près de deux mois, affirmant qu'il ne commandera plus auprès de ce vendeur.","PRIX, AUTRE"
+517bc634e0c9979d4ce2f7e22a2b9878,"O único problema foi que comprei 3 pote de banho de verniz de 1kg),e só recebi 1 pote de 1kg.","Le client a commandé trois pots de 1 kg mais n'en a reçu qu'un seul, la commande est donc incomplète.",LIV_NONRECU
+7ede1fb0c7746e17e85ca0032ef8cfbe,produto entregue conforme o anunciado,Le produit a été livré conformément à la description.,POSITIF
+a30bfc3a9fb4ea43dc2ad7c62e3336f4,"Estou muito chateado, pois comprei um tapete e nao recebi, estou tentando resolver a questão de forma ",Le client est très mécontent car il n'a pas reçu le tapis commandé et tente actuellement de résoudre le problème.,"LIV_NONRECU, SAV"
+840e190a6a1fc72b02bbe5a5e74fa4a4,Perfeito em todos os quesitos,Le client est pleinement satisfait et indique que tout a été parfait à tous les égards.,POSITIF
+eeec16a7667595b6bdd2e6b4c6d47216,Comprei um produto e foi entregue outro,Le client a reçu un produit différent de celui qu'il avait commandé.,PROD_NONCOFORME
+7c59ac5939aa88b1057f3307d7f8f7cc,excelente recebi em 2 dias ,Le client est très satisfait et a reçu sa commande en seulement deux jours.,POSITIF
+57d720a4164ce4e420c120398045fbd0,Foi falado que houve problemas na entrega mas não falava o que e nem como seria resolvido. Me causou uma preocupação e frustração desnecessária já que o mesmo chegou antes do prazo estipulado. ,"Le client déplore une communication anxiogène et floue signalant un problème de livraison, alors que le colis est finalement arrivé en avance.","SAV, AUTRE"
+a5bf4be72da6008e5669b2e4e7676803,muito bom,Le client exprime sa grande satisfaction en indiquant que c'est très bon.,POSITIF
+ae8e2c1b56cc33be3a56a78f1c657dc6,Comprei outros dois produtos e chegaram. Agora o Mobile até hj nada.,"Le client a bien reçu deux autres articles commandés, mais indique n'avoir toujours pas reçu le mobile à ce jour.",LIV_NONRECU
+9732f3e470a4badfd3582fee6a17b164,Comprei três produtos que poderiam ser enviados dentro de um pacote só e assim talvez poderia economizar no frete.. achei um absurdo pagar no frete quase metade do valor em si.. ,Le client déplore des frais de port excessifs représentant près de la moitié du prix des articles et regrette que ses trois produits n'aient pas été regroupés dans un seul colis.,"PRIX, SAV"
+fd03f797e6b8cc82be1b949704b400d0,"o produto não se encaixa direito,pois o modelo do agile é 2012,só por ter 2B não foi o correto,mas falei o modelo/ano ","Le produit ne s'adapte pas correctement au véhicule Agile 2012 du client, malgré le fait qu'il ait précisé le modèle et l'année.","SAV, PROD_NONCONFORME"
+647f735abb9eec5b523779f06d2869bd,O site não avisa q o produto é importado com manual de instruções todo em inglês. Pergunto: Terei a garantia que é dada normalmente pelo fabricante?,"Le client déplore que le site n'indique pas que le produit est importé avec une notice uniquement en anglais, et demande si la garantie fabricant s'applique.",SAV
+f655c5472590afd6074264898560436f,Dá pra uma pessoa só. bem quentinho e macio. amei.,"Le client a adoré le produit, le trouvant bien chaud, doux et parfaitement adapté pour une seule personne.",POSITIF
+4a9331cb4a88ac647de22fbc722f4cae,Produto simples e funcional.,Le client est satisfait et indique que le produit est simple et fonctionnel.,POSITIF
+837684b3d98ae0ffc60854f23d23ceab,"Feito de madeira q absorve umidade.. 
+Não recomendo. Muito caro para o material utilizado. ",Le client déconseille ce produit car le bois utilisé absorbe l'humidité et estime que le prix est excessif pour cette qualité de matériau.,"PRIX, PROD_QUALITE"
+4fdae8b806ed4ef938e677701d27a565,Tudo certo. O Correio demorou a atualizar o rastreio mas chegou dentro do prazo. ,"Tout s'est bien passé et le colis a été livré dans les délais, malgré une mise à jour tardive du suivi postal.",POSITIF
+5a8608437f4b52bec5cd143f37258b5e,Obrigado pela atenção. Lojas lannister perfeito em tudo.,Le client remercie pour l'attention portée et juge la boutique parfaite en tout point.,POSITIF
+5823c73b5c49dac6a32b37803b3e2477,"A mochila veio muito pequena. Não cabe livros. Pedi o cancelamento , a devolução do produto e o valor de volta como estorno no cartão de crédito desde o dia em que chegou. (20/01/2018) Aguardo contato","Le sac à dos reçu est trop petit pour contenir des livres. Le client attend un retour du service client pour annuler la commande, retourner l'article et obtenir un remboursement.","SAV, PROD_NONCONFORME"
+5203c76e44af95e7eacd4e3ac5c3ce4b,A informação que consta nos Correios é que a encomenda foi entregue porém não recebi no meu apto. E nem na adm. Do condomínio foi entregue nenhuma encomenda em meu nome.,"Le suivi postal indique que le colis a été livré, mais le client ne l'a reçu ni dans son appartement ni auprès de l'administration de sa résidence.","LIV_NONRECU, SAV"
+6f1a19bf03b03565115f376a64dd4ae4,comprei tapetes para meu carro e chegou uma capa para pneu do CrossFox... e até agora não tive nenhuma resposta do vendedor ,Le client a reçu une housse de roue au lieu des tapis de voiture commandés et reste sans réponse de la part du vendeur.,"SAV, PROD_NONCONFORME"
+5beae763aa480d6c5be55fdb0749d4b5,"comprei um abo dourado usb tipo-c + usb V8 + ightning 3x1.
+A nota fiscal e a caixa vieram do cabo dourado que comprei, mas o cabo veio prata.","Le client a commandé un câble 3-en-1 doré mais a reçu un modèle argenté, bien que la boîte et la facture indiquent la bonne couleur.",PROD_NONCONFORME
+d59790dd8ea696ed642c3d98724b6748,Não recebi o produto ,Le client signale qu'il n'a pas reçu son produit.,LIV_NONRECU
+ad8ba09e9d77bfc502684f424c92937e,Chegou bem antes da data prevista a minha mulher amou o relógio e perfeito e sem falar na embalagem q e linda ,La commande est arrivée bien avant la date prévue. Le client et son épouse sont ravis de la montre et de son bel emballage.,POSITIF
+efc804b6a70ca29346ad8ebbaa031810,O material da mochila é bem fraco. ,"Le client est déçu par la qualité du sac à dos, trouvant le matériau très fragile.",PROD_QUALITE
+e5d28e53d5398eebb2bd89aa93329a2b,"Fiz vários pedidos "" lannister.com.br "", esse pedido veio faltando CD e o lucro não estava embalado no plástico, os outros pedidos vieram os livros embalados no plástico e CD dentro da embalagem.","Le client signale que sa commande est incomplète en raison d'un CD manquant et que le livre n'était pas emballé sous plastique, contrairement à ses commandes précédentes.","LIV_NONRECU, AUTRE"
+5abe71e7e936f87f9fbfb65a449d06b0,Estou aguardando a troca do capacete.,Le client indique qu'il est en attente de l'échange de son casque.,SAV
+c91410f72935babe0547a45f223dee17,Bom recebi o produto errado a voltagem errada em fim fui enganado pois comprei um produto 220 e recebi 127 sem maleta .,Le client a reçu un produit non conforme avec un voltage incorrect (127V au lieu de 220V) et sans la mallette prévue.,PROD_NONCONFORME
+0c8e7347f1cdd2aede37371543e3d163,UM DOS PRODUTOS (ENTREGA02) COMPRADOS NESTE PEDIDO NAO RECEBI AINDA E OUTRO (ENTREGA01) RECEBI EMAIL QUE ESTA COM DIFICULDADES NA ENTREGA E NÃO TIVE MAIS NOTICIAS ,Le client n'a toujours pas reçu l'un des articles de sa commande et reste sans nouvelles du second après avoir été informé de difficultés de livraison.,"SAV, LIV_NONRECU"
+6414fe2db14d77a9032c0a1e051b0b05,comprei nove cadeiras e chegou só 7 cade o restante?,Le client a commandé neuf chaises mais n'en a reçu que sept et réclame les articles manquants.,LIV_NONRECU
+a22346996ffb3c918dbd18da80cd3a7e,Minha insatisfação se refere ao produto recebido. Ao colocar a película no celular observei que as extremidades não aderiram e após um dia com ele no bolso observei que ela trincou.,Le client est insatisfait de la protection d'écran reçue : les bords n'adhèrent pas et le film s'est fissuré après seulement une journée dans sa poche.,PROD_QUALITE
+8ed4260041fbcd134a9e109e9888e70e,Muito bom atendimento.. parabéns!,Le client félicite l'entreprise pour l'excellente qualité du service client.,POSITIF
+ea23e587d4044e38461af1b328b4bc19,"Produto ótimo, estou muito satisfeito",Le client est très satisfait et trouve le produit excellent.,POSITIF
+f3675fbbe2330758167467391c52618a,Estou aguardando uma posição da loja em relação a disponibilidade do produto,Le client attend une réponse de la part de la boutique concernant la disponibilité du produit.,SAV
+a8d011828bc7a9508b221e3f4d6a8f8e,"o produto é uma porcaria. não vieram todos os parafusos, o produto entortou o cano com a primeira sentada na rede.",Le client déplore une qualité déplorable : il manquait des vis à la livraison et la structure s'est déformée dès la première utilisation.,"PROD_QUALITE, PROD_ENDOMMAGE"
+cd9024db094fdf3ec53cea6405691382,"Recebi o produto, porém o mesmo veio com o encosto do braço quebrado.
+Sugiro à loja que acondicione melhor os seus produtos, uma vez que veio embalado em um papel fino comum.",Le produit a été reçu avec l'accoudoir cassé en raison d'un emballage trop fin et inadapté.,PROD_ENDOMMAGE
+44f461e28bc1f11cf2a298e9411a151d,Bom atendimento nas compras efetuadas.,Le client est satisfait du bon service reçu lors de ses achats.,"SAV, POSITIF"
+4ae9d5bddf498294473bb8e45788b313,Produto estraviado pro correio,Le client indique que son colis a été égaré par la poste.,LIV_NONRECU
+4a4a4d36aded730df0e7966ce1d5a34c,Bom produto ,Le client est satisfait et indique qu'il s'agit d'un bon produit.,POSITIF
+9161a73eae2a183a995589ec7154b605,Sempre gostei das lannister,Le client indique avoir toujours apprécié la marque ou les produits Lannister.,POSITIF
+76f9dca6c970c13fd2a893e8cc8ee4ea,Único ruim é o prazo de entrega que é primordial. Não recomendaria por conta do longo prazo pra entregar uma simples pelicula.,Le client est insatisfait du délai de livraison excessif pour une simple protection d'écran et ne recommande pas le service.,AUTRE
+3a52de5acf044b3bd339b7f860a98a8d,"Primeira vez que tenho problemas com a lannister. Acredito que não seja comum, dado meu histórico de compras. Espero que não se repita ;)","Le client indique avoir rencontré un problème pour la première fois, espérant qu'il s'agit d'un incident isolé au vu de son historique positif.",SAV
+c32ee371c3d835db805856587a580b5a,as prateleiras não recebi,Le client signale ne pas avoir reçu les étagères commandées.,LIV_NONRECU
+36b1395c17974fc04d2bbcee0adf8c0e,Só sugiro que coloquem as medidas no site!,Le client suggère simplement d'ajouter les mesures et dimensions des produits sur le site.,SAV
+136463ae3844928f9f275f177bbc2430,Demorou para chegar ,Le client signale que sa commande a mis du temps à arriver.,LIV_RETARD
+5ad171e2befd146aac220f83acc3e019,Nao recomendo comprei uma cortina é veio só as varetas de colocar as cortinas,Le client ne recommande pas l'article car il a commandé un rideau mais n'a reçu que les tringles.,LIV_NONRECU
+692d8bf87554563793e70841d992d9d4,Meu produto que CANCELEI antes de gerar NFE ainda não chegou para eu recusar.,Le client indique que le produit qu'il a annulé avant la facturation n'est toujours pas arrivé pour lui permettre de refuser la livraison.,"LIV_NONRECU, SAV"
+fdd7f0e246210022305fc66460a5833e,olha eu comprei dois produtos mas so foi entregue apenas um? espero que entregue a memoria tambem...30 dias pra intregar um simples produto e muito descaso com o cliente; acredito eu...,Le client n'a reçu qu'un seul des deux articles commandés après un délai de livraison de 30 jours et attend toujours la livraison de la mémoire manquante.,LIV_NONRECU
+7c43af1205ff01c2b95065b2b02b3343,"Houve alguma confusão entre vendedor e o stark, pois recebi um email do stark pedindo o cancelamento do produto por algum imprevisto na entrega; neguei e recebi o produto dias depois.",Une confusion logistique a conduit à une demande d'annulation injustifiée pour imprévu de livraison. Le client a refusé cette annulation et a finalement bien reçu son produit quelques jours plus tard.,"POSITIF, SAV"
+4fce8c660bdc692db94049b1380df74a,"Até agora não recebir meu produto na minha residência. 
+Fico muito triste pois essa é minha primeira compra pelo baratheon e fiquei insatisfeita.",La cliente n'a toujours pas reçu son colis à son domicile et fait part de sa grande déception pour sa toute première commande sur la plateforme.,LIV_NONRECU
+0bb20d4f394f7bd4b6158541ea9b27af,"O cesto é lindo e decorativo, mas esperava que fosse um pouco mais largo. Ele é fino, nao cabe muita coisa. 
+Quando comprei procurei as medidas mas nao encontrei.
+Mesmo assim recomendo, porque é lin","Le client trouve le panier beau et le recommande, mais regrette le manque d'indications sur les dimensions qui s'avèrent plus étroites qu'espéré.",SAV
+aa043ca2af093196d38288371f5f3db0,Gostei,Le client est satisfait et indique avoir aimé le produit.,POSITIF
+4952093947f2957a6b9c11eda9346a1f,"O tecido deveria ser um pouco mais encorpado, grosso, resistente, visto que se trata de finalidade industrial. Após lavar e retirada a goma, ele terá a textura alterada e ficará mais fino do que já é.","Le client estime que le tissu manque d'épaisseur et de résistance pour un usage industriel, redoutant qu'il ne devienne encore plus fin après le lavage.",PRDO_QUALITE
+9878c85e533bc39e3d98d96e24cccfb0,Veio com um pigente estragado,Le produit a été livré avec un pendentif abîmé.,PROD_ENDOMMAGE
+8dde477039fd3928c19ad52b4cacbde4,"Minhas filhas amaram ..
+É bem macio..","La cliente indique que ses filles ont adoré le produit, soulignant qu'il est très doux.",POSITIF
+f9a9cf42f012bb2b685859e2a6de67d0,"Por favor, mudem as especificações do produto. No anuncio existe um comentário de que a mochila aberta fica com 64cm. Não fica! Isso é propaganda enganosa. Comprei pensando nessa medida e me dei mal. ","Le client dénonce une fausse description concernant les dimensions du sac à dos, qui n'atteint pas les 64 cm annoncés.",PROD_NONCONFORME
+7124a152696cce2c9503d4e20a1785db,"Queria um telefone pra contato, comprei dois cofres só chegou um e sem nota fiscal ",Le client demande un contact téléphonique suite à la réception incomplète de sa commande (un seul coffre reçu sur deux) et à l'absence de facture.,"SAV, LIV_NONRECU"
+c16af142dacc4ecd1049bff1ce946d30,produto entregue conforme prazo,Le produit a été livré dans les délais prévus.,POSITIF
+516e638e0ea44d362ce6f5941321d9e0,O SITE NÃO FUNCIONA DIREITO NA COMPRA DE PRODUTOS COM RELAÇÃO A ANDAMENTO DE ENTREGAS,Le client signale que le site internet fonctionne mal concernant le suivi de l'avancement des livraisons.,SAV
+7b395616622736266d6690d1be448b26,O produto foi entregue no prazo porém veio com a tampa quebrada e o produto vazando ,"Le produit a bien été livré dans les délais mais il est arrivé endommagé, avec le bouchon cassé et une fuite.",PROD_ENDOMMAGE
+d91208aecc05cd123f48d5598b5d84d5,prazo longo demais e ainda não chegou.....,Le client déplore un délai de livraison excessivement long et signale que sa commande n'est toujours pas arrivée.,LIV_NONRECU
+42310ac5a702a5c03582f0b1ae815145,"a base da cadeira não encachava no acento
+
+deixou a desejar","La base de la chaise ne s'emboîte pas dans l'assise, laissant le client déçu du produit.",LIV_NONCONFORME
+47f27f4eb37f314733e7afb331692b95,Obrigada,Le client remercie simplement la plateforme.,POSITIF
+0a7a21ecaa58c88d57b808539634a444, faltando o meu produto é um guarda roupa e veio faltando o fundo de uma gaveta.,Le client signale que sa garde-robe est incomplète car le fond d'un tiroir est manquant.,LIV_NONRECU

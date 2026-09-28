@@ -23,4 +23,12 @@
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2 (migration SDK Gemini et gestion du cache).
 - Résultats obtenus (chiffres réels) : Test validé sur 5 avis réels avec génération de résumés FR et classification d'irritants/sentiment/urgence.
 - Questions d'entretien travaillées : Pourquoi imposer une sortie JSON Pydantic plutôt qu'un texte libre (robustesse, parsing automatique sans échec).
-- Prochaine étape : Étape 4 - Validation manuelle de 100 avis (mesure de la précision et du rappel par irritant).
+## [Projet 1 : Voix du Client IA] - Étape 4 : Validation manuelle et évaluation
+- Date : 2026-09-28
+- Fait : Implémentation de `generate_validation_sample()` et `evaluate_classification()` dans `voc/validation.py`. Annotation manuelle d'un échantillon de 100 avis et calcul des métriques TP, FP, FN, Précision, Rappel et F1-score par irritant.
+- Ce que j'ai compris : Différence entre précision (évitement des fausses alertes) et rappel (exhaustivité), impact métier des Faux Positifs sur la crédibilité de l'outil et technique de prompt engineering pour clarifier la frontière de `LIV_RETARD`.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2.
+- Résultats obtenus (chiffres réels) : 100 avis annotés. F1 = 0.941 sur `LIV_NONRECU`, F1 = 0.937 sur `POSITIF`, Précision = 0.25 sur `LIV_RETARD` (sur-détection), Rappel = 0.522 sur `SAV`.
+- Questions d'entretien travaillées : Interprétation d'une faible précision / haut rappel en prod ; ajustement du prompt pour supprimer le biais sur les délais de livraison.
+- Prochaine étape : Étape 5 - Analyse et priorisation des irritants (Matrice Fréquence x Impact, proxy NPS).
+
