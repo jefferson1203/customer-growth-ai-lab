@@ -1,0 +1,16 @@
+pandas
+numpy
+scikit-learn
+statsmodels
+matplotlib
+streamlit
+pydantic
+openpyxl
+ucimlrepo
+fastapi
+uvicorn
+httpx
+pytest
+python-dotenv
+anthropic
+google-genai
