@@ -26,6 +26,27 @@ def load_olist(raw_dir: Path) -> dict[str, pd.DataFrame]:
         "categories": product_category_name_translation,
     }
 
+def prepare_voc_data(raw_data :dict) -> pd.DataFrame:
+    """ fusionner les données olist et retail  """
+    df = raw_data["reviews"].copy()
+    
+    df = df.merge(raw_data["orders"], on="order_id", how="left")
+    df = df.merge(raw_data["items"], on="order_id", how="left")
+    df = df.merge(raw_data["products"], on="product_id", how="left")
+    df = df.merge(raw_data["categories"], on="product_category_name", how="left")
+        
+        
+    df.drop_duplicates(subset="review_id", keep="first", inplace=True)
+    df["retard_jours"] = (df["order_delivered_customer_date"] - df["order_estimated_delivery_date"]).dt.days
+    df = df.dropna(subset=["review_comment_message"])
+    df = df[df["review_comment_message"].str.strip().astype(bool)]
+    
+
+    return df
+
+
+        
+
 def load_retail(raw_dir: Path, with_customer_only: bool = False) -> pd.DataFrame:
     """Online Retail II nettoyé (règles du projet 2), colonne Revenue ajoutée.
     Renvoie aussi le tableau des lignes retirées par règle."""
