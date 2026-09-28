@@ -14,3 +14,4 @@ pytest
 python-dotenv
 anthropic
 google-genai
+deepseek
