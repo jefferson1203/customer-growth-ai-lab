@@ -16,7 +16,9 @@ def prepare_ml_dataset(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     
     df_temp = df.copy()
     if "delai_livraison_jours" not in df_temp.columns:
-        df_temp["delai_livraison_jours"] = (df_temp["order_delivered_customer_date"] - df_temp["order_purchase_timestamp"]).dt.days
+        d_deliv = pd.to_datetime(df_temp["order_delivered_customer_date"])
+        d_purch = pd.to_datetime(df_temp["order_purchase_timestamp"])
+        df_temp["delai_livraison_jours"] = (d_deliv - d_purch).dt.days
 
     cols = ['retard_jours', 'delai_livraison_jours', 'freight_value', 'price', 'product_category_name_english']
     X = df_temp[cols].copy()
