@@ -108,4 +108,17 @@
 - Questions d'entretien travaillées : Pourquoi privilégier les règles RFM au clustering en conseil ; interprétation d'un score de Silhouette (bornes [-1, +1]) ; gestion de la corrélation R/F/M.
 - Prochaine étape : Étape 3 (Personas LLM & Next Best Action).
 
+## [Projet 2 : Segmentation & Portefeuille] - Étape 3 : Personas LLM & Next Best Actions
+- Date : 2026-09-30
+- Fait : Implémentation du prompt template `prompts/portfolio_persona.txt`, du schéma Pydantic `SegmentPersona`, de la génération structurée via `LLMClient` avec cache unifié (`portfolio/personas.py`), et de la table synthétique de Next Best Action (`build_next_best_action_table`).
+- Ce que j'ai compris : Respect strict de la confidentialité RGPD (aucune donnée individuelle transmise au LLM, uniquement des agrégats), rôle d'expert retail senior dans le prompt, et construction de la table des Next Best Actions pour alimenter le copilote (Projet 4).
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (passations des variables `$var` dans le template string de `common/llm.py`).
+- Résultats obtenus (chiffres réels) : 6 personas générés et mis en cache (`outputs/portfolio/personas_cache.json`).
+  - **Champions** : *L'Élite Ambassadrice* (Programme VIP, Conciergerie)
+  - **À risque** : *Le Grand Habitué Endormi* (Reconquête ciblée, Appel direct pour sauver 1.64M £)
+  - **Nouveaux** : *L'Explorateur à Fort Potentiel* (Parcours de bienvenue post-achat)
+- Questions d'entretien travaillées : Complémentarité entre statistiques RFM et récit LLM ; protection des données clients (RGPD) avec l'IA.
+- Prochaine étape : Étape 4 (Segmentation produits ABC & Longue traîne).
+
+
 

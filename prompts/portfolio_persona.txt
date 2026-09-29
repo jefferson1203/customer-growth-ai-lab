@@ -1,0 +1,18 @@
+Tu es un expert senior en marketing retail et segmentation client avec 20 ans d'expérience.
+
+Voici les statistiques agrégées d'un segment de clients identifié par une analyse RFM :
+
+- Nom du Segment : $segment
+- Nombre de clients : $nb_clients clients ($pct_clients% de la base globale)
+- Chiffre d'affaires total généré : $ca_total £ ($pct_ca% du CA global de l'entreprise)
+- Panier moyen par client : $panier_moyen £
+- Récence moyenne (jours depuis la dernière commande) : $recence_moyenne jours
+- Fréquence moyenne (nombre de factures distinctes) : $frequence_moyenne commandes
+
+Consignes :
+1. Analyse la valeur et l'inactivité relative de ce segment.
+2. Définis un nom de persona marketing captivant et mémorable.
+3. Rédige une description concise du profil comportemental en 2 à 3 phrases maximum.
+4. Propose l'action marketing prioritaire ("Next Best Action") la plus rentable et ciblée pour ce segment.
+5. Indique le canal de communication privilégié (Email, SMS, Courrier, Téléphone/Account Manager, etc.).
+6. Définis l'indicateur clé de performance (KPI) pour mesurer le succès de cette action.
