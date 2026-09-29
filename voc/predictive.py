@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.ensemble import HistGradientBoostingClassifier
 from config import VOC
 
@@ -31,16 +31,7 @@ def prepare_ml_dataset(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
 
 
 def train_eval_nps_model(X: pd.DataFrame, y: pd.Series, model_type: str = "logistic") -> dict:
-    """Entraîne un modèle (Logistic Regression ou HistGradientBoosting) et évalue ses performances.
-
-    Args:
-        X (pd.DataFrame): Features explicatives.
-        y (pd.Series): Cible binaire (is_detractor).
-        model_type (str, optional): "logistic" ou "gb" (HistGradientBoosting).
-
-    Returns:
-        dict: Métriques et modèle entraîné.
-    """
+    """Entraîne un modèle (Logistic Regression ou HistGradientBoosting) et évalue ses performances."""
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=VOC["seed"], stratify=y
     )
@@ -66,9 +57,10 @@ def train_eval_nps_model(X: pd.DataFrame, y: pd.Series, model_type: str = "logis
     ])
     pipeline.fit(X_train, y_train)
 
-    # 4. Calcul de l'AUC et du taux de détracteurs dans le Top 10%
+    # 4. Calcul de l'AUC, courbe ROC et du taux de détracteurs dans le Top 10%
     y_proba = pipeline.predict_proba(X_test)[:, 1]
     auc = roc_auc_score(y_test, y_proba)
+    fpr, tpr, _ = roc_curve(y_test, y_proba)
 
     # Sélection des 10% des avis avec les plus fortes probabilités prédites
     test_res = pd.DataFrame({"y_true": y_test, "prob": y_proba})
@@ -78,6 +70,8 @@ def train_eval_nps_model(X: pd.DataFrame, y: pd.Series, model_type: str = "logis
     return {
         "model": pipeline,
         "auc": round(auc, 3),
+        "fpr": fpr,
+        "tpr": tpr,
         "top_10_detractor_rate": round(top_10_rate, 2),
         "baseline_detractor_rate": round(y_test.mean() * 100, 2)
     }

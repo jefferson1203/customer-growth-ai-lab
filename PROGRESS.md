@@ -44,7 +44,14 @@
 - Points où j'ai été aidé (niveau d'aide) : Niveau 3 (construction du Pipeline Scikit-Learn et calcul du Lift).
 - Résultats obtenus (chiffres réels) : Logistic Regression (AUC = **0.676**, Lift = **2.33x**) vs **HistGradientBoosting** (AUC = **0.711**, Taux détracteurs Top 10% = **90.02 %**, Lift = **2.56x**).
 - Questions d'entretien travaillées : Pourquoi le Lift est plus convaincant qu'un score AUC auprès d'un Directeur Client ; comparaison Régression Logistique vs Gradient Boosting ; prévention du Data Leakage.
-- Prochaine étape : Étape 7 - Restitution (Tableau de bord Streamlit `voc/app.py` et 3 slides de recommandations).
+## [Projet 1 : Voix du Client IA] - Étape 7 : Restitution & Tableau de bord
+- Date : 2026-09-29
+- Fait : Création de l'application interactive Streamlit [`voc/app.py`](file:///Users/jefferson/Documents/analysis/data%20et%20agentique/customer-growth-ai-lab/voc/app.py) (4 onglets : KPIs, Matrice des irritants, Impact des retards, NPS prédictif & courbe ROC comparative) et rédaction des 3 slides de synthèse stratégique ([`slides/Projet1_Voix_du_Client_IA_Slides.md`](file:///Users/jefferson/Documents/analysis/data%20et%20agentique/customer-growth-ai-lab/slides/Projet1_Voix_du_Client_IA_Slides.md)).
+- Ce que j'ai compris : Restitution efficace du signal Data à la décision business, structuration de slides conseil orientées conclusions, et articulation d'une boucle d'action proactive.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (structure Streamlit et layout des slides).
+- Résultats obtenus (chiffres réels) : Dashboard fonctionnel à 100%, 3 slides de recommandations chiffrées basées sur les données Olist.
+- Statut : **Projet 1 Terminé avec succès ! 🎉**
+
 
 
 
