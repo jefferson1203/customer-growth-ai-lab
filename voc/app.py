@@ -60,31 +60,31 @@ st.sidebar.markdown("---")
 
 # Navigation par Onglets
 tab0, tab1, tab2, tab3, tab4 = st.tabs([
-    "📌 Cadrage & Recommandations",
-    "📊 Synthèse & NPS Proxy",
-    "🗺️ Matrice des Irritants",
-    "⏱️ Analyse des Retards",
-    "🤖 Modèle Prédictif ML"
+    "Cadrage & Recommandations",
+    "Synthèse & NPS Proxy",
+    "Matrice des Irritants",
+    "Analyse des Retards",
+    "Modèle Prédictif ML"
 ])
 
 # ----------------------------------------------------
 # TAB 0 : CADRAGE & RECOMMANDATIONS STRATÉGIQUES
 # ----------------------------------------------------
 with tab0:
-    st.subheader("🎯 Cadrage du Projet 1 : Voix du Client IA & NPS Prédictif")
+    st.subheader("Cadrage du Projet 1 : Voix du Client IA & NPS Prédictif")
     
     col_cad1, col_cad2 = st.columns(2)
     with col_cad1:
         st.markdown("""
-        ### 📋 Problématique & Objectifs Business
+        ### Problématique & Objectifs Business
         - **Contexte** : La satisfaction client sur la marketplace Olist subit une dégradation liée à des retards de livraison et des problèmes de conformité produit.
-        - **Objectif** : Passer d'une écoute passive réactive à un système d'analyse automatisé par LLM et de préduction proactive par Machine Learning.
+        - **Objectif** : Passer d'une écoute passive réactive à un système d'analyse automatisé par LLM et de prédiction proactive par Machine Learning.
         - **Enjeux Conseil** : Identifier les leviers prioritaires de réduction du taux de détracteurs et modéliser le seuil de basculement de la satisfaction.
         """)
         
     with col_cad2:
         st.markdown("""
-        ### 📦 Données Utilisées (Olist E-Commerce)
+        ### Données Utilisées (Olist E-Commerce)
         - **Périmètre** : ~100 000 commandes e-commerce réelles au Brésil (2016-2018).
         - **Verbatims analysés** : 40 641 avis contenant un message texte.
         - **Échantillonnage LLM** : 1 500 avis échantillonnés de manière stratifiée (300 par note 1-5).
@@ -92,7 +92,7 @@ with tab0:
         """)
         
     st.divider()
-    st.subheader("💡 Recommandations Stratégiques (Slides Direction)")
+    st.subheader("Recommandations Stratégiques (Slides Direction)")
     
     with st.expander("Slide 1 : Cartographie des Irritants & Diagnostic NPS", expanded=True):
         st.markdown("""
