@@ -33,6 +33,16 @@ def load_all_data():
     return full_df, classified_df
 
 
+@st.cache_data
+def get_cached_prio_matrix(classified_df, full_df):
+    return compute_prioritization_matrix(classified_df, full_df)
+
+
+@st.cache_data
+def get_cached_delay_analysis(full_df):
+    return analyze_delay_impact(full_df)
+
+
 # En-tête clair
 st.caption("CUSTOMER & GROWTH AI LAB")
 st.title("Plateforme Voix du Client & NPS Prédictif")
@@ -49,12 +59,64 @@ st.sidebar.markdown(f"**Périmètre analysé**\n- Avis validés : **{len(full_df
 st.sidebar.markdown("---")
 
 # Navigation par Onglets
-tab1, tab2, tab3, tab4 = st.tabs([
-    "Synthèse & NPS Proxy",
-    "Matrice des Irritants",
-    "Analyse des Retards",
-    "Modèle Prédictif ML"
+tab0, tab1, tab2, tab3, tab4 = st.tabs([
+    "📌 Cadrage & Recommandations",
+    "📊 Synthèse & NPS Proxy",
+    "🗺️ Matrice des Irritants",
+    "⏱️ Analyse des Retards",
+    "🤖 Modèle Prédictif ML"
 ])
+
+# ----------------------------------------------------
+# TAB 0 : CADRAGE & RECOMMANDATIONS STRATÉGIQUES
+# ----------------------------------------------------
+with tab0:
+    st.subheader("🎯 Cadrage du Projet 1 : Voix du Client IA & NPS Prédictif")
+    
+    col_cad1, col_cad2 = st.columns(2)
+    with col_cad1:
+        st.markdown("""
+        ### 📋 Problématique & Objectifs Business
+        - **Contexte** : La satisfaction client sur la marketplace Olist subit une dégradation liée à des retards de livraison et des problèmes de conformité produit.
+        - **Objectif** : Passer d'une écoute passive réactive à un système d'analyse automatisé par LLM et de préduction proactive par Machine Learning.
+        - **Enjeux Conseil** : Identifier les leviers prioritaires de réduction du taux de détracteurs et modéliser le seuil de basculement de la satisfaction.
+        """)
+        
+    with col_cad2:
+        st.markdown("""
+        ### 📦 Données Utilisées (Olist E-Commerce)
+        - **Périmètre** : ~100 000 commandes e-commerce réelles au Brésil (2016-2018).
+        - **Verbatims analysés** : 40 641 avis contenant un message texte.
+        - **Échantillonnage LLM** : 1 500 avis échantillonnés de manière stratifiée (300 par note 1-5).
+        - **Validation** : 100 avis réels annotés manuellement pour évaluer la précision du LLM.
+        """)
+        
+    st.divider()
+    st.subheader("💡 Recommandations Stratégiques (Slides Direction)")
+    
+    with st.expander("Slide 1 : Cartographie des Irritants & Diagnostic NPS", expanded=True):
+        st.markdown("""
+        * **NPS Proxy Global** : **+15.1** (35.2% de détracteurs vs 50.2% de promoteurs).
+        * **Irrritant Majeur #1 — Livraison non reçue (`LIV_NONRECU`)** : Représente **39.7%** des avis négatifs. Impact dévastateur sur l'image de marque.
+        * **Irrritant Majeur #2 — Service Client (`SAV`)** : **21.8%** des plaintes dénoncent l'absence de réponse ou l'inefficacité du support.
+        * **Irrritant Majeur #3 — Produit non conforme (`PROD_NONCONFORME`)** : **19.3%** des insatisfactions liées à la qualité vendeur.
+        """)
+        
+    with st.expander("Slide 2 : Impact des Retards — La Règle Critique des 4 Jours", expanded=False):
+        st.markdown("""
+        * **À l'heure (0 jour de retard)** : Seuls **27.1%** de détracteurs.
+        * **1 à 3 jours de retard** : Hausse modérée à **39.5%** de détracteurs.
+        * **4 à 10 jours de retard** : **Seuil de rupture à 87.3% de détracteurs**.
+        * **Action Opérationnelle** : Déclencher une alerte logistique automatisée et une compensation systématique dès le **4ème jour de retard**.
+        """)
+        
+    with st.expander("Slide 3 : NPS Prédictif — Anticipation Proactive par Machine Learning", expanded=False):
+        st.markdown("""
+        * **Modèle Retenu** : HistGradientBoosting Classifier (AUC-ROC = **0.711**).
+        * **Efficacité Opérationnelle (Lift)** : **2.56x** par rapport au hasard.
+        * **Top 10% des commandes les plus à risque** : Concentre **90.0%** de vrais détracteurs.
+        * **Valeur Business** : Permet au Service Client de contacter proactivement les 10% de clients menacés *avant même qu'ils ne déposent un avis négatif*.
+        """)
 
 # ----------------------------------------------------
 # TAB 1 : SYNTHÈSE & NPS PROXY
@@ -85,7 +147,7 @@ with tab2:
     st.subheader("Cartographie et priorisation des irritants clients")
     
     if not classified_df.empty:
-        prio_df = compute_prioritization_matrix(classified_df, full_df)
+        prio_df = get_cached_prio_matrix(classified_df, full_df)
         
         col_chart, col_table = st.columns([6, 4])
         with col_chart:
