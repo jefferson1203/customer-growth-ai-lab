@@ -20,8 +20,12 @@ st.set_page_config(
 @st.cache_data
 def load_all_data():
     """Charge et prépare les données Olist et les classifications LLM."""
-    data = load_olist(DATA_RAW)
-    full_df = prepare_voc_data(data)
+    processed_path = OUTPUTS / "voc" / "processed_voc.csv.gz"
+    if processed_path.exists():
+        full_df = pd.read_csv(processed_path)
+    else:
+        data = load_olist(DATA_RAW)
+        full_df = prepare_voc_data(data)
     
     cache_path = OUTPUTS / "voc" / "classifications.jsonl"
     classified_df = pd.DataFrame()

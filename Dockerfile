@@ -17,4 +17,4 @@ COPY . .
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["sh", "-c", "streamlit run voc/app.py --server.port=${PORT} --server.address=0.0.0.0"]
+CMD ["sh", "-c", "streamlit run main.py --server.port=${PORT} --server.address=0.0.0.0"]

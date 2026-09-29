@@ -1,18 +1,23 @@
-import argparse
-#from voc.pipeline import run as run_voc
-#from portfolio.pipeline import run as run_portfolio
-#from pricing.pipeline import run as run_pricing
+import streamlit as st
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Customer & Growth AI Lab")
-    parser.add_argument("module", choices=["voc", "portfolio", "pricing", "all"])
-    args = parser.parse_args()
-    if args.module in ("voc", "all"):
-        run_voc()
-    if args.module in ("portfolio", "all"):
-        run_portfolio()
-    if args.module in ("pricing", "all"):
-        run_pricing()
+# Configuration de la page principale
+st.set_page_config(
+    page_title="Customer & Growth AI Lab",
+    page_icon="⚡",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-if __name__ == "__main__":
-    main()
+# Définition des pages du hub multi-projets
+p1 = st.Page("voc/app.py", title="1. Voix du Client IA", icon="📊", default=True)
+p2 = st.Page("portfolio/app.py", title="2. Segmentation Clients", icon="👥")
+p3 = st.Page("pricing/app.py", title="3. Pricing & Élasticité", icon="🏷️")
+p4 = st.Page("copilot/app.py", title="4. Copilote Agentique", icon="🤖")
+
+# Hub de navigation Streamlit
+pg = st.navigation({
+    "Laboratoire AI & Growth": [p1, p2, p3, p4]
+})
+
+# Lancement de la page sélectionnée
+pg.run()
