@@ -10,12 +10,7 @@ from voc.analysis import calculate_nps_proxy, compute_prioritization_matrix, ana
 from voc.predictive import prepare_ml_dataset, train_eval_nps_model
 
 
-# Configuration globale de la page Streamlit
-st.set_page_config(
-    page_title="Voix du Client IA | Customer Growth AI Lab",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Navigation multi-pages déjà configurée par main.py
 
 @st.cache_data
 def load_all_data():
@@ -137,16 +132,21 @@ with tab3:
 
 # ----------------------------------------------------
 # TAB 4 : MODÈLE PRÉDICTIF ML & COURBE ROC
+@st.cache_data
+def get_cached_ml_results(full_df):
+    X, y = prepare_ml_dataset(full_df)
+    log_m = train_eval_nps_model(X, y, model_type="logistic")
+    gb_m = train_eval_nps_model(X, y, model_type="gb")
+    return log_m, gb_m
+
 # ----------------------------------------------------
 with tab4:
     st.subheader("Évaluation du modèle prédictif du risque détracteur")
     st.caption("Modèle entraîné exclusivement sur les caractéristiques connues avant l'avis (sans fuite de données).")
     
     if st.button("Lancer l'évaluation comparative des modèles"):
-        with st.spinner("Entraînement des modèles Scikit-Learn en corps..."):
-            X, y = prepare_ml_dataset(full_df)
-            log_m = train_eval_nps_model(X, y, model_type="logistic")
-            gb_m = train_eval_nps_model(X, y, model_type="gb")
+        with st.spinner("Entraînement des modèles Scikit-Learn en cours..."):
+            log_m, gb_m = get_cached_ml_results(full_df)
             
             c_m1, c_m2 = st.columns(2)
             with c_m1:
