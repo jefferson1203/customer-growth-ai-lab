@@ -11,11 +11,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copie de l'application
+# Copie de l'application et de la configuration Streamlit
 COPY . .
 
-# Configuration du port pour Google Cloud Run
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["sh", "-c", "streamlit run voc/app.py --server.port=${PORT} --server.address=0.0.0.0 --server.enableCORS=false --server.enableXsrfProtection=false"]
+CMD ["sh", "-c", "streamlit run voc/app.py --server.port=${PORT} --server.address=0.0.0.0"]
