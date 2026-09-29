@@ -29,8 +29,9 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
 
 ### 🌟 Résultats Réels et Métriques d'Impact
 
+<!-- METRICS:START -->
 * **Volume Traité** : **40 641 avis clients texte** analysés et préparés sur le dataset Olist.
-* **Répartition des Clients** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.2 %** Détracteurs (1-3★).
+* **Répartition des Clients** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.1 %** Détracteurs (1-3★).
 * **NPS Proxy Global** : **+15.09** (% Promoteurs 5★ - % Détracteurs 1-3★).
 * **Évaluation Complète de la Classification LLM (Échantillon de Validation 100 Avis Annotés)** :
 
@@ -39,7 +40,7 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
 | `LIV_NONRECU` | 0.923 | 0.960 | **0.941** | Excellent repérage des commandes non reçues |
 | `POSITIF` | 1.000 | 0.881 | **0.937** | Aucune fausse alerte sur les avis positifs |
 | `PROD_NONCONFORME` | 0.833 | 0.769 | **0.800** | Bonne détection de la non-conformité |
-| `SAV` | 0.750 | 0.522 | **0.615** | Sur-détection initiale corrigée |
+| `SAV` | 0.750 | 0.522 | **0.615** | Rappel insuffisant (réclamations indirectes manquées), non résolu par le v2 : objet du v3 |
 | `LIV_RETARD` | 0.250 | 0.900 | **0.391** | Sur-détection (explicite vs délai normal) ajustée au prompt v2 |
 
 * **Cartographie des Irritants Négatifs (Pondérée & Redressée par la distribution réelle)** :
@@ -55,6 +56,7 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
   * **AUC-ROC** : **0.713** (vs 0.696 en Régression Logistique baseline)
   * **Taux de détracteurs dans le Top 10% le plus à risque** : **90.15 %**
   * **Lift (Gain d'efficacité)** : **2.56x** par rapport au hasard.
+<!-- METRICS:END -->
 
 ---
 
