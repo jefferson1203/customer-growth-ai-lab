@@ -7,3 +7,5 @@ outputs/**/*.jsonl
 .ipynb_checkpoints/
 .DS_Store
 Prompt_Agents_mentor.md
+Prompt_Agent_Mentor.md
+Prompt_*.md
