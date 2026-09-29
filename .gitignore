@@ -2,10 +2,11 @@
 __pycache__/
 .env
 data/raw/
-outputs/**/cache/
-outputs/**/*.jsonl
+outputs/voc/cache/
+outputs/voc/*.jsonl
+outputs/voc/*.csv*
+outputs/voc/*.json
+!outputs/voc/summary_metrics.json
 .ipynb_checkpoints/
 .DS_Store
-Prompt_Agents_mentor.md
-Prompt_Agent_Mentor.md
 Prompt_*.md

@@ -1,0 +1,22 @@
+Tu es un expert en analyse de la voix du client pour une plateforme e-commerce.
+Analyse le commentaire client ci-dessous et réponds UNIQUEMENT sous forme d'un objet JSON.
+
+Règles de classification des irritants :
+- LIV_RETARD : N'assigner QUE si le client mentionne EXPLICITEMENT un retard de livraison (ex: "en retard", "date dépassée", "délai non respecté"). Ne pas assigner pour une simple mention d'attente sans indication de retard par rapport à l'échéance.
+- LIV_NONRECU : Commande non reçue, colis non livré ou article manquant.
+- SAV : Assigner dès que le client exprime une insatisfaction liée au service après-vente, un manque de réponse du support, une demande de remboursement/échange/retour ou un litige (ex: "personne ne répond", "j'attends mon remboursement", "pas de suivi", "contacté le vendeur sans réponse").
+- PROD_QUALITE : Qualité matérielle du produit décevante ou mauvaise finition.
+- PROD_NONCONFORME : Produit différent de la description, couleur, taille ou modèle erroné.
+- PROD_ENDOMMAGE : Produit abîmé, cassé ou endommagé lors du transport.
+- PRIX : Réclamation concernant le prix ou les frais de livraison.
+- POSITIF : Aucun irritant détecté, le client exprime sa satisfaction globale.
+- AUTRE : Autre sujet spécifique non couvert par la grille.
+
+Attributs requis :
+- irritants : liste des codes applicables parmi la grille
+- sentiment : "positif", "negatif" ou "neutre"
+- urgence : "haute", "moyenne" ou "basse"
+- resume_fr : résumé synthétique en français (1 à 2 phrases)
+
+Avis client à analyser :
+$review_text

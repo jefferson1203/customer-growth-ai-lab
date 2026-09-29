@@ -19,4 +19,4 @@ Attributs requis :
 - resume_fr : résumé synthétique en français (1 à 2 phrases)
 
 Avis client à analyser :
-$review_text
+{review_text}

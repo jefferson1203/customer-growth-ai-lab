@@ -28,18 +28,29 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
 ### 🌟 Résultats Réels et Métriques d'Impact
 
 * **Volume Traité** : **40 641 avis clients texte** analysés et préparés sur le dataset Olist.
-* **NPS Proxy Global** : **+15.09** (*64.8 %* Promoteurs 5★ | *35.2 %* Détracteurs 1-3★).
-* **Évaluation de la Classification LLM (Gemini 3.8 Flash via Pydantic JSON)** :
-  * `LIV_NONRECU` : **F1-score 0.941** (Précision 0.923 | Rappel 0.960)
-  * `POSITIF` : **F1-score 0.937** (Précision 1.000 | Rappel 0.881)
-* **Cartographie des Irritants Négatifs** :
-  * **39.67 %** `LIV_NONRECU` (Commande non reçue)
-  * **21.78 %** `SAV` (Litiges et support)
-  * **19.33 %** `PROD_NONCONFORME` (Produit décevant)
-* **Seuil Critique de Retard** : À partir de **4 jours de retard**, le taux de détracteurs passe à **87.33 %** (contre 27.14 % à l'heure).
-* **NPS Prédictif (Machine Learning)** :
+* **Répartition des Clients** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.2 %** Détracteurs (1-3★).
+* **NPS Proxy Global** : **+15.09** (% Promoteurs 5★ - % Détracteurs 1-3★).
+* **Évaluation Complète de la Classification LLM (Échantillon de Validation 100 Avis Annotés)** :
+
+| Irritant / Classe | Précision | Rappel | F1-Score | Diagnostic / Action Prompt |
+|---|---|---|---|---|
+| `LIV_NONRECU` | 0.923 | 0.960 | **0.941** | Excellent repérage des commandes non reçues |
+| `POSITIF` | 1.000 | 0.881 | **0.937** | Aucune fausse alerte sur les avis positifs |
+| `PROD_NONCONFORME` | 0.833 | 0.769 | **0.800** | Bonne détection de la non-conformité |
+| `SAV` | 0.750 | 0.522 | **0.615** | Sur-détection initiale corrigée |
+| `LIV_RETARD` | 0.250 | 0.900 | **0.391** | Sur-détection (explicite vs délai normal) ajustée au prompt v2 |
+
+* **Cartographie des Irritants Négatifs (Pondérée & Redressée par la distribution réelle)** :
+  * **47.23 %** `LIV_NONRECU` (Commande non reçue - Irritant majeur #1)
+  * **26.82 %** `SAV` (Litiges et support)
+  * **20.09 %** `LIV_RETARD` (Retard significatif)
+  * **19.95 %** `PROD_NONCONFORME` (Produit décevant)
+* **Points de Rupture des Retards & Commandes Non Livrées** :
+  * **Commandes Non Livrées (4.5% des commandes)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
+  * **Retards de 4 à 10 jours** : **87.33 %** de détracteurs (Seuil de rupture nécessitant une alerte au 3ème jour).
+* **NPS Prédictif (Machine Learning avec Feature `non_livre`)** :
   * Modèle retenu : **HistGradientBoostingClassifier**
-  * **AUC-ROC** : **0.711** (vs 0.676 en Régression Logistique baseline)
+  * **AUC-ROC** : **0.751** (vs 0.696 en Régression Logistique baseline)
   * **Taux de détracteurs dans le Top 10% le plus à risque** : **90.02 %**
   * **Lift (Gain d'efficacité)** : **2.56x** par rapport au hasard.
 
@@ -82,7 +93,7 @@ customer-growth-ai-lab/
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-user/customer-growth-ai-lab.git
+git clone https://github.com/jefferson1203/customer-growth-ai-lab.git
 cd customer-growth-ai-lab
 
 # Créer et activer l'environnement virtuel

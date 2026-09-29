@@ -13,12 +13,16 @@ from voc.predictive import prepare_ml_dataset, train_eval_nps_model
 # Navigation multi-pages déjà configurée par main.py
 
 @st.cache_data
+def _read_summary_file(mtime: float):
+    summary_path = OUTPUTS / "voc" / "summary_metrics.json"
+    with open(summary_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 def load_summary_metrics():
-    """Charge les métriques analytiques agrégées pré-calculées (lightweight & secure)."""
+    """Charge les métriques analytiques agrégées pré-calculées avec rafraîchissement automatique."""
     summary_path = OUTPUTS / "voc" / "summary_metrics.json"
     if summary_path.exists():
-        with open(summary_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        return _read_summary_file(summary_path.stat().st_mtime)
     return {}
 
 # ----------------------------------------------------
@@ -76,9 +80,10 @@ with tab0:
     with st.expander("Slide 1 : Cartographie des Irritants & Diagnostic NPS", expanded=True):
         st.markdown("""
         * **NPS Proxy Global** : **+15.1** (35.2% de détracteurs vs 50.2% de promoteurs).
-        * **Irrritant Majeur #1 — Livraison non reçue (`LIV_NONRECU`)** : Représente **39.7%** des avis négatifs. Impact dévastateur sur l'image de marque.
-        * **Irrritant Majeur #2 — Service Client (`SAV`)** : **21.8%** des plaintes dénoncent l'absence de réponse ou l'inefficacité du support.
-        * **Irrritant Majeur #3 — Produit non conforme (`PROD_NONCONFORME`)** : **19.3%** des insatisfactions liées à la qualité vendeur.
+        * **Irritant Majeur #1 — Livraison non reçue (`LIV_NONRECU`)** : Représente **47.2%** des avis négatifs (redressé). Impact dévastateur sur l'image de marque.
+        * **Irritant Majeur #2 — Service Client (`SAV`)** : **26.8%** des plaintes dénoncent l'absence de réponse ou l'inefficacité du support (redressé).
+        * **Irritant Majeur #3 — Retard de livraison (`LIV_RETARD`)** : **20.1%** des avis négatifs soulignent un retard d'échéance (redressé).
+        * **Irritant Majeur #4 — Produit non conforme (`PROD_NONCONFORME`)** : **20.0%** des insatisfactions liées à la qualité ou l'erreur d'article (redressé).
         """)
         
     with st.expander("Slide 2 : Impact des Retards — La Règle Critique des 4 Jours", expanded=False):
@@ -97,11 +102,12 @@ with tab0:
         * **Valeur Business** : Permet au Service Client de contacter proactivement les 10% de clients menacés *avant même qu'ils ne déposent un avis négatif*.
         """)
 
-    with st.expander("Benchmark & Ingénierie LLM : Évaluation Empirique Prompt V1 vs Prompt V2", expanded=False):
-        st.markdown("Comparaison mesurée sur l'échantillon de validation (100 avis annotés manuellement) après désambiguïsation explicite dans la grille de prompt.")
+    with st.expander("Benchmark & Ingénierie LLM : Évaluation Empirique Prompt V1 vs Prompt V2", expanded=True):
+        st.markdown("Comparaison mesurée sur l'échantillon de validation (100 avis annotés manuellement) suite à la désambiguïsation explicite du prompt v2 :")
         prompt_comp = metrics.get("prompt_eval_comparison", [])
         if prompt_comp:
-            st.dataframe(pd.DataFrame(prompt_comp))
+            df_comp = pd.DataFrame(prompt_comp)
+            st.dataframe(df_comp, use_container_width=True)
 
 # ----------------------------------------------------
 # TAB 1 : SYNTHÈSE & NPS PROXY
@@ -158,8 +164,10 @@ with tab2:
                 filtered_reviews = verb_df[verb_df["irritants"].apply(lambda x: selected_irr in x if isinstance(x, list) else False)]
                 st.write(f"**{len(filtered_reviews)}** exemples associés au motif `{selected_irr}` :")
                 
-                for _, r in filtered_reviews.head(4).iterrows():
+                for _, r in filtered_reviews.head(5).iterrows():
                     with st.expander(f"Avis ID {r['review_id']} — Note : {int(r['review_score'])}/5"):
+                        if r.get('comment'):
+                            st.markdown(f"**Verbatim client original** : *\"{r['comment']}\"*")
                         st.markdown(f"**Résumé automatisé (LLM)** : {r.get('resume_fr', 'N/A')}")
                         st.caption(f"Sentiment : {r.get('sentiment', 'N/A')} | Urgence : {r.get('urgence', 'N/A')}")
     else:

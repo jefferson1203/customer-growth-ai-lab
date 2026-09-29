@@ -73,6 +73,20 @@
 - Ce que j'ai compris : Rigueur de l'évaluation méthodologique en conseil (redressement d'échantillons stratifiés, analyse empirique de l'arbitrage Précision vs Rappel en prompt engineering, protection de la propriété intellectuelle des jeux de données).
 - Statut : **Projet 1 Validé avec Révision Méthodologique & Expérimentation Réelle !**
 
+## [Projet 1 : Voix du Client IA] - Étape 10 : Refactoring LLMClient, migration du cache v1 et test à blanc Prompt V3
+- Date : 2026-09-29
+- Fait :
+  - Restructuration de `common/llm.py` (cache unifié avec empreinte MD5 du prompt, `response_schema` strict, retry typé sur `ValidationError`, `JSONDecodeError` et `APIError` 429/5xx avec backoff exponentiel).
+  - Création du schéma centralisé Pydantic `voc/schema.py` (`ReviewLabel`).
+  - Archivage du prompt original v1 sous `prompts/archive/voc_classification_v1_original.txt` et confirmation du modèle `gemini-3.8-flash`.
+  - Script de migration `voc/migrate_cache.py` exécuté avec validation Pydantic strict à la volée.
+  - Test à blanc v3 réussi sur 5 avis réels (`voc/dry_run_v3.py`).
+- Résultats obtenus :
+  - `pytest tests/test_llm.py` : 4 tests au vert (100%).
+  - Migration : **1 500 entrées valides migré(es)** (0 invalides).
+  - Test à blanc Prompt V3 : 5 avis classés avec succès.
+
+
 
 
 

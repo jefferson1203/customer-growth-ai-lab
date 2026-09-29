@@ -14,7 +14,7 @@ def classify_reviews(text :str, review_id: str , client: LLMClient) -> ReviewLab
     return client.complete_json("voc_classification", variables, ReviewLabel, review_id)
     
 def classify_batch(df: pd.DataFrame, cache_path: Path) -> pd.DataFrame:
-    client = LLMClient(OUTPUTS)
+    client = LLMClient(cache_path=cache_path)
     results = []
     for index, row in df.iterrows():
         review_text = row["review_comment_message"]

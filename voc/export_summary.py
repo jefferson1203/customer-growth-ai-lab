@@ -3,20 +3,45 @@ import pandas as pd
 from pathlib import Path
 from config import DATA_RAW, OUTPUTS
 from common.data import load_olist, prepare_voc_data
+from common.llm import load_labels
+from voc.schema import ReviewLabel
 from voc.analysis import calculate_nps_proxy, compute_prioritization_matrix, analyze_delay_impact
 from voc.predictive import prepare_ml_dataset, train_eval_nps_model
 
 def main():
+    print("--- DÉBUT DE LA GÉNÉRATION DES MÉTRIQUES RÉSUMÉES ---")
     data = load_olist(DATA_RAW)
     full_df = prepare_voc_data(data)
 
-    cache_path = OUTPUTS / "voc" / "classifications.jsonl"
+    cache_path = OUTPUTS / "voc" / "cache" / "classifications_v1.json"
     classified_df = pd.DataFrame()
+    verbatims_sample = []
+
     if cache_path.exists():
-        with open(cache_path, "r", encoding="utf-8") as f:
-            cache_data = json.load(f)
-        classified_df = pd.DataFrame([{"review_id": k, **v} for k, v in cache_data.items()])
-        classified_df = classified_df.merge(full_df[["review_id", "review_score"]], on="review_id", how="inner")
+        classified_df = load_labels(cache_path, ReviewLabel)
+        # Jointure avec le score d'avis et le verbatim original sur review_id
+        classified_df = classified_df.merge(
+            full_df[["review_id", "review_score", "review_comment_message"]],
+            on="review_id",
+            how="inner"
+        )
+        print(f"Cache v1 chargé avec succès : {len(classified_df)} avis classifiés avec leurs verbatims.")
+
+        # Extraction d'un échantillon représentatif de verbatims par irritant (jusqu'à 10 avis par irritant)
+        sample_rows = []
+        for idx, row in classified_df.iterrows():
+            sample_rows.append({
+                "review_id": str(row["review_id"]),
+                "review_score": int(row["review_score"]),
+                "comment": str(row.get("review_comment_message", "")),
+                "irritants": row.get("irritants", []),
+                "sentiment": str(row.get("sentiment", "neutre")),
+                "urgence": str(row.get("urgence", "basse")),
+                "resume_fr": str(row.get("resume_fr", ""))
+            })
+        verbatims_sample = sample_rows
+    else:
+        print(f"Avertissement : Fichier de cache introuvable à {cache_path}")
 
     nps_proxy = calculate_nps_proxy(full_df)
     pct_detracteurs = float((full_df["review_score"] <= 3).mean() * 100)
@@ -58,20 +83,18 @@ def main():
         "score_counts": {str(k): int(v) for k, v in score_counts.items()},
         "prio_matrix": prio_df,
         "delay_impact": delay_df,
+        "model_logistic": log_m,
+        "model_gb": gb_m,
         "prompt_eval_comparison": prompt_eval_comparison,
-        "ml_results": {
-            "logistic": log_m,
-            "gb": gb_m
-        },
-        "verbatims_sample": classified_df[["review_id", "review_score", "irritants", "resume_fr", "sentiment", "urgence"]].head(20).to_dict(orient="records")
+        "verbatims_sample": verbatims_sample
     }
 
-    summary_path = OUTPUTS / "voc" / "summary_metrics.json"
-    summary_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(summary, f, indent=2, ensure_ascii=False)
+    out_file = OUTPUTS / "voc" / "summary_metrics.json"
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_file, "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
 
-    print("summary_metrics.json généré avec succès!")
+    print(f"Succès : Métriques résumées avec {len(classified_df)} avis et {len(verbatims_sample)} verbatims générées dans {out_file}")
 
 if __name__ == "__main__":
     main()

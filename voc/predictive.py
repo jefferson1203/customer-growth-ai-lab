@@ -20,9 +20,12 @@ def prepare_ml_dataset(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
         d_purch = pd.to_datetime(df_temp["order_purchase_timestamp"])
         df_temp["delai_livraison_jours"] = (d_deliv - d_purch).dt.days
 
-    cols = ['retard_jours', 'delai_livraison_jours', 'freight_value', 'price', 'product_category_name_english']
+    df_temp["non_livre"] = df_temp["order_delivered_customer_date"].isna().astype(int)
+
+    cols = ['non_livre', 'retard_jours', 'delai_livraison_jours', 'freight_value', 'price', 'product_category_name_english']
     X = df_temp[cols].copy()
     
+    X['non_livre'] = X['non_livre'].fillna(0)
     X['retard_jours'] = X['retard_jours'].fillna(0)
     X['delai_livraison_jours'] = X['delai_livraison_jours'].fillna(0)
     X['freight_value'] = X['freight_value'].fillna(X['freight_value'].median())
@@ -38,7 +41,7 @@ def train_eval_nps_model(X: pd.DataFrame, y: pd.Series, model_type: str = "logis
         X, y, test_size=0.2, random_state=VOC["seed"], stratify=y
     )
 
-    num_cols = ["retard_jours", "delai_livraison_jours", "freight_value", "price"]
+    num_cols = ["non_livre", "retard_jours", "delai_livraison_jours", "freight_value", "price"]
     cat_cols = ["product_category_name_english"]
 
     preprocessor = ColumnTransformer(
