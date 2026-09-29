@@ -46,11 +46,32 @@
 - Questions d'entretien travaillées : Pourquoi le Lift est plus convaincant qu'un score AUC auprès d'un Directeur Client ; comparaison Régression Logistique vs Gradient Boosting ; prévention du Data Leakage.
 ## [Projet 1 : Voix du Client IA] - Étape 7 : Restitution & Tableau de bord
 - Date : 2026-09-29
-- Fait : Création de l'application interactive Streamlit [`voc/app.py`](file:///Users/jefferson/Documents/analysis/data%20et%20agentique/customer-growth-ai-lab/voc/app.py) (4 onglets : KPIs, Matrice des irritants, Impact des retards, NPS prédictif & courbe ROC comparative) et rédaction des 3 slides de synthèse stratégique ([`slides/Projet1_Voix_du_Client_IA_Slides.md`](file:///Users/jefferson/Documents/analysis/data%20et%20agentique/customer-growth-ai-lab/slides/Projet1_Voix_du_Client_IA_Slides.md)).
+- Fait : Création de l'application interactive Streamlit [`voc/app.py`](voc/app.py) (4 onglets : KPIs, Matrice des irritants, Impact des retards, NPS prédictif & courbe ROC comparative) et rédaction des 3 slides de synthèse stratégique ([`slides/Projet1_Voix_du_Client_IA_Slides.md`](slides/Projet1_Voix_du_Client_IA_Slides.md)).
 - Ce que j'ai compris : Restitution efficace du signal Data à la décision business, structuration de slides conseil orientées conclusions, et articulation d'une boucle d'action proactive.
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2 (structure Streamlit et layout des slides).
-- Résultats obtenus (chiffres réels) : Dashboard fonctionnel à 100%, 3 slides de recommandations chiffrées basées sur les données Olist.
-- Statut : **Projet 1 Terminé avec succès ! 🎉**
+- Résultats obtenus (chiffres réels) : Dashboard fonctionnel, 3 slides de recommandations chiffrées basées sur les données Olist.
+
+## [Projet 1 : Voix du Client IA] - Étape 8 : Déploiement Cloud Run & CI/CD initial
+- Date : 2026-09-29
+- Fait : 
+  - Déploiement conteneurisé Docker sur Google Cloud Run (`customer-growth-voc`).
+  - Automatisation du pipeline CI/CD GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) déclenché sur la branche `master`.
+  - Implémentation du hub d'entrée multi-pages [`main.py`](main.py) via `st.navigation`.
+- Ce que j'ai compris : Gestion des contraintes de déploiement serveur (`STREAMLIT_SERVER_HEADLESS`, casse des noms de fichiers Linux).
+- Statut : **Déploiement opérationnel, corrections suite à revue en cours.**
+
+## [Projet 1 : Voix du Client IA] - Étape 9 : Corrections suite à la revue senior & Rigueur méthodologique
+- Date : 2026-09-29
+- Fait :
+  - **Retrait des données brutes & Sécurité** : Retrait des fichiers CSV/JSONL bruts du dépôt (`git rm --cached`), remplacement par un fichier JSON d'agrégats analytiques anonymisés (`outputs/voc/summary_metrics.json`).
+  - **Redressement de la Matrice des Irritants** : Application des poids de redressement selon la distribution réelle Olist (60.5% 1★, 14.8% 2★, 24.7% 3★). Le motif `LIV_NONRECU` passe de 39.7% (brut) à **47.23% (redressé)**.
+  - **Commandes Non Livrées & Feature ML** : Prise en compte explicite de la tranche *"0. Non livrée"* (1 845 commandes, 91.38% détracteurs) et ajout de la feature `non_livre` (AUC du Gradient Boosting qui passe de 0.711 à **0.751**).
+  - **Expérimentation LLM réelle (Prompt V1 vs Prompt V2)** : Création de `prompts/voc_classification_v2.txt` avec des consignes de désambiguïsation strictes et ré-exécution réelle des 100 avis via l'API Gemini 3.8 Flash (`voc/run_v2_eval.py`). Constat : La précision sur `LIV_RETARD` a **doublé (passant de 0.25 à 0.50)** et le rappel sur `PROD_NONCONFORME` a atteint **100 %**.
+  - **Benchmark intégré dans l'Application** : Ajout du tableau comparatif mesuré V1 vs V2 dans l'onglet *Cadrage & Recommandations* de l'application Streamlit [`voc/app.py`](voc/app.py).
+  - **Transparence du README** : Rectification des chiffres du README (Promoteurs 50.2 %, Passifs 14.6 %, Détracteurs 35.2 %) et publication du tableau complet des métriques par irritant.
+  - **Design Corporate & Homogénéisation** : Retrait des émojis des titres d'onglets pour une restitution sobre.
+- Ce que j'ai compris : Rigueur de l'évaluation méthodologique en conseil (redressement d'échantillons stratifiés, analyse empirique de l'arbitrage Précision vs Rappel en prompt engineering, protection de la propriété intellectuelle des jeux de données).
+- Statut : **Projet 1 Validé avec Révision Méthodologique & Expérimentation Réelle !**
 
 
 
