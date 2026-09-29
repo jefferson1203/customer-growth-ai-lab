@@ -28,6 +28,7 @@ jobs:
           gcloud run deploy customer-growth-voc \
             --source . \
             --region europe-west1 \
+            --project diagnosense-479919 \
             --memory 2Gi \
             --timeout 300s \
             --allow-unauthenticated
