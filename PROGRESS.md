@@ -30,5 +30,21 @@
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2.
 - Résultats obtenus (chiffres réels) : 100 avis annotés. F1 = 0.941 sur `LIV_NONRECU`, F1 = 0.937 sur `POSITIF`, Précision = 0.25 sur `LIV_RETARD` (sur-détection), Rappel = 0.522 sur `SAV`.
 - Questions d'entretien travaillées : Interprétation d'une faible précision / haut rappel en prod ; ajustement du prompt pour supprimer le biais sur les délais de livraison.
-- Prochaine étape : Étape 5 - Analyse et priorisation des irritants (Matrice Fréquence x Impact, proxy NPS).
+## [Projet 1 : Voix du Client IA] - Étape 5 : Analyse et priorisation des irritants
+- Date : 2026-09-29
+- Fait : Implémentation de `calculate_nps_proxy()`, `compute_prioritization_matrix()` et `analyze_delay_impact()` dans `voc/analysis.py`.
+- Ce que j'ai compris : Calcul du NPS proxy sur échelle 1-5 vs vrai NPS relationnel (échelle 0-10), identification des irritants majeurs (`LIV_NONRECU` à 39.67% et `SAV` à 21.78%), et mise en évidence du seuil critique des 4 jours de retard de livraison (87.33% de détracteurs).
+- Points où j'ai été aidé (niveau d'aide) : Niveau 3 (vectorisation pandas et découpage `pd.cut`).
+- Résultats obtenus (chiffres réels) : NPS proxy global de **15.09**. Taux de détracteurs bondissant de 27.14% (à l'heure) à 87.33% (retard 4-10j). Top 3 irritants : `LIV_NONRECU` (39.67%), `SAV` (21.78%), `PROD_NONCONFORME` (19.33%).
+- Questions d'entretien travaillées : Différence entre satisfaction transactionnelle (avis commande) et NPS relationnel (recommandation marque) ; préconisation opérationnelle sur le seuil critique des 4 jours.
+## [Projet 1 : Voix du Client IA] - Étape 6 : NPS prédictif (Machine Learning)
+- Date : 2026-09-29
+- Fait : Implémentation de `prepare_ml_dataset()` et `train_eval_nps_model()` dans `voc/predictive.py` (Pipeline Scikit-Learn avec ColumnTransformer, StandardScaler, OneHotEncoder et LogisticRegression).
+- Ce que j'ai compris : Importance capitale d'éviter la fuite de données (Data Leakage temporel) en n'utilisant que les informations connues à la livraison, rôle des pipelines Scikit-Learn pour l'encodage propre, et pertinence métier de la métrique de Lift (Top 10% le plus à risque) par rapport à l'AUC-ROC.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 3 (construction du Pipeline Scikit-Learn et calcul du Lift).
+- Résultats obtenus (chiffres réels) : Logistic Regression (AUC = **0.676**, Lift = **2.33x**) vs **HistGradientBoosting** (AUC = **0.711**, Taux détracteurs Top 10% = **90.02 %**, Lift = **2.56x**).
+- Questions d'entretien travaillées : Pourquoi le Lift est plus convaincant qu'un score AUC auprès d'un Directeur Client ; comparaison Régression Logistique vs Gradient Boosting ; prévention du Data Leakage.
+- Prochaine étape : Étape 7 - Restitution (Tableau de bord Streamlit `voc/app.py` et 3 slides de recommandations).
+
+
 
