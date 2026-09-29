@@ -9,10 +9,10 @@ st.set_page_config(
 )
 
 # Définition des pages du hub multi-projets
-p1 = st.Page("voc/app.py", title="1. Voix du Client IA", icon="📊", default=True)
-p2 = st.Page("portfolio/app.py", title="2. Segmentation Clients", icon="👥")
-p3 = st.Page("pricing/app.py", title="3. Pricing & Élasticité", icon="🏷️")
-p4 = st.Page("copilot/app.py", title="4. Copilote Agentique", icon="🤖")
+p1 = st.Page("voc/app.py", title="1. Voix du Client IA", icon="📊", url_path="voc", default=True)
+p2 = st.Page("portfolio/app.py", title="2. Segmentation Clients", icon="👥", url_path="portfolio")
+p3 = st.Page("pricing/app.py", title="3. Pricing & Élasticité", icon="🏷️", url_path="pricing")
+p4 = st.Page("copilot/app.py", title="4. Copilote Agentique", icon="🤖", url_path="copilot")
 
 # Hub de navigation Streamlit
 pg = st.navigation({
