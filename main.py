@@ -14,6 +14,11 @@ p2 = st.Page("portfolio/app.py", title="2. Segmentation Clients", icon="👥", u
 p3 = st.Page("pricing/app.py", title="3. Pricing & Élasticité", icon="🏷️", url_path="pricing")
 p4 = st.Page("copilot/app.py", title="4. Copilote Agentique", icon="🤖", url_path="copilot")
 
+# Lien vers l'application Cloud Run de production dans la sidebar
+st.sidebar.markdown("---")
+st.sidebar.markdown("🚀 **Déploiement Cloud Run**")
+st.sidebar.markdown("[Accéder à l'application Cloud Run](https://customer-growth-voc-tgdklsc2vq-ew.a.run.app/)")
+
 # Hub de navigation Streamlit
 pg = st.navigation({
     "Laboratoire AI & Growth": [p1, p2, p3, p4]
