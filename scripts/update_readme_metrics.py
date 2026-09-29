@@ -42,8 +42,8 @@ def update_readme():
     table_body = "\n".join(table_rows)
 
     metrics_text = f"""<!-- METRICS:START -->
-* **Volume Traité** : **40 641 avis clients texte** analysés et préparés sur le dataset Olist.
-* **Répartition des Clients** : **{pct_promoteurs:.1f} %** Promoteurs (5★), **{pct_passifs:.1f} %** Passifs (4★), **{pct_detracteurs:.1f} %** Détracteurs (1-3★).
+* **Volume Traité** : **1 500 avis classés par LLM parmi 40 641 préparés** sur le dataset Olist.
+* **Répartition des Clients (Avis texte)** : **{pct_promoteurs:.1f} %** Promoteurs (5★), **{pct_passifs:.1f} %** Passifs (4★), **{pct_detracteurs:.1f} %** Détracteurs (1-3★).
 * **NPS Proxy Global** : **+{nps_proxy:.2f}** (% Promoteurs 5★ - % Détracteurs 1-3★).
 * **Évaluation Complète de la Classification LLM (V1 vs V2 sur Échantillon de Validation 100 Avis)** :
 
@@ -57,7 +57,7 @@ def update_readme():
   * **{prio_map['LIV_RETARD']:.2f} %** `LIV_RETARD` (Retard significatif)
   * **{prio_map['PROD_NONCONFORME']:.2f} %** `PROD_NONCONFORME` (Produit décevant)
 * **Points de Rupture des Retards & Commandes Non Livrées** :
-  * **Commandes Non Livrées (4.5% des commandes)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
+  * **Commandes Non Livrées (4,5 % des avis avec commentaire)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
   * **Retards de 4 à 10 jours** : **87.33 %** de détracteurs (Seuil de rupture nécessitant une alerte au 3ème jour).
 * **NPS Prédictif (Machine Learning avec Feature `non_livre`)** :
   * Modèle retenu : **HistGradientBoostingClassifier**

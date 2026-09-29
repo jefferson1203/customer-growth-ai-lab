@@ -30,8 +30,8 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
 ### 🌟 Résultats Réels et Métriques d'Impact
 
 <!-- METRICS:START -->
-* **Volume Traité** : **40 641 avis clients texte** analysés et préparés sur le dataset Olist.
-* **Répartition des Clients** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.1 %** Détracteurs (1-3★).
+* **Volume Traité** : **1 500 avis classés par LLM parmi 40 641 préparés** sur le dataset Olist.
+* **Répartition des Clients (Avis texte)** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.1 %** Détracteurs (1-3★).
 * **NPS Proxy Global** : **+15.09** (% Promoteurs 5★ - % Détracteurs 1-3★).
 * **Évaluation Complète de la Classification LLM (V1 vs V2 sur Échantillon de Validation 100 Avis)** :
 
@@ -53,7 +53,7 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
   * **20.09 %** `LIV_RETARD` (Retard significatif)
   * **19.95 %** `PROD_NONCONFORME` (Produit décevant)
 * **Points de Rupture des Retards & Commandes Non Livrées** :
-  * **Commandes Non Livrées (4.5% des commandes)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
+  * **Commandes Non Livrées (4,5 % des avis avec commentaire)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
   * **Retards de 4 à 10 jours** : **87.33 %** de détracteurs (Seuil de rupture nécessitant une alerte au 3ème jour).
 * **NPS Prédictif (Machine Learning avec Feature `non_livre`)** :
   * Modèle retenu : **HistGradientBoostingClassifier**
@@ -61,6 +61,13 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
   * **Taux de détracteurs dans le Top 10% le plus à risque** : **90.15 %**
   * **Lift (Gain d'efficacité)** : **2.56x** par rapport au hasard.
 <!-- METRICS:END -->
+
+### 📌 Limites & Prochaines Étapes (Maîtrise du Projet)
+
+1. **Validation du Prompt V3 sur jeu de test indépendant** : Le prompt v3 est rédigé et pré-évalué sur 50 avis inédits, mais nécessite une campagne d'annotation annotée à grande échelle sur un test-set out-of-sample totalement étanche.
+2. **Amélioration du Rappel SAV (Axe n°1)** : Le rappel du motif SAV reste le principal défi (0,522 en V1, tombé à 0,304 en V2 en raison de règles trop restrictives). L'enjeu du V3 est d'intercepter les réclamations indirectes (ex: demandes de suivi/remboursement sans mention du mot "support").
+3. **Périmètre des Avis Texte** : Les métriques et taux de détracteurs portent spécifiquement sur les 40 641 avis avec commentaire texte, naturellement plus négatifs que la population globale des 99 224 commandes Olist.
+4. **Validation Temporelle du Modèle ML (Backtesting Out-of-Time)** : Le découpage entraînement / test actuel est un split stratifié aléatoire. La prochaine étape consiste à valider le modèle par un découpage temporel (entraînement sur 2017, test out-of-time sur 2018).
 
 ---
 
