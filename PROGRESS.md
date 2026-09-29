@@ -86,7 +86,9 @@
   - Migration : **1 500 entrées valides migré(es)** (0 invalides).
   - Test à blanc Prompt V3 : 5 avis classés avec succès.
 
-
-
-
+## Projet 2 - Étape 1 : Chargement et cadrage Online Retail II
+- Date : 2026-09-29
+- Fait : Implémentation du loader optimisé (Parquet) et fonction overview.
+- Résultats réels : CA total £20,12M (85.7% UK), 5 852 clients uniques, 4 907 références, 1 037 098 lignes nettoyées.
+- Prochaine étape : Étape 2 (Segmentation RFM & K-Means).
 
