@@ -96,9 +96,9 @@ with tab0:
         
     with st.expander("Slide 3 : NPS Prédictif — Anticipation Proactive par Machine Learning", expanded=False):
         st.markdown("""
-        * **Modèle Retenu** : HistGradientBoosting Classifier (AUC-ROC = **0.751**).
+        * **Modèle Retenu** : HistGradientBoosting Classifier (AUC-ROC = **0.713**).
         * **Efficacité Opérationnelle (Lift)** : **2.56x** par rapport au hasard.
-        * **Top 10% des commandes les plus à risque** : Concentre **90.0%** de vrais détracteurs.
+        * **Top 10% des commandes les plus à risque** : Concentre **90.15%** de vrais détracteurs.
         * **Valeur Business** : Permet au Service Client de contacter proactivement les 10% de clients menacés *avant même qu'ils ne déposent un avis négatif*.
         """)
 
@@ -206,13 +206,13 @@ with tab4:
         c_m1, c_m2 = st.columns(2)
         with c_m1:
             st.markdown("#### Régression Logistique (Baseline)")
-            st.metric("AUC-ROC", f"{log_m.get('auc', 0.696)}")
-            st.metric("Détracteurs Top 10%", f"{log_m.get('top_10_detractor_rate', 81.77)}%")
+            st.metric("AUC-ROC", f"{log_m['auc']}")
+            st.metric("Détracteurs Top 10%", f"{log_m['top_10_detractor_rate']:.2f}%")
             
         with c_m2:
             st.markdown("#### HistGradientBoosting (Modèle Retenu)")
-            st.metric("AUC-ROC", f"{gb_m.get('auc', 0.751)}")
-            st.metric("Détracteurs Top 10%", f"{gb_m.get('top_10_detractor_rate', 90.02)}%")
+            st.metric("AUC-ROC", f"{gb_m['auc']}")
+            st.metric("Détracteurs Top 10%", f"{gb_m['top_10_detractor_rate']:.2f}%")
             
         st.markdown("---")
         st.subheader("Courbe ROC Comparative")

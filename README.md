@@ -33,15 +33,19 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
 * **Volume Traité** : **40 641 avis clients texte** analysés et préparés sur le dataset Olist.
 * **Répartition des Clients** : **50.2 %** Promoteurs (5★), **14.6 %** Passifs (4★), **35.1 %** Détracteurs (1-3★).
 * **NPS Proxy Global** : **+15.09** (% Promoteurs 5★ - % Détracteurs 1-3★).
-* **Évaluation Complète de la Classification LLM (Échantillon de Validation 100 Avis Annotés)** :
+* **Évaluation Complète de la Classification LLM (V1 vs V2 sur Échantillon de Validation 100 Avis)** :
 
-| Irritant / Classe | Précision | Rappel | F1-Score | Diagnostic / Action Prompt |
-|---|---|---|---|---|
-| `LIV_NONRECU` | 0.923 | 0.960 | **0.941** | Excellent repérage des commandes non reçues |
-| `POSITIF` | 1.000 | 0.881 | **0.937** | Aucune fausse alerte sur les avis positifs |
-| `PROD_NONCONFORME` | 0.833 | 0.769 | **0.800** | Bonne détection de la non-conformité |
-| `SAV` | 0.750 | 0.522 | **0.615** | Rappel insuffisant (réclamations indirectes manquées), non résolu par le v2 : objet du v3 |
-| `LIV_RETARD` | 0.250 | 0.900 | **0.391** | Sur-détection (explicite vs délai normal) ajustée au prompt v2 |
+| Irritant / Classe | V1 (Précision / Rappel / F1) | V2 (Précision / Rappel / F1) |
+|---|---|---|
+| `LIV_NONRECU` | 0.923 / 0.960 / **0.941** | 0.923 / 0.960 / **0.941** |
+| `LIV_RETARD` | 0.250 / 1.000 / **0.400** | 0.500 / 1.000 / **0.667** |
+| `PROD_QUALITE` | 0.667 / 1.000 / **0.800** | 0.667 / 1.000 / **0.800** |
+| `POSITIF` | 1.000 / 0.881 / **0.937** | 1.000 / 0.881 / **0.937** |
+| `PROD_NONCONFORME` | 0.667 / 1.000 / **0.800** | 0.727 / 1.000 / **0.842** |
+| `SAV` | 1.000 / 0.522 / **0.686** | 1.000 / 0.304 / **0.467** |
+| `PROD_ENDOMMAGE` | 1.000 / 0.667 / **0.800** | 1.000 / 0.667 / **0.800** |
+| `AUTRE` | 0.429 / 0.429 / **0.429** | 0.444 / 0.571 / **0.500** |
+| `PRIX` | 0.750 / 1.000 / **0.857** | 0.750 / 1.000 / **0.857** |
 
 * **Cartographie des Irritants Négatifs (Pondérée & Redressée par la distribution réelle)** :
   * **47.23 %** `LIV_NONRECU` (Commande non reçue - Irritant majeur #1)
