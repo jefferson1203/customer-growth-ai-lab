@@ -12932,6 +12932,24 @@
       "f1_v2": 0.941
     },
     {
+      "irritant": "LIV_RETARD",
+      "prec_v1": 0.25,
+      "rec_v1": 1.0,
+      "f1_v1": 0.4,
+      "prec_v2": 0.5,
+      "rec_v2": 1.0,
+      "f1_v2": 0.667
+    },
+    {
+      "irritant": "PROD_QUALITE",
+      "prec_v1": 0.667,
+      "rec_v1": 1.0,
+      "f1_v1": 0.8,
+      "prec_v2": 0.667,
+      "rec_v2": 1.0,
+      "f1_v2": 0.8
+    },
+    {
       "irritant": "POSITIF",
       "prec_v1": 1.0,
       "rec_v1": 0.881,
@@ -12942,39 +12960,48 @@
     },
     {
       "irritant": "PROD_NONCONFORME",
-      "prec_v1": 0.833,
-      "rec_v1": 0.769,
+      "prec_v1": 0.667,
+      "rec_v1": 1.0,
       "f1_v1": 0.8,
       "prec_v2": 0.727,
       "rec_v2": 1.0,
       "f1_v2": 0.842
     },
     {
-      "irritant": "LIV_RETARD",
-      "prec_v1": 0.25,
-      "rec_v1": 0.9,
-      "f1_v1": 0.391,
-      "prec_v2": 0.5,
-      "rec_v2": 1.0,
-      "f1_v2": 0.667
-    },
-    {
       "irritant": "SAV",
-      "prec_v1": 0.75,
+      "prec_v1": 1.0,
       "rec_v1": 0.522,
-      "f1_v1": 0.615,
+      "f1_v1": 0.686,
       "prec_v2": 1.0,
       "rec_v2": 0.304,
       "f1_v2": 0.467
     },
     {
-      "irritant": "PROD_QUALITE",
-      "prec_v1": 0.75,
-      "rec_v1": 0.75,
-      "f1_v1": 0.75,
-      "prec_v2": 0.667,
-      "rec_v2": 1.0,
+      "irritant": "PROD_ENDOMMAGE",
+      "prec_v1": 1.0,
+      "rec_v1": 0.667,
+      "f1_v1": 0.8,
+      "prec_v2": 1.0,
+      "rec_v2": 0.667,
       "f1_v2": 0.8
+    },
+    {
+      "irritant": "AUTRE",
+      "prec_v1": 0.429,
+      "rec_v1": 0.429,
+      "f1_v1": 0.429,
+      "prec_v2": 0.444,
+      "rec_v2": 0.571,
+      "f1_v2": 0.5
+    },
+    {
+      "irritant": "PRIX",
+      "prec_v1": 0.75,
+      "rec_v1": 1.0,
+      "f1_v1": 0.857,
+      "prec_v2": 0.75,
+      "rec_v2": 1.0,
+      "f1_v2": 0.857
     }
   ],
   "verbatims_sample": [

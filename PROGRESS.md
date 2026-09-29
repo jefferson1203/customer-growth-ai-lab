@@ -65,7 +65,7 @@
 - Fait :
   - **Retrait des données brutes & Sécurité** : Retrait des fichiers CSV/JSONL bruts du dépôt (`git rm --cached`), remplacement par un fichier JSON d'agrégats analytiques anonymisés (`outputs/voc/summary_metrics.json`).
   - **Redressement de la Matrice des Irritants** : Application des poids de redressement selon la distribution réelle Olist (60.5% 1★, 14.8% 2★, 24.7% 3★). Le motif `LIV_NONRECU` passe de 39.7% (brut) à **47.23% (redressé)**.
-  - **Commandes Non Livrées & Feature ML** : Prise en compte explicite de la tranche *"0. Non livrée"* (1 845 commandes, 91.38% détracteurs) et ajout de la feature `non_livre` (AUC du Gradient Boosting qui passe de 0.711 à **0.751**).
+  - **Commandes Non Livrées & Feature ML** : Prise en compte explicite de la tranche *"0. Non livrée"* (1 845 commandes, 91.38% détracteurs) et ajout de la feature `non_livre` (AUC du Gradient Boosting qui passe de 0.696 à **0.713**).
   - **Expérimentation LLM réelle (Prompt V1 vs Prompt V2)** : Création de `prompts/voc_classification_v2.txt` avec des consignes de désambiguïsation strictes et ré-exécution réelle des 100 avis via l'API Gemini 3.8 Flash (`voc/run_v2_eval.py`). Constat : La précision sur `LIV_RETARD` a **doublé (passant de 0.25 à 0.50)** et le rappel sur `PROD_NONCONFORME` a atteint **100 %**.
   - **Benchmark intégré dans l'Application** : Ajout du tableau comparatif mesuré V1 vs V2 dans l'onglet *Cadrage & Recommandations* de l'application Streamlit [`voc/app.py`](voc/app.py).
   - **Transparence du README** : Rectification des chiffres du README (Promoteurs 50.2 %, Passifs 14.6 %, Détracteurs 35.2 %) et publication du tableau complet des métriques par irritant.

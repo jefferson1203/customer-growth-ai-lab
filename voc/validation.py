@@ -54,10 +54,10 @@ def evaluate_classification(manual_path: Path, llm_cache_path: Path) -> pd.DataF
     """
     manual_df = pd.read_csv(manual_path)
     
-    with open(llm_cache_path, "r", encoding="utf-8") as f:
-        llm_cache = json.load(f)
+    from common.llm import load_labels
+    from voc.schema import ReviewLabel
     
-    llm_df = pd.DataFrame([{"review_id": k, **v} for k, v in llm_cache.items()])
+    llm_df = load_labels(llm_cache_path, ReviewLabel)
     llm_df["review_id"] = llm_df["review_id"].astype(str)
     manual_df["review_id"] = manual_df["review_id"].astype(str)
 

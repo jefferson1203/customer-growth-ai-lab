@@ -199,9 +199,8 @@ with tab4:
     st.subheader("Évaluation du modèle prédictif du risque détracteur")
     st.caption("Modèle entraîné exclusivement sur les caractéristiques connues avant l'avis (sans fuite de données, incluant la feature non_livre).")
     
-    ml_res = metrics.get("ml_results", {})
-    log_m = ml_res.get("logistic", {})
-    gb_m = ml_res.get("gb", {})
+    log_m = metrics.get("model_logistic", {})
+    gb_m = metrics.get("model_gb", {})
     
     if log_m and gb_m:
         c_m1, c_m2 = st.columns(2)

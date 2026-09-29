@@ -47,10 +47,10 @@ def update_readme():
 | `LIV_RETARD` | 0.250 | 0.900 | **0.391** | Sur-détection (explicite vs délai normal) ajustée au prompt v2 |
 
 * **Cartographie des Irritants Négatifs (Pondérée & Redressée par la distribution réelle)** :
-  * **{prio_map.get('LIV_NONRECU', 47.23):.2f} %** `LIV_NONRECU` (Commande non reçue - Irritant majeur #1)
-  * **{prio_map.get('SAV', 26.82):.2f} %** `SAV` (Litiges et support)
-  * **{prio_map.get('LIV_RETARD', 20.09):.2f} %** `LIV_RETARD` (Retard significatif)
-  * **{prio_map.get('PROD_NONCONFORME', 19.95):.2f} %** `PROD_NONCONFORME` (Produit décevant)
+  * **{prio_map['LIV_NONRECU']:.2f} %** `LIV_NONRECU` (Commande non reçue - Irritant majeur #1)
+  * **{prio_map['SAV']:.2f} %** `SAV` (Litiges et support)
+  * **{prio_map['LIV_RETARD']:.2f} %** `LIV_RETARD` (Retard significatif)
+  * **{prio_map['PROD_NONCONFORME']:.2f} %** `PROD_NONCONFORME` (Produit décevant)
 * **Points de Rupture des Retards & Commandes Non Livrées** :
   * **Commandes Non Livrées (4.5% des commandes)** : **91.38 %** de détracteurs (Note moyenne 1.51/5).
   * **Retards de 4 à 10 jours** : **87.33 %** de détracteurs (Seuil de rupture nécessitant une alerte au 3ème jour).
