@@ -86,9 +86,26 @@
   - Migration : **1 500 entrées valides migré(es)** (0 invalides).
   - Test à blanc Prompt V3 : 5 avis classés avec succès.
 
-## Projet 2 - Étape 1 : Chargement et cadrage Online Retail II
+## [Projet 2 : Segmentation & Portefeuille] - Étape 1 : Chargement et cadrage Online Retail II
 - Date : 2026-09-29
-- Fait : Implémentation du loader optimisé (Parquet) et fonction overview.
-- Résultats réels : CA total £20,12M (85.7% UK), 5 852 clients uniques, 4 907 références, 1 037 098 lignes nettoyées.
+- Fait : Implémentation du loader optimisé Parquet (`common/data.py`) et calcul des métriques de cadrage (`portfolio/overview.py`).
+- Ce que j'ai compris : Optimisation du temps de chargement (< 2s via Parquet) et importance de conserver les transactions sans CustomerID pour le calcul du CA global.
+- Résultats obtenus (chiffres réels) : CA total £20.12M (85.7% UK), 5 852 clients uniques identifiés, 4 907 références produits, 1 037 098 lignes nettoyées sur 1 067 371 brutes.
 - Prochaine étape : Étape 2 (Segmentation RFM & K-Means).
+
+## [Projet 2 : Segmentation & Portefeuille] - Étape 2 : Segmentation clients RFM & K-Means
+- Date : 2026-09-29
+- Fait : Implémentation du modèle RFM par quintiles (`portfolio/rfm.py`), 6 règles métier de segmentation, analyse d'impact des grossistes (Top 1% CA), et comparaison avec K-Means sur log(R,F,M) standardisés (`portfolio/clustering.py`). Création des tests unitaires (`tests/test_rfm.py`).
+- Ce que j'ai compris : Différence entre segmentation métier déterministe (RFM) et clustering non supervisé (K-Means), transformation log1p pour réduire l'asymétrie, et justification de la primauté des règles métiers pour l'adhésion client.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (utilisation du Pipeline Scikit-Learn pour log1p + StandardScaler + K-Means).
+- Résultats obtenus (chiffres réels) :
+  - **Champions** : 25.2% des clients, **69.3% du CA** (£12.08M, panier moyen 8 190.82 £).
+  - **Fidèles** : 20.6% des clients, 14.1% du CA (£2.46M).
+  - **À risque** : 14.1% des clients, 9.4% du CA (£1.64M à sauver, récence moy. 368 jours).
+  - **En sommeil** : 25.8% des clients, 3.6% du CA (£633k, récence moy. 457 jours).
+  - **Top 1% Grossistes** : 59 clients génèrent **32.06% du CA total** (£5.59M).
+  - **K-Means** : Silhouette score = **0.3423** (pour k=5).
+- Questions d'entretien travaillées : Pourquoi privilégier les règles RFM au clustering en conseil ; interprétation d'un score de Silhouette (bornes [-1, +1]) ; gestion de la corrélation R/F/M.
+- Prochaine étape : Étape 3 (Personas LLM & Next Best Action).
+
 
