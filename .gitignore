@@ -1,11 +1,11 @@
 .venv/
 __pycache__/
 .env
-data/raw/
-outputs/voc/cache/
-outputs/voc/*.jsonl
-outputs/voc/*.csv*
-outputs/voc/*.json
+data/
+outputs/**/cache/
+outputs/**/*.jsonl
+outputs/**/*.csv*
+outputs/**/*.json
 !outputs/voc/summary_metrics.json
 .ipynb_checkpoints/
 .DS_Store

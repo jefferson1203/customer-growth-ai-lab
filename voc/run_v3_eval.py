@@ -1,51 +1,77 @@
+"""
+voc/run_v3_eval.py - Évaluation empirique du Prompt V3 sur 50 avis inédits.
+"""
+
 import os
-import json
+import sys
 import pandas as pd
 from pathlib import Path
-from dotenv import load_dotenv
-from config import OUTPUTS
-from common.llm import LLMClient, ReviewLabel
-from voc.validation import evaluate_classification
 
-load_dotenv()
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-def run_v3_evaluation():
-    val_sample_path = Path("outputs/voc/validation_sample_100.csv")
-    if not val_sample_path.exists():
-        print("Fichier outputs/voc/validation_sample_100.csv non trouvé.")
-        return
+from config import DATA_RAW, OUTPUTS
+from common.data import load_olist, prepare_voc_data
+from common.llm import LLMClient
+from voc.schema import ReviewLabel
 
-    val_df = pd.read_csv(val_sample_path)
-    print(f"Chargement de {len(val_df)} avis pour évaluation empirique avec Prompt V3...")
+PROMPT_V3_PATH = "prompts/voc_classification_v3.txt"
+CACHE_V3_PATH = OUTPUTS / "voc" / "cache" / "classifications_v3_eval50.json"
 
-    # Fichier de cache dédié v3
-    cache_v3_path = OUTPUTS / "voc" / "cache" / "classifications_v3.json"
-    llm_client = LLMClient(cache_path=cache_v3_path)
 
-    count = 0
-    for idx, row in val_df.iterrows():
+def evaluate_v3_on_fresh_sample():
+    print("--- ÉVALUATION empirique PROMPT V3 SUR 50 AVIS INÉDITS ---")
+    data = load_olist(DATA_RAW)
+    full_df = prepare_voc_data(data)
+
+    # Chargement de l'échantillon de validation historique (100 avis) pour l'exclure
+    val_100_path = OUTPUTS / "voc" / "validation_sample_100.csv"
+    excluded_ids = set()
+    if val_100_path.exists():
+        excluded_ids = set(pd.read_csv(val_100_path)["review_id"].astype(str))
+
+    # Filtrage des avis non vus lors de l'ajustement du prompt
+    fresh_reviews = full_df[~full_df["review_id"].astype(str).isin(excluded_ids)].dropna(subset=["review_comment_message"])
+    
+    # Échantillon de 50 avis inédits avec seed fixe
+    sample_50 = fresh_reviews.sample(n=50, random_state=123).copy()
+
+    client = LLMClient(prompt_path=PROMPT_V3_PATH, cache_path=CACHE_V3_PATH)
+
+    results = []
+    print(f"Lancement de la classification pour {len(sample_50)} avis inédits...")
+
+    for idx, row in sample_50.reset_index(drop=True).iterrows():
         review_id = str(row["review_id"])
         review_text = row["review_comment_message"]
 
-        cache_key_check = f"voc_classification_v3:{llm_client.cache_path}:{review_id}"
-        if cache_key_check not in llm_client.cache:
-            try:
-                print(f"[{idx+1}/100] Traitement avis {review_id} via Gemini (v3)...")
-                res = llm_client.complete_json(
-                    prompt_name="voc_classification_v3",
-                    variables={"review_text": review_text},
-                    schema=ReviewLabel,
-                    cache_key=review_id
-                )
-                count += 1
-            except Exception as e:
-                print(f"Erreur sur {review_id}: {e}")
+        label = client.complete_json(
+            variables={"review_text": review_text},
+            cache_key=review_id,
+            schema=ReviewLabel
+        )
 
-    print(f"\n{count} nouveaux avis classifiés avec le Prompt V3.")
-    print("\n--- RÉSULTATS RÉELS DU PROMPT V3 ---")
-    
-    metrics_v3_df = evaluate_classification(val_sample_path, cache_v3_path)
-    print(metrics_v3_df.to_string(index=False))
+        results.append({
+            "review_id": review_id,
+            "review_score": row["review_score"],
+            "comment": review_text,
+            "irritants": label.irritants,
+            "sentiment": label.sentiment,
+            "urgence": label.urgence,
+            "resume_fr": label.resume_fr
+        })
+
+    eval_df = pd.DataFrame(results)
+
+    print(f"\nTotal d'appels API effectués : {client.call_count}")
+    print("\n--- DISTRIBUTION DES IRRITANTS PRÉDITS PAR PROMPT V3 (50 AVIS) ---")
+    all_irritants = eval_df["irritants"].explode().value_counts()
+    print(all_irritants.to_string())
+
+    sav_count = (eval_df["irritants"].apply(lambda x: "SAV" in x if isinstance(x, list) else False)).sum()
+    print(f"\nNombre d'avis identifiés avec le motif 'SAV' : {sav_count} / 50 ({sav_count/50*100:.1f}%)")
+
+    return eval_df
+
 
 if __name__ == "__main__":
-    run_v3_evaluation()
+    evaluate_v3_on_fresh_sample()

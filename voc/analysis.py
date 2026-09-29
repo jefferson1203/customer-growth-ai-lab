@@ -21,13 +21,14 @@ def compute_prioritization_matrix(classified_df: pd.DataFrame, full_df: pd.DataF
 
     neg_df = classified_df[classified_df["review_score"] <= 3].copy()
     
-    # Calcul des poids de redressement selon la distribution réelle Olist des avis négatifs
-    # Distribution réelle Olist (1-3 stars) : 1★: 60.5%, 2★: 14.8%, 3★: 24.7%
-    real_dist = {1: 0.605, 2: 0.148, 3: 0.247}
+    # Calcul dynamique des poids de redressement à partir de la distribution réelle full_df (1-3 stars)
+    full_negatives = full_df[full_df["review_score"] <= 3]
+    real_dist = (full_negatives["review_score"].value_counts(normalize=True)).to_dict()
+
     sample_counts = neg_df["review_score"].value_counts()
     sample_dist = sample_counts / len(neg_df)
     
-    weights_map = {score: real_dist[score] / sample_dist[score] for score in [1, 2, 3] if score in sample_dist}
+    weights_map = {score: real_dist.get(score, 0) / sample_dist[score] for score in [1, 2, 3] if score in sample_dist and sample_dist[score] > 0}
     neg_df["weight"] = neg_df["review_score"].map(weights_map).fillna(1.0)
     classified_df_copy = classified_df.copy()
     classified_df_copy["weight"] = classified_df_copy["review_score"].map(weights_map).fillna(1.0)

@@ -52,8 +52,8 @@ Ce module (`voc/`) transforme des milliers de verbatims clients non structurés 
   * **Retards de 4 à 10 jours** : **87.33 %** de détracteurs (Seuil de rupture nécessitant une alerte au 3ème jour).
 * **NPS Prédictif (Machine Learning avec Feature `non_livre`)** :
   * Modèle retenu : **HistGradientBoostingClassifier**
-  * **AUC-ROC** : **0.751** (vs 0.696 en Régression Logistique baseline)
-  * **Taux de détracteurs dans le Top 10% le plus à risque** : **90.02 %**
+  * **AUC-ROC** : **0.713** (vs 0.696 en Régression Logistique baseline)
+  * **Taux de détracteurs dans le Top 10% le plus à risque** : **90.15 %**
   * **Lift (Gain d'efficacité)** : **2.56x** par rapport au hasard.
 
 ---
