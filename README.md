@@ -94,6 +94,7 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
 3. **Coûts logistiques fixes par SKU** : La valeur de £500 / SKU / an constitue une moyenne forfaitaire; l'exécution impose la validation des engagements contractuels fournisseurs (MOQ, remises sur volume) et des coûts de déstockage.
 4. **Périmètres temporels des Business Cases** : Le CA à risque des SKUs candidates (£14 020.87) est un chiffre d'affaires cumulé sur deux ans, alors que les économies logistiques (£88 000/an) sont calculées sur une base annuelle.
+5. **Présence de références de test / ajustements (TEST, GIFT, etc.)** : Le dataset conserve certaines références de test ou d'ajustement opérationnel (ex: TEST, GIFT) non filtrées par les règles initiales d'exclusion des StockCodes. Un nettoyage complémentaire du master données produits est nécessaire avant l'exécution de la déréférenciation.
 
 ---
 

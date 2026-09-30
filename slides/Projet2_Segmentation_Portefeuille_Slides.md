@@ -70,3 +70,5 @@
 2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
 3. **Coûts de complexité logistique** : Le coût fixe de £500 / SKU / an est une moyenne forfaitaire; la déréférenciation exige de vérifier les contraintes contractuelles fournisseurs (MOQ) et l'écoulement des stocks.
 4. **Périmètres temporels des Business Cases** : Le CA à risque des SKUs candidates (£14 020.87) est un chiffre d'affaires cumulé sur deux ans, alors que les économies logistiques (£88 000/an) sont calculées sur une base annuelle.
+5. **Présence de références de test / ajustements (TEST, GIFT, etc.)** : Le dataset conserve des références de test ou d'ajustement opérationnel non éliminées par le filtrage initial des StockCodes. Un nettoyage complémentaire du master données est recommandé.
+
