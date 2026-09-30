@@ -16,7 +16,7 @@ from portfolio.clustering import train_kmeans, compare_rfm_vs_kmeans
 from portfolio.personas import generate_all_personas, build_next_best_action_table
 from common.pdf_exporter import export_markdown_slides_to_pdf
 from portfolio.product_analysis import compute_abc_analysis, identify_deletion_candidates
-from portfolio.business_case import compute_business_case_a, compute_business_case_b, compute_sensitivity_tables
+from portfolio.business_case import compute_business_case_a, compute_business_case_b, compute_sensitivity_tables, generate_business_case_excel
 
 # Configuration de la page gérée par main.py
 
@@ -36,6 +36,7 @@ def load_all_portfolio_data():
     rfm_vs_kmeans = compare_rfm_vs_kmeans(df_kmeans)
     df_abc, abc_summary = compute_abc_analysis(df_clean)
     df_candidates = identify_deletion_candidates(df_clean, df_rfm, df_abc)
+    excel_path = generate_business_case_excel(df_rfm, df_candidates)
 
     
     cache_path = OUTPUTS / "portfolio" / "personas_cache.json"
@@ -61,6 +62,7 @@ def load_all_portfolio_data():
         "bc_b": bc_b,
         "sens_a": sens_a,
         "sens_b": sens_b,
+        "excel_path": excel_path
     }
 
 data = load_all_portfolio_data()
@@ -262,3 +264,16 @@ with tab3:
     with col_sens2:
         st.markdown("#### Sensibilité Case B : Transfer Rate vs Cost per SKU (£ Net)")
         st.dataframe(data["sens_b"], use_container_width=True)
+
+    st.divider()
+    excel_path = Path(data["excel_path"])
+    if excel_path.exists():
+        excel_bytes = excel_path.read_bytes()
+        st.download_button(
+            label="Télécharger le Modèle Financier Dynamique (Excel .xlsx)",
+            data=excel_bytes,
+            file_name="Business_Cases_Portfolio_Rationalization.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            help="Télécharger le fichier Excel interactif avec formules de recalcul dynamique."
+        )
+

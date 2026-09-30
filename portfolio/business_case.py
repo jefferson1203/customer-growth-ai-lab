@@ -77,10 +77,201 @@ def compute_sensitivity_tables(
     ca_at_risk = df_candidates["ca_total"].sum()
     nb_candidates = len(df_candidates)
     
-    sens_b = pd.DataFrame(index=[f"{t*100:.0f}%" for t in transfer_rates], columns=[f"{c} €" for c in sku_costs])
+    sens_b = pd.DataFrame(index=[f"{t*100:.0f}%" for t in transfer_rates], columns=[f"{c} £" for c in sku_costs])
     for t in transfer_rates:
         for c in sku_costs:
             gain = (nb_candidates * c) - (ca_at_risk * (1 - t) * config["margin_rate"])
-            sens_b.loc[f"{t*100:.0f}%", f"{c} €"] = float(round(gain, 2))
+            sens_b.loc[f"{t*100:.0f}%", f"{c} £"] = float(round(gain, 2))
 
     return sens_a, sens_b
+
+
+def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFrame, output_path: str = "outputs/portfolio/business_case.xlsx") -> str:
+    """Génère un fichier Excel dynamique avec des formules natives qui se recalculent automatiquement."""
+    import openpyxl
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    from openpyxl.utils import get_column_letter
+
+    wb = openpyxl.Workbook()
+    
+    # Style definitions
+    header_fill = PatternFill(start_color="1E3A8A", end_color="1E3A8A", fill_type="solid")
+    header_font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+    title_font = Font(name="Calibri", size=14, bold=True, color="1E3A8A")
+    subtitle_font = Font(name="Calibri", size=10, italic=True, color="475569")
+    bold_font = Font(name="Calibri", size=11, bold=True)
+    num_fmt_curr = "£#,##0.00"
+    num_fmt_pct = "0.0%"
+    num_fmt_int = "#,##0"
+
+    thin_border = Border(
+        left=Side(style='thin', color='CBD5E1'),
+        right=Side(style='thin', color='CBD5E1'),
+        top=Side(style='thin', color='CBD5E1'),
+        bottom=Side(style='thin', color='CBD5E1')
+    )
+
+    # -------------------------------------------------------------
+    # Onglet 1 : Hypothèses (Assumptions)
+    # -------------------------------------------------------------
+    ws_hyp = wb.active
+    ws_hyp.title = "Hypothèses"
+    ws_hyp.views.sheetView[0].showGridLines = True
+
+    ws_hyp["A1"] = "CUSTOMER & GROWTH AI LAB - HYPOTHÈSES DES BUSINESS CASES"
+    ws_hyp["A1"].font = title_font
+    ws_hyp["A2"] = "Modifiez les cellules en fond vert léger ci-dessous pour recalculer dynamiquement les modèles."
+    ws_hyp["A2"].font = subtitle_font
+
+    headers_hyp = ["Code Hypothèse", "Description de l'Hypothèse", "Valeur", "Unité", "Source / Validation"]
+    for col_num, h in enumerate(headers_hyp, 1):
+        cell = ws_hyp.cell(row=4, column=col_num)
+        cell.value = h
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    hyp_data = [
+        ("COST_CONTACT", "Coût unitaire de contact CRM (Phoning / SMS)", 2.00, "£ / client", "Estimation CRM direct"),
+        ("RESP_RATE", "Taux de conversion / réengagement estimé", 0.06, "%", "Historique campagnes CRM"),
+        ("MARGIN_RATE", "Taux de marge brute moyen sur les ventes", 0.40, "%", "Comptabilité analytique"),
+        ("SKU_COST", "Coût de complexité logistique annuel par SKU", 500.00, "£ / SKU / an", "Analyse coûts fixes Supply"),
+        ("TRANSFER_RATE", "Taux de transfert d'achat vers SKUs A/B", 0.50, "%", "Merchandising / Substituts"),
+        ("CONTROL_PCT", "Part des clients réservés au groupe de contrôle", 0.10, "%", "Méthodologie AB Testing")
+    ]
+
+    input_fill = PatternFill(start_color="DCFCE7", end_color="DCFCE7", fill_type="solid")
+
+    for idx, (code, desc, val, unit, src) in enumerate(hyp_data, start=5):
+        ws_hyp.cell(row=idx, column=1, value=code).font = Font(name="Calibri", bold=True)
+        ws_hyp.cell(row=idx, column=2, value=desc)
+        
+        val_cell = ws_hyp.cell(row=idx, column=3, value=val)
+        val_cell.fill = input_fill
+        val_cell.font = Font(name="Calibri", bold=True)
+        if unit == "£" or "£" in unit:
+            val_cell.number_format = num_fmt_curr
+        elif unit == "%":
+            val_cell.number_format = num_fmt_pct
+
+        ws_hyp.cell(row=idx, column=4, value=unit).alignment = Alignment(horizontal="center")
+        ws_hyp.cell(row=idx, column=5, value=src)
+
+        for col in range(1, 6):
+            ws_hyp.cell(row=idx, column=col).border = thin_border
+
+    # -------------------------------------------------------------
+    # Onglet 2 : Business Case A (Formules Excel dynamiques)
+    # -------------------------------------------------------------
+    ws_a = wb.create_sheet(title="Business Case A (Reconquête)")
+    ws_a.views.sheetView[0].showGridLines = True
+
+    df_at_risk = df_rfm[df_rfm["segment"] == "À risque"]
+    nb_at_risk = df_at_risk["CustomerID"].nunique()
+    pm_at_risk = float(df_at_risk["Monetary"].mean())
+
+    ws_a["A1"] = "BUSINESS CASE A : RECONQUÊTE DES CLIENTS À RISQUE"
+    ws_a["A1"].font = title_font
+    ws_a["A2"] = "Recalcul dynamique lié aux cellules de l'onglet 'Hypothèses'."
+    ws_a["A2"].font = subtitle_font
+
+    ws_a["A4"] = "Indicateur Financier / Opérationnel"
+    ws_a["B4"] = "Formule Excel / Valeur"
+    ws_a["C4"] = "Unité"
+    for col in (ws_a["A4"], ws_a["B4"], ws_a["C4"]):
+        col.fill = header_fill
+        col.font = header_font
+
+    rows_a = [
+        ("Volume de clients ciblés (À risque)", nb_at_risk, num_fmt_int, "clients"),
+        ("Part du groupe de contrôle", "='Hypothèses'!C10", num_fmt_pct, "%"),
+        ("Volume du groupe de contrôle", "=ROUND(B5*B6, 0)", num_fmt_int, "clients (AB Testing)"),
+        ("Volume réellement contacté (Traitement)", "=B5-B7", num_fmt_int, "clients"),
+        ("Coût unitaire de contact", "='Hypothèses'!C5", num_fmt_curr, "£ / client"),
+        ("Investissement Total (Coût Campagne)", "=B8*B9", num_fmt_curr, "£"),
+        ("Panier Moyen Historique du Segment", pm_at_risk, num_fmt_curr, "£"),
+        ("Taux de Réponse (Conversion)", "='Hypothèses'!C6", num_fmt_pct, "%"),
+        ("Nombre de clients réengagés", "=B8*B12", num_fmt_int, "clients"),
+        ("Chiffre d'Affaires Brut Généré", "=B13*B11", num_fmt_curr, "£"),
+        ("Taux de Marge Brute", "='Hypothèses'!C7", num_fmt_pct, "%"),
+        ("Marge Brute Générée", "=B14*B15", num_fmt_curr, "£"),
+        ("GAIN NET FINANCIER (Marge - Coût)", "=B16-B10", num_fmt_curr, "£"),
+        ("Seuil de Rentabilité (Break-even Rate)", "=B9/(B11*B15)", num_fmt_pct, "% réengagement minimum"),
+        ("RETOUR SUR INVESTISSEMENT (ROI)", "=B17/B10", num_fmt_pct, "% ROI Net")
+    ]
+
+    for idx, (label, formula_val, fmt, unit) in enumerate(rows_a, start=5):
+        cell_lbl = ws_a.cell(row=idx, column=1, value=label)
+        cell_val = ws_a.cell(row=idx, column=2, value=formula_val)
+        cell_unit = ws_a.cell(row=idx, column=3, value=unit)
+        cell_val.number_format = fmt
+
+        if "GAIN NET" in label or "RETOUR SUR INVESTISSEMENT" in label:
+            cell_lbl.font = bold_font
+            cell_val.font = bold_font
+            cell_val.fill = input_fill
+
+        for c in (cell_lbl, cell_val, cell_unit):
+            c.border = thin_border
+
+    # -------------------------------------------------------------
+    # Onglet 3 : Business Case B (Formules Excel dynamiques)
+    # -------------------------------------------------------------
+    ws_b = wb.create_sheet(title="Business Case B (SKUs)")
+    ws_b.views.sheetView[0].showGridLines = True
+
+    nb_sku_candidates = len(df_candidates)
+    ca_candidates = float(df_candidates["ca_total"].sum())
+
+    ws_b["A1"] = "BUSINESS CASE B : RATIONALISATION DU CATALOGUE SKUS"
+    ws_b["A1"].font = title_font
+    ws_b["A2"] = "Recalcul dynamique lié aux cellules de l'onglet 'Hypothèses'."
+    ws_b["A2"].font = subtitle_font
+
+    ws_b["A4"] = "Indicateur Financier / Logistique"
+    ws_b["B4"] = "Formule Excel / Valeur"
+    ws_b["C4"] = "Unité"
+    for col in (ws_b["A4"], ws_b["B4"], ws_b["C4"]):
+        col.fill = header_fill
+        col.font = header_font
+
+    rows_b = [
+        ("Volume de SKUs C déréférencés", nb_sku_candidates, num_fmt_int, "références C"),
+        ("Chiffre d'Affaires Historique des SKUs", ca_candidates, num_fmt_curr, "£"),
+        ("Taux de transfert d'achat vers SKUs A/B", "='Hypothèses'!C9", num_fmt_pct, "%"),
+        ("Part de CA perdu définitivement", "=1-B7", num_fmt_pct, "%"),
+        ("Chiffre d'Affaires Perdu", "=B6*B8", num_fmt_curr, "£"),
+        ("Taux de Marge Brute", "='Hypothèses'!C7", num_fmt_pct, "%"),
+        ("Marge Brute Perdue", "=B9*B10", num_fmt_curr, "£ (Coût d'opportunité)"),
+        ("Coût annuel de complexité par SKU", "='Hypothèses'!C8", num_fmt_curr, "£ / SKU / an"),
+        ("Économies Logistiques Annuelles", "=B5*B12", num_fmt_curr, "£ de coûts fixes économisés"),
+        ("GAIN NET FINANCIER ANNUEL", "=B13-B11", num_fmt_curr, "£ Gain Net")
+    ]
+
+    for idx, (label, formula_val, fmt, unit) in enumerate(rows_b, start=5):
+        cell_lbl = ws_b.cell(row=idx, column=1, value=label)
+        cell_val = ws_b.cell(row=idx, column=2, value=formula_val)
+        cell_unit = ws_b.cell(row=idx, column=3, value=unit)
+        cell_val.number_format = fmt
+
+        if "GAIN NET" in label or "Économies Logistiques" in label:
+            cell_lbl.font = bold_font
+            cell_val.font = bold_font
+            cell_val.fill = input_fill
+
+        for c in (cell_lbl, cell_val, cell_unit):
+            c.border = thin_border
+
+    # Ajustement automatique des largeurs de colonnes
+    for ws in [ws_hyp, ws_a, ws_b]:
+        for col in ws.columns:
+            max_len = max(len(str(cell.value or '')) for cell in col)
+            col_letter = get_column_letter(col[0].column)
+            ws.column_dimensions[col_letter].width = max(max_len + 4, 14)
+
+    from pathlib import Path
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    wb.save(output_path)
+    return output_path
+
+
