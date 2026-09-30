@@ -71,8 +71,8 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 ### 🌟 Synthèse des Résultats & Business Cases
 
 * **Segmentation Métier RFM** :
-  * **Champions (25.2 % des clients)** : Concentrent **69.3 % du CA** (£12.08M, panier moyen £8 190.82).
-  * **Fidèles (20.6 % des clients)** : Generent **14.1 % du CA** (£2.46M).
+  * **Champions (25.2 % des clients)** : Concentrent **69.3 % du CA** (£12.08M, CA moyen par client sur la période £8 190.82).
+  * **Fidèles (20.6 % des clients)** : Génèrent **14.1 % du CA** (£2.46M).
   * **À risque (14.1 % des clients)** : **£1.64M de CA menacé** (récence moyenne de 368 jours).
   * **Top 1% Grossistes (59 clients)** : Génèrent **32.06 % du CA global** (£5.59M).
 * **Clustérisation 3D K-Means** :
@@ -84,9 +84,15 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
   * **Classe A (80 % du CA)** : 1 036 références (21.1 % du catalogue).
   * **Classe C (5 % du CA)** : 2 590 références (52.8 % du catalogue).
   * **Déréférenciation ciblée** : **1 737 références C** identifiées pour suppression (ventes en baisse + absentes des paniers Champions).
-* **Évaluation Financière des Business Cases** :
-  * **Business Case A (Reconquête Clients À risque)** : Gain Net annuel de **£39 779.84** (ROI : **2 669.8 %**, Seuil de rentabilité : **0.29 %** de taux de réponse).
-  * **Business Case B (Rationalisation SKUs)** : Économies logistiques de **£868 500/an** (£500/SKU) pour un Gain Net de **£756 669.64** (avec 50 % de transfert d'achat sur les références A/B).
+* **Évaluation Financière des Business Cases & Seuils de Rentabilité** :
+  * **Business Case A (Reconquête Clients À risque)** : Seuil de rentabilité dès **0.29 %** de taux de réponse incrémentale (Gain Net de **£39 779.84** à 6% de conversion, ROI : **2 669.8 %**).
+  * **Business Case B (Rationalisation SKUs)** : Seuil de rentabilité dès **£76.89 / SKU / an** de coût de complexité logistique (vs £500 retenus, dégageant **£756 669.64** net) et dès **0 %** de transfert d'achat.
+
+### ⚠️ Limites & Périmètre d'Interprétation (Projet 2)
+
+1. **Données transactionnelles historiques (Online Retail II)** : Ingestion limitée aux enregistrements 2009-2011; absence de données sociodémographiques ou de satisfaction directe des acheteurs.
+2. **Hypothèses des Business Cases** : Les taux de réengagement (6 %) et de transfert d'achat (50 %) s'appuient sur des benchmarks sectoriels et doivent être confirmés par A/B Testing direct.
+3. **Coûts logistiques fixes par SKU** : La valeur de £500 / SKU / an constitue une moyenne forfaitaire; l'exécution impose la validation des engagements contractuels fournisseurs (MOQ, remises sur volume) et des coûts de déstockage.
 
 ---
 

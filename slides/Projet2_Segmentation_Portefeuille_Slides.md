@@ -8,8 +8,8 @@
 > **Synthèse Exécutive** : L'analyse déterministe RFM sur 5 852 clients identifie une ultra-concentration des revenus et une fragilité majeure sur le segment à risque (£1.64M sous menace de churn).
 
 ### Poids des Segments Clients & Dépendance Grossistes
-- **Champions** (*25.2 % des clients*) : **£12.08M** du CA (*69.3 %* du chiffre d'affaires total, panier moyen £8 190.82).
-- **Fidèles** (*20.6 % des clients*) : **£2.46M** du CA (*14.1 %* du CA, panier moyen £2 042.14).
+- **Champions** (*25.2 % des clients*) : **£12.08M** du CA (*69.3 %* du chiffre d'affaires total, CA moyen par client sur la période £8 190.82).
+- **Fidèles** (*20.6 % des clients*) : **£2.46M** du CA (*14.1 %* du CA, CA moyen par client sur la période £2 042.14).
 - **À risque** (*14.1 % des clients*) : **£1.64M** de CA menacé (*9.4 %* du CA, récence moyenne de **368 jours**).
 - **En sommeil** (*25.8 % des clients*) : **£633k** de CA dormant (*3.6 %* du CA, récence moyenne de **457 jours**).
 - **Dépendance Grossistes (Top 1% CA)** : **59 clients** représentent à eux seuls **32.06 % du CA global** (£5.59M).
@@ -46,28 +46,25 @@
 
 ---
 
-## Slide 4 : Les Business Cases Financiers
-### Deux leviers complémentaires génèrent un gain net combiné de £796 449 par an avec des retours sur investissement exceptionnels.
+## Slide 4 : Business Cases Financiers & Sensibilité
+### La réactivation est rentable dès 0,29 % de réponse incrémentale et la déréférenciation est rentable dès £76,89 de coût logistique par SKU.
 
-> **Synthèse des Business Cases** : Évaluation financière rigoureuse intégrant les coûts opérationnels, les groupes de contrôle et l'analyse de sensibilité.
+> **Synthèse des Business Cases** : Évaluation financière rigoureuse intégrant les coûts opérationnels, les groupes de contrôle et les seuils de rentabilité.
 
-### Business Case A : Reconquête des Clients À Risque (Scénario Central)
+### Business Case A : Reconquête des Clients À Risque (Seuil de Rentabilité)
 - **Périmètre Cible** : 745 clients ciblés (83 clients préservés en groupe de contrôle AB testing).
 - **Investissement & Coût** : **£1 490** (£2.00 / contact).
-- **Gain Net Financier** : **£39 779.84** (ROI : **2 669.8 %**).
-- **Seuil de Rentabilité (Break-even)** : **0.29 %** de taux de réponse.
+- **Seuil de Rentabilité (Break-even)** : **0.29 %** de taux de réponse incrémentale minimum.
+- **Gain Net Financier (Scénario 6 %)** : **£39 779.84** (ROI : **2 669.8 %**).
 - **Sensibilité Clé** : Sensible au taux de marge (de £22k à 20% de marge à £68k à 50% de marge).
 
-### Business Case B : Rationalisation Catalogue SKUs (Scénario Central)
+### Business Case B : Rationalisation Catalogue SKUs (Seuil de Rentabilité)
 - **Périmètre Cible** : **1 737 références C** supprimées.
-- **Économies Logistiques** : **£868 500** (£500 de coût de complexité économisé par SKU/an).
-- **Marge Perdue** : **£111 830.36** (Hypothèse de 50 % de transfert d'achat vers références A/B).
-- **Gain Net Financier** : **£756 669.64**.
+- **Seuil de Rentabilité Logistique (Break-even SKU Cost)** : Rentable dès **£76.89 / SKU / an** de coût de complexité fixe (vs £500 retenus dans le scénario central, dégageant **£756 670** net).
+- **Taux de Transfert Minimum (Break-even Transfer Rate)** : Opération rentable dès **0 % de report d'achat** (marge perdue de £111,8k largement inférieure aux £868,5k d'économies logistiques).
 - **Sensibilité Clé** : Si le taux de transfert tombe à 10 %, le gain net reste très largement positif à **£687k**.
 
-### Hypothèses Clés à Valider avec le Client en Atelier
-1. **Coût de contact CRM** : Confirmer le coût unitaire réel de £2.00 / client à risque.
-2. **Taux de transfert d'achat B** : Valider avec le Merchandising l'existence de substituts proches pour les 1 737 SKUs C.
-3. **Coût annuel de complexité SKU** : Valider avec la Logistique le coût fixe de possession de £500 / SKU / an.
-
-
+### Limites & Périmètre d'Interprétation (Projet 2)
+1. **Données transactionnelles historiques** : Absence d'informations sociodémographiques clients ou de mesure directe de la satisfaction; périmètre limité aux transactions enregistrées.
+2. **Hypothèses des Business Cases** : Le taux de réengagement (6 %) et le taux de transfert (50 %) reposent sur des benchmarks sectoriels et nécessitent une validation in vivo par A/B Testing.
+3. **Coûts de complexité logistique** : Le coût fixe de £500 / SKU / an est une moyenne forfaitaire; la déréférenciation effective exige de vérifier les contraintes contractuelles fournisseurs (MOQ, pénalités) et la gestion des stocks résiduels.

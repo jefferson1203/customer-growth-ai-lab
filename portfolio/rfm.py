@@ -46,13 +46,13 @@ def compute_rfm_summary(df_rfm: pd.DataFrame) -> pd.DataFrame:
     summary = df_rfm.groupby("segment").agg(
         nb_clients=("CustomerID", "count"),
         ca_total=("Monetary", "sum"),
-        panier_moyen=("Monetary", "mean"),
+        ca_moyen_client=("Monetary", "mean"),
         recence_moyenne=("Recency", "mean"),
         frequence_moyenne=("Frequency", "mean")
     ).round(2).astype({
         "nb_clients": int,
         "ca_total": float,
-        "panier_moyen": float,
+        "ca_moyen_client": float,
         "recence_moyenne": float,
         "frequence_moyenne": float
     }).reset_index()

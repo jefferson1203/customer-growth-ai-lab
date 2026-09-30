@@ -163,6 +163,18 @@
   - Intégration dans Streamlit avec redémarrage à chaud du serveur.
 - Statut : **Projet 1 et Projet 2 intégralement finalisés et validés !**
 
+## [Projet 2 : Segmentation & Portefeuille] - Étape 8 : Harmonisation Monétaire (£ GBP), Précision de la Terminologie & Reformulation en Seuil de Rentabilité
+- Date : 2026-09-30
+- Fait :
+  - **Harmonisation Monétaire (£ GBP)** : Conversion intégrale des clés de configuration et des fichiers de calcul (`config.py`, `portfolio/business_case.py`, `tests/test_business_case.py`) en livres sterling (`contact_cost_gbp`, `cost_per_sku_gbp`).
+  - **Précision de la Terminologie** : Remplacement de la dénomination « panier moyen » par **« CA moyen par client sur la période »** (`ca_moyen_client`) pour qualifier la valeur cumulée par client sur l'ensemble de la période d'analyse.
+  - **Reformulation des Business Cases en Seuil de Rentabilité (Ton Conseil Factuel)** :
+    - **Business Case A (Reconquête)** : Seuil de rentabilité dès **0.29 %** de taux de réponse incrémentale.
+    - **Business Case B (Rationalisation SKUs)** : Rentable dès que le coût annuel de complexité logistique dépasse **£76.89 / SKU / an** (vs £500 retenus, dégageant £756 670 net) et dès **0 %** de transfert d'achat.
+  - **Ajout de la Section Limites & Périmètre d'Interprétation** : Rédaction des contraintes méthodologiques et opérationnelles dans `README.md`, `slides/Projet2_Segmentation_Portefeuille_Slides.md` et `portfolio/app.py`.
+- Résultats obtenus : 12/12 tests unitaires passés au vert (100%), exportation Excel interactive `outputs/portfolio/business_case.xlsx` regénérée avec formules d'apprentissage dynamiques, application Streamlit validée.
+
+
 
 
 

@@ -31,12 +31,12 @@ PORTFOLIO = {
 }
 
 BUSINESS_CASE = {
-    "contact_cost_eur": 2.0,           # [illustratif]
+    "contact_cost_gbp": 2.0,           # [illustratif] coût de contact en livres (£)
     "response_rate": 0.08,             # [illustratif]
     "margin_rate": 0.35,               # [illustratif]
     "control_group_pct": 0.10,         # [choix]
     "transfer_rate": 0.50,             # [illustratif] report des achats après suppression d'une référence
-    "cost_per_sku_eur": 500,           # [illustratif] coût annuel de complexité par référence
+    "cost_per_sku_gbp": 500,           # [illustratif] coût annuel de complexité par référence en livres (£)
 }
 
 PRICING = {

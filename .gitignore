@@ -6,8 +6,8 @@ outputs/**/cache/
 outputs/**/*.jsonl
 outputs/**/*.csv*
 outputs/**/*.json
+outputs/**/*.pdf
 !outputs/voc/summary_metrics.json
-!outputs/portfolio/summary_metrics.json
 .ipynb_checkpoints/
 .DS_Store
 Prompt_*.md

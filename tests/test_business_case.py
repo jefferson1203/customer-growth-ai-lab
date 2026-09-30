@@ -24,7 +24,7 @@ def sample_candidates_data():
 def test_compute_business_case_a(sample_rfm_data):
     config = {
         "control_group_pct": 0.10,
-        "contact_cost_eur": 2.0,
+        "contact_cost_gbp": 2.0,
         "response_rate": 0.10,
         "margin_rate": 0.30,
     }
@@ -34,14 +34,14 @@ def test_compute_business_case_a(sample_rfm_data):
     assert res["n_control"] == 2
     assert res["n_treatment"] == 18
     assert res["cost"] == 36.0  # 18 * 2.0
-    assert res["panier_moyen"] == 100.0
+    assert res["ca_moyen_par_client"] == 100.0
     assert res["gross_margin"] == 54.0  # 1.8 * 100 * 0.30
     assert res["net_margin"] == 18.0   # 54 - 36
     assert res["roi_pct"] == 50.0      # (18 / 36) * 100
 
 def test_compute_business_case_b(sample_candidates_data):
     config = {
-        "cost_per_sku_eur": 500.0,
+        "cost_per_sku_gbp": 500.0,
         "transfer_rate": 0.50,
         "margin_rate": 0.30,
     }
@@ -56,8 +56,8 @@ def test_compute_business_case_b(sample_candidates_data):
 def test_compute_sensitivity_tables(sample_rfm_data, sample_candidates_data):
     config = {
         "control_group_pct": 0.10,
-        "contact_cost_eur": 2.0,
-        "cost_per_sku_eur": 500.0,
+        "contact_cost_gbp": 2.0,
+        "cost_per_sku_gbp": 500.0,
         "transfer_rate": 0.50,
         "margin_rate": 0.30,
     }
@@ -65,4 +65,4 @@ def test_compute_sensitivity_tables(sample_rfm_data, sample_candidates_data):
     assert not sens_a.empty
     assert not sens_b.empty
     assert "30%" in sens_a.columns
-    assert "500 €" in sens_b.columns
+    assert "500 £" in sens_b.columns

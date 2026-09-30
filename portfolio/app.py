@@ -150,7 +150,7 @@ with tab0:
     
     with st.expander("Slide 1 : Portefeuille Clients — Les 25,2 % de Champions génèrent 69,3 % du CA et 59 grossistes 32,1 %", expanded=True):
         st.markdown(f"""
-        - **Champions (25.2% des clients)** : Génèrent **69.3% du CA total** (£12.08M, panier moyen £8 190.82).
+        - **Champions (25.2% des clients)** : Génèrent **69.3% du CA total** (£12.08M, CA moyen par client £8 190.82).
         - **Clients À risque (14.1% des clients)** : **£1.64M de CA sous menace de churn** (récence moyenne de 368 jours).
         - **En sommeil (25.8% des clients)** : £633k de CA dormant (récence moyenne de 457 jours).
         - **Dépendance Grossistes (Top 1% CA)** : **59 clients** représentent à eux seuls **32.06% du CA global** (£5.59M).
@@ -171,30 +171,29 @@ with tab0:
         - **CA Produit à Risque** : **£639k** couverts par substitution.
         """)
 
-    with st.expander("Slide 4 : Business Cases Financiers — Gain net combiné de £796 449 / an avec retours sur investissement élevés", expanded=False):
+    with st.expander("Slide 4 : Business Cases Financiers — La réactivation est rentable dès 0,29 % de réponse incrémentale et la déréférenciation est rentable dès £76,89 de coût logistique / SKU", expanded=False):
         bc_a = data["bc_a"]
         bc_b = data["bc_b"]
         st.markdown(f"""
-        ### Business Case A : Reconquête des Clients À Risque
+        ### Business Case A : Reconquête des Clients À Risque (Seuil de Rentabilité)
         - **Cible** : {bc_a['n_treatment']:,} clients ciblés ({bc_a['n_control']:,} en groupe de contrôle AB testing).
         - **Investissement** : **£{bc_a['cost']:,.2f}** (£2.00 / contact).
-        - **Gain Net** : **£{bc_a['net_margin']:,.2f}** (ROI : **{bc_a['roi_pct']:.1f} %**).
-        - **Seuil de rentabilité (Break-even)** : **{bc_a['break_event_rate']*100:.2f} %** de taux de réponse.
+        - **Seuil de rentabilité (Break-even)** : **{bc_a['break_event_rate']*100:.2f} %** de taux de réponse incrémentale minimum.
+        - **Gain Net Financier (Scénario 6%)** : **£{bc_a['net_margin']:,.2f}** (ROI : **{bc_a['roi_pct']:.1f} %**).
         - **Sensibilité** : De £22k à £68k selon le taux de marge (20% à 50%).
 
         ---
-        ### Business Case B : Rationalisation du Catalogue SKUs
+        ### Business Case B : Rationalisation du Catalogue SKUs (Seuil de Rentabilité)
         - **Périmètre** : **{bc_b['nb_candidates']:,} références C** supprimées.
-        - **Économies Logistiques** : **£{bc_b['saving']:,.2f}** (£500 / SKU / an).
-        - **Marge Perdue** : **£{bc_b['lost_margin']:,.2f}** (Hypothèse 50% de transfert d'achat).
-        - **Gain Net Total** : **£{bc_b['net_gain']:,.2f}**.
+        - **Seuil de Rentabilité Logistique (Break-even SKU Cost)** : Rentable dès **£{bc_b['break_even_sku_cost']:.2f} / SKU / an** de coût de complexité fixe (vs £500 retenus, dégageant £{bc_b['net_gain']:,.2f} net).
+        - **Taux de Transfert Minimum (Break-even Transfer Rate)** : Rentable dès **0 % de report d'achat** (marge perdue de £{bc_b['lost_margin']:,.2f} inférieure aux £{bc_b['saving']:,.2f} d'économies logistiques).
         - **Sensibilité** : Gain net de £687k même si le taux de transfert chute à 10%.
 
         ---
-        ### Hypothèses Clés à Valider avec le Client en Atelier
-        1. **Coût unitaire contact CRM** : Valider le coût de £2.00 / client.
-        2. **Taux de transfert d'achat B** : Confirmer la substituabilité des 1 737 SKUs C avec le Merchandising.
-        3. **Coût de complexité logistique SKU** : Confirmer l'économie fixe de £500 / SKU / an avec la Supply Chain.
+        ### Limites & Périmètre d'Interprétation (Projet 2)
+        1. **Données transactionnelles historiques** : Absence d'informations sociodémographiques clients; périmètre restreint aux transactions enregistrées sans mesure directe de la satisfaction.
+        2. **Hypothèses des Business Cases** : Le taux de réengagement (6 %) et le transfert d'achat (50 %) reposent sur des benchmarks sectoriels et nécessitent une validation in vivo par A/B Testing.
+        3. **Coûts de complexité logistique** : Le coût fixe de £500 / SKU / an est une moyenne forfaitaire; la déréférenciation exige de vérifier les contraintes contractuelles fournisseurs (MOQ) et l'écoulement des stocks.
         """)
 
 
