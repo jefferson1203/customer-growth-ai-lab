@@ -1,4 +1,7 @@
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 def compute_abc_analysis(df_clean: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     df_prod = df_clean.groupby("StockCode").agg(
@@ -52,9 +55,14 @@ def identify_deletion_candidates(
     # Jointure des transactions avec le segment RFM du client
     df_valid_cust = df_clean.dropna(subset=["CustomerID"]).copy()
     df_valid_cust["CustomerID"] = df_valid_cust["CustomerID"].astype(str)
+    
+    df_rfm_copy = df_rfm.copy()
+    df_rfm_copy["CustomerID"] = df_rfm_copy["CustomerID"].astype(str)
+    
     df_transactions_rfm = df_valid_cust.merge(
-        df_rfm[["CustomerID", "segment"]], on="CustomerID", how="left"
+        df_rfm_copy[["CustomerID", "segment"]], on="CustomerID", how="left"
     )
+
 
     buyers_profile = df_transactions_rfm.groupby("StockCode").agg(
         nb_client=("CustomerID", "nunique"),
@@ -71,3 +79,49 @@ def identify_deletion_candidates(
     
     df_candidate = df_c[df_c["is_candidate"]].sort_values(by="ca_total", ascending=False).reset_index(drop=True)
     return df_candidate
+
+
+def plot_pareto_curve(df_prod: pd.DataFrame) -> go.Figure:
+    fig = go.Figure()
+    
+    # Courbe Pareto du % cumulé
+    fig.add_trace(go.Scatter(
+        x=list(range(1, len(df_prod) + 1)),
+        y=df_prod["cum_pct_ca"] * 100,
+        mode="lines",
+        name="CA Cumulé (%)",
+        line=dict(color="#1f77b4", width=3)
+    ))
+    
+    # Lignes de démarcation ABC (80% et 95%)
+    fig.add_hline(y=80, line_dash="dash", line_color="green", annotation_text="Seuil A (80%)")
+    fig.add_hline(y=95, line_dash="dash", line_color="orange", annotation_text="Seuil B (95%)")
+    
+    fig.update_layout(
+        title="Courbe de Pareto (Analyse ABC du Catalogue Produit)",
+        xaxis_title="Nombre de références triées par CA",
+        yaxis_title="% Cumulé du Chiffre d'Affaires",
+        template="plotly_white"
+    )
+    return fig
+
+
+def plot_long_tail_scatter(df_candidates: pd.DataFrame) -> go.Figure:
+    fig = px.scatter(
+        df_candidates,
+        x="nb_client",
+        y="tendance_pct",
+        size="ca_total",
+        color="pct_champions_fidele",
+        hover_data=["StockCode", "Description", "ca_total"],
+        title="Diagnostic des Références C (Tendance vs Nombre d'Acheteurs)",
+        labels={
+            "nb_client": "Nombre d'acheteurs uniques",
+            "tendance_pct": "Tendance Année 2 vs Année 1 (%)",
+            "pct_champions_fidele": "% Acheteurs VIP"
+        },
+        template="plotly_white"
+    )
+    fig.add_hline(y=0, line_dash="dot", line_color="red")
+    return fig
+

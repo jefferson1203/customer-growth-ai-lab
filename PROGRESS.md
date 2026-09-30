@@ -133,6 +133,38 @@
 - Questions d'entretien travaillées : Pourquoi ne pas supprimer toute la Classe C ; impact logistique et coût de complexité de la longue traîne.
 - Prochaine étape : Étape 5 (Business Cases Chiffrés A & B).
 
+## [Projet 2 : Segmentation & Portefeuille] - Étape 5 : Business Cases Chiffrés A & B
+- Date : 2026-09-30
+- Fait : Implémentation des modèles financiers `compute_business_case_a`, `compute_business_case_b` et `compute_sensitivity_tables` dans `portfolio/business_case.py`. Création des tests unitaires validés dans `tests/test_business_case.py`.
+- Ce que j'ai compris : Différence essentielle entre gain brut et gain net, rôle clé du groupe de contrôle AB testing pour mesurer la conversion additionnelle (incrementality), et sensibilité du Business Case B au taux de transfert d'achat sur les références substituts.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 1.
+- Résultats obtenus (chiffres réels) :
+  - **Business Case A (Reconquête Clients À risque)** : 745 clients ciblés (83 en groupe contrôle), Coût £1,490, Gain Net £39,779.84, ROI **2 669.8 %**, Taux de Rentabilité (Break-even) **0.29 %**.
+  - **Business Case B (Rationalisation Catalogue SKUs)** : 1 737 références C déréférencées, Économies logistiques £868,500, Marge perdue £111,830.36 (avec 50% de transfert), Gain Net **£756,669.64**.
+- Questions d'entretien travaillées : Utilité du groupe de contrôle AB testing (incrémentalité vs achats spontanés) ; sensibilité du Business Case B au transfert d'achat.
+- Prochaine étape : Étape 6 (Restitution & Application Interactive Streamlit).
+
+## [Projet 2 : Segmentation & Portefeuille] - Étape 6 : Restitution & Application Interactive Streamlit
+- Date : 2026-09-30
+- Fait : Création de l'application interactive Streamlit [`portfolio/app.py`](portfolio/app.py) à 4 onglets (`Tab 0: Cadrage & Recommandations`, `Tab 1: Segmentation RFM & Cohortes`, `Tab 2: Clusters K-Means vs Règles`, `Tab 3: Portefeuille Produits & Business Cases`). Agrandissement du scatter plot 3D K-Means (hauteur 750px) et intégration du bouton de téléchargement du support PDF.
+- Ce que j'ai compris : Présentation multi-onglets structurée pour faciliter la prise de décision par la Direction, mise en valeur de l'arbitrage entre segmentation déterministe RFM et clustering non-supervisé K-Means.
+- Résultats obtenus : Dashboard complet et fonctionnel pour explorer les 5 852 clients et 4 907 références produits.
+
+## [Projets 1 & 2] - Étape 7 : Exporter PDF Stratégique & Rendu Standardisé (1 slide par page A4 Paysage)
+- Date : 2026-09-30
+- Fait : Implémentation du moteur d'exportation PDF customisé `PresentationPDF` dans [`common/pdf_exporter.py`](common/pdf_exporter.py) :
+  - Découpage étanche des slides via regex (`re.split(r'\n\s*---\s*\n', content)`) évitant toute confusion avec les séparateurs de tableaux Markdown (`|---|`).
+  - Fusion propre du titre principal (# H1) sur la première slide sous forme de bandeau d'en-tête.
+  - Calcul dynamique de la hauteur des cellules et des espacements pour garantir une stricte mise en page "1 slide = 1 page A4 Paysage" sans pages fantômes ni décalages.
+  - Mise en forme corporate des tableaux (en-tête bleu nuit `#EFF6FF`, bordures `#CBD5E1`, fond alterné).
+- Résultats obtenus :
+  - `Projet1_Voix_du_Client_IA_Slides.pdf` : **Exactement 3 pages A4 Paysage**.
+  - `Projet2_Segmentation_Portefeuille_Slides.pdf` : **Exactement 4 pages A4 Paysage**.
+  - Intégration dans Streamlit avec redémarrage à chaud du serveur.
+- Statut : **Projet 1 et Projet 2 intégralement finalisés et validés !**
+
+
+
 
 
 

@@ -6,8 +6,10 @@ import matplotlib.pyplot as plt
 
 from config import DATA_RAW, OUTPUTS
 from common.data import load_olist, prepare_voc_data
+from common.pdf_exporter import export_markdown_slides_to_pdf
 from voc.analysis import calculate_nps_proxy, compute_prioritization_matrix, analyze_delay_impact
 from voc.predictive import prepare_ml_dataset, train_eval_nps_model
+
 
 
 # Navigation multi-pages déjà configurée par main.py
@@ -75,7 +77,21 @@ with tab0:
         """)
         
     st.divider()
+    
+    # Bouton de téléchargement de la présentation PDF
+    p1_slides_path = Path("slides/Projet1_Voix_du_Client_IA_Slides.md")
+    if p1_slides_path.exists():
+        pdf_bytes = export_markdown_slides_to_pdf(p1_slides_path)
+        st.download_button(
+            label="Télécharger la Présentation Stratégique (PDF)",
+            data=pdf_bytes,
+            file_name="Projet1_Voix_du_Client_IA_Slides.pdf",
+            mime="application/pdf",
+            help="Télécharger les slides au format PDF pour restitution Direction."
+        )
+
     st.subheader("Recommandations Stratégiques (Slides Direction)")
+
     
     with st.expander("Slide 1 : Cartographie des Irritants & Diagnostic NPS", expanded=True):
         st.markdown("""
