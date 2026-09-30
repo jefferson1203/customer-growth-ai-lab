@@ -24,46 +24,68 @@ from portfolio.business_case import compute_business_case_a, compute_business_ca
 # Chargement optimisé des données
 @st.cache_data
 def load_all_portfolio_data():
-    df_clean, audit_df = load_retail(DATA_RAW)
+    summary_path = OUTPUTS / "portfolio" / "summary_metrics.json"
+    try:
+        df_clean, audit_df = load_retail(DATA_RAW)
 
+        df_rfm = compute_rfm(df_clean)
+        rfm_summary = compute_rfm_summary(df_rfm)
+        df_wholesalers_stats = analyse_wholesalers(df_rfm)
 
-    df_rfm = compute_rfm(df_clean)
-    rfm_summary = compute_rfm_summary(df_rfm)
-    df_wholesalers_stats = analyse_wholesalers(df_rfm)
+        df_kmeans, silhouette_score_val = train_kmeans(df_rfm, n_clusters=5)
 
-    df_kmeans, silhouette_score_val = train_kmeans(df_rfm, n_clusters=5)
+        rfm_vs_kmeans = compare_rfm_vs_kmeans(df_kmeans)
+        df_abc, abc_summary = compute_abc_analysis(df_clean)
+        df_candidates = identify_deletion_candidates(df_clean, df_rfm, df_abc)
+        excel_path = generate_business_case_excel(df_rfm, df_candidates)
 
-    rfm_vs_kmeans = compare_rfm_vs_kmeans(df_kmeans)
-    df_abc, abc_summary = compute_abc_analysis(df_clean)
-    df_candidates = identify_deletion_candidates(df_clean, df_rfm, df_abc)
-    excel_path = generate_business_case_excel(df_rfm, df_candidates)
+        cache_path = OUTPUTS / "portfolio" / "personas_cache.json"
+        personas_cache = generate_all_personas(rfm_summary, cache_path)
 
-    
-    cache_path = OUTPUTS / "portfolio" / "personas_cache.json"
-    personas_cache = generate_all_personas(rfm_summary, cache_path)
+        bc_a = compute_business_case_a(df_rfm)
+        bc_b = compute_business_case_b(df_candidates)
+        sens_a, sens_b = compute_sensitivity_tables(df_rfm, df_candidates)
+        
+        return {
+            "df_clean": df_clean,
+            "df_rfm": df_rfm,
+            "rfm_summary": rfm_summary,
+            "stats_wholesalers": df_wholesalers_stats,
+            "df_kmeans": df_kmeans,
+            "silhouette_score": silhouette_score_val,
+            "rfm_vs_kmeans": rfm_vs_kmeans,
+            "df_abc": df_abc,
+            "df_candidates": df_candidates,
+            "personas_cache": personas_cache,
+            "bc_a": bc_a,
+            "bc_b": bc_b,
+            "sens_a": sens_a,
+            "sens_b": sens_b,
+            "excel_path": excel_path
+        }
+    except FileNotFoundError:
+        if summary_path.exists():
+            with open(summary_path, "r", encoding="utf-8") as f:
+                s = json.load(f)
+            return {
+                "df_clean": pd.DataFrame(s.get("df_clean", [])),
+                "df_rfm": pd.DataFrame(s.get("df_rfm", [])),
+                "rfm_summary": pd.DataFrame(s.get("rfm_summary", [])),
+                "stats_wholesalers": s.get("wholesalers_stats", {}),
+                "df_kmeans": pd.DataFrame(s.get("df_kmeans", [])),
+                "silhouette_score": s.get("silhouette_score", 0.3423),
+                "rfm_vs_kmeans": pd.DataFrame(s.get("rfm_vs_kmeans", [])),
+                "df_abc": pd.DataFrame(s.get("df_abc", [])),
+                "df_candidates": pd.DataFrame(s.get("df_candidates", [])),
+                "personas_cache": s.get("personas_cache", {}),
+                "bc_a": s.get("bc_a", {}),
+                "bc_b": s.get("bc_b", {}),
+                "sens_a": pd.DataFrame(s["sens_a"]["data"], index=s["sens_a"]["index"], columns=s["sens_a"]["columns"]) if "sens_a" in s else pd.DataFrame(),
+                "sens_b": pd.DataFrame(s["sens_b"]["data"], index=s["sens_b"]["index"], columns=s["sens_b"]["columns"]) if "sens_b" in s else pd.DataFrame(),
+                "excel_path": s.get("excel_path", str(OUTPUTS / "portfolio" / "business_case.xlsx"))
+            }
+        raise
 
-    bc_a = compute_business_case_a(df_rfm)
-    bc_b = compute_business_case_b(df_candidates)
-    sens_a, sens_b = compute_sensitivity_tables(df_rfm, df_candidates)
-    
-    return {
-        "df_clean": df_clean,
-        "df_rfm": df_rfm,
-        "rfm_summary": rfm_summary,
-        "stats_wholesalers": df_wholesalers_stats,
-
-        "df_kmeans": df_kmeans,
-        "silhouette_score": silhouette_score_val,
-        "rfm_vs_kmeans": rfm_vs_kmeans,
-        "df_abc": df_abc,
-        "df_candidates": df_candidates,
-        "personas_cache": personas_cache,
-        "bc_a": bc_a,
-        "bc_b": bc_b,
-        "sens_a": sens_a,
-        "sens_b": sens_b,
-        "excel_path": excel_path
-    }
 
 data = load_all_portfolio_data()
 
