@@ -26,7 +26,6 @@ def compute_business_case_a(df_rfm: pd.DataFrame, config: dict = BUSINESS_CASE) 
         "n_treatment": n_treatment,
         "cost": cost,
         "valeur_commande": valeur_commande,
-        "ca_moyen_par_client": valeur_commande,
         "n_responder": round(n_responder, 1),
         "gross_margin": gross_margin,
         "net_margin": net_margin,

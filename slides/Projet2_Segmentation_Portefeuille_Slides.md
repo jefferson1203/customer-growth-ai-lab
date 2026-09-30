@@ -3,16 +3,16 @@
 ---
 
 ## Slide 1 : Le Portefeuille Clients
-### Les 25,2 % de clients Champions génèrent 69,3 % du chiffre d'affaires, tandis que 59 grossistes concentrent à eux seuls 32,1 % de l'activité.
+### Les 25,2 % de clients Champions génèrent 69,3 % du chiffre d'affaires des clients identifiés, tandis que 59 grossistes concentrent à eux seuls 32,1 % de cette activité.
 
-> **Synthèse Exécutive** : L'analyse déterministe RFM sur 5 852 clients identifie une ultra-concentration des revenus et une fragilité majeure sur le segment à risque (£1.64M sous menace de churn).
+> **Synthèse Exécutive** : L'analyse déterministe RFM sur 5 852 clients identifie une ultra-concentration des revenus et une fragilité majeure sur le segment à risque (£1.64M de CA historique sur 2 ans).
 
 ### Poids des Segments Clients & Dépendance Grossistes
-- **Champions** (*25.2 % des clients*) : **£12.08M** du CA (*69.3 %* du chiffre d'affaires total, CA moyen par client sur la période £8 190.82).
+- **Champions** (*25.2 % des clients*) : **£12.08M** du CA (*69.3 %* du chiffre d'affaires des clients identifiés, CA moyen par client sur la période £8 190.82).
 - **Fidèles** (*20.6 % des clients*) : **£2.46M** du CA (*14.1 %* du CA, CA moyen par client sur la période £2 042.14).
-- **À risque** (*14.1 % des clients*) : **£1.64M** de CA menacé (*9.4 %* du CA, récence moyenne de **368 jours**).
+- **À risque** (*14.1 % des clients*) : **£1.64M** de CA historique sur 2 ans (*9.4 %* du CA, récence moyenne de **368 jours**).
 - **En sommeil** (*25.8 % des clients*) : **£633k** de CA dormant (*3.6 %* du CA, récence moyenne de **457 jours**).
-- **Dépendance Grossistes (Top 1% CA)** : **59 clients** représentent à eux seuls **32.06 % du CA global** (£5.59M).
+- **Dépendance Grossistes (Top 1% CA)** : **59 clients** représentent à eux seuls **32.06 % du CA des clients identifiés** (£5.59M).
 
 ---
 
@@ -41,8 +41,8 @@
 - **Classe A (80 % du CA)** : **1 036 références** (21.1 % du catalogue) génèrent **£16.10M**.
 - **Classe B (15 % du CA)** : **1 281 références** (26.1 % du catalogue) génèrent **£3.02M**.
 - **Classe C (5 % du CA)** : **2 590 références** (52.8 % du catalogue) ne génèrent que **£1.01M**.
-- **Déréférenciation Ciblée** : **176 références C** identifiées pour suppression (tendance des ventes négative et absence d'achat par les clients Champions/Fidèles).
-- **CA Produit à Risque** : **£14.02k** couverts par des produits de substitution du catalogue.
+- **Déréférenciation Ciblée** : **176 références C** identifiées pour suppression (tendance des ventes négative et moins de 20 % des achats réalisés par des clients Champions ou Fidèles).
+- **CA Produit à Risque** : **£14.02k** (CA cumulé 2 ans) couverts par des produits de substitution du catalogue.
 
 ---
 
@@ -62,10 +62,11 @@
 ### Business Case B : Rationalisation Catalogue SKUs (Seuil de Rentabilité)
 - **Périmètre Cible** : **176 références C** supprimées.
 - **Seuil de Rentabilité Logistique (Break-even SKU Cost)** : Rentable dès **£13.94 / SKU / an** de coût de complexité fixe (vs £500 retenus dans le scénario central, dégageant **£85 546.35** net).
-- **Taux de Transfert Minimum (Break-even Transfer Rate)** : Opération rentable dès **0 % de report d'achat** (marge perdue de £2,453.65 largement inférieure aux £88 000 d'économies logistiques).
+- **Taux de Transfert Minimum (Break-even Transfer Rate)** : Opération rentable dès **0 % de report d'achat** (marge perdue de £2 453.65 largement inférieure aux £88 000 d'économies logistiques).
 - **Sensibilité Clé** : Si le taux de transfert tombe à 10 %, le gain net reste très largement positif à **£83.5k**.
 
 ### Limites & Périmètre d'Interprétation (Projet 2)
 1. **Données transactionnelles historiques** : Absence d'informations sociodémographiques clients; périmètre restreint aux transactions enregistrées sans mesure directe de la satisfaction.
 2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
 3. **Coûts de complexité logistique** : Le coût fixe de £500 / SKU / an est une moyenne forfaitaire; la déréférenciation exige de vérifier les contraintes contractuelles fournisseurs (MOQ) et l'écoulement des stocks.
+4. **Périmètres temporels des Business Cases** : Le CA à risque des SKUs candidates (£14 020.87) est un chiffre d'affaires cumulé sur deux ans, alors que les économies logistiques (£88 000/an) sont calculées sur une base annuelle.

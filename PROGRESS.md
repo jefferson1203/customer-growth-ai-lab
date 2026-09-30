@@ -99,11 +99,11 @@
 - Ce que j'ai compris : Différence entre segmentation métier déterministe (RFM) et clustering non supervisé (K-Means), transformation log1p pour réduire l'asymétrie, et justification de la primauté des règles métiers pour l'adhésion client.
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2 (utilisation du Pipeline Scikit-Learn pour log1p + StandardScaler + K-Means).
 - Résultats obtenus (chiffres réels) :
-  - **Champions** : 25.2% des clients, **69.3% du CA** (£12.08M, panier moyen 8 190.82 £).
+  - **Champions** : 25.2% des clients, **69.3% du CA des clients identifiés** (£12.08M, CA moyen par client sur la période 8 190.82 £).
   - **Fidèles** : 20.6% des clients, 14.1% du CA (£2.46M).
-  - **À risque** : 14.1% des clients, 9.4% du CA (£1.64M à sauver, récence moy. 368 jours).
+  - **À risque** : 14.1% des clients, 9.4% du CA (£1.64M de CA historique sur 2 ans, récence moy. 368 jours).
   - **En sommeil** : 25.8% des clients, 3.6% du CA (£633k, récence moy. 457 jours).
-  - **Top 1% Grossistes** : 59 clients génèrent **32.06% du CA total** (£5.59M).
+  - **Top 1% Grossistes** : 59 clients génèrent **32.06% du CA des clients identifiés** (£5.59M).
   - **K-Means** : Silhouette score = **0.3423** (pour k=5).
 - Questions d'entretien travaillées : Pourquoi privilégier les règles RFM au clustering en conseil ; interprétation d'un score de Silhouette (bornes [-1, +1]) ; gestion de la corrélation R/F/M.
 - Prochaine étape : Étape 3 (Personas LLM & Next Best Action).
@@ -115,32 +115,32 @@
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2 (passations des variables `$var` dans le template string de `common/llm.py`).
 - Résultats obtenus (chiffres réels) : 6 personas générés et mis en cache (`outputs/portfolio/personas_cache.json`).
   - **Champions** : *L'Élite Ambassadrice* (Programme VIP, Conciergerie)
-  - **À risque** : *Le Grand Habitué Endormi* (Reconquête ciblée, Appel direct pour sauver 1.64M £)
+  - **À risque** : *Le Grand Habitué Endormi* (Reconquête ciblée, Appel direct pour réactiver le segment à risque)
   - **Nouveaux** : *L'Explorateur à Fort Potentiel* (Parcours de bienvenue post-achat)
 - Questions d'entretien travaillées : Complémentarité entre statistiques RFM et récit LLM ; protection des données clients (RGPD) avec l'IA.
 - Prochaine étape : Étape 4 (Segmentation produits ABC & Longue traîne).
 
 ## [Projet 2 : Segmentation & Portefeuille] - Étape 4 : Segmentation produits ABC & Longue traîne
 - Date : 2026-09-30
-- Fait : Implémentation de l'analyse Pareto ABC (`compute_abc_analysis`), identification des 1 737 candidats à la déréférenciation (`identify_deletion_candidates` dans `portfolio/product_analysis.py`), et création de la suite de tests unitaires (`tests/test_product_analysis.py`).
-- Ce que j'ai compris : Loi de Pareto appliquée au retail (80/15/5), arbitrage stratégique entre rationalisation de catalogue et préservation de la complétude du panier des clients VIP (Champions), et évaluation des coûts de complexité logistique.
+- Fait : Implémentation de l'analyse Pareto ABC (`compute_abc_analysis`), identification des 176 candidats à la déréférenciation (`identify_deletion_candidates` dans `portfolio/product_analysis.py`), et création de la suite de tests unitaires (`tests/test_product_analysis.py`).
+- Ce que j'ai compris : Loi de Pareto appliquée au retail (80/15/5), arbitrage stratégique entre rationalisation de catalogue et préservation de la complétude du panier des clients VIP (Champions/Fidèles), et évaluation des coûts de complexité logistique.
 - Points où j'ai été aidé (niveau d'aide) : Niveau 2 (jointure multi-périodes P1/P2 et harmonisation des types `CustomerID` float vs str).
 - Résultats obtenus (chiffres réels) :
   - **Classe A (80% CA)** : 1 036 références (21.1% du catalogue, £16.10M).
   - **Classe B (15% CA)** : 1 281 références (26.1% du catalogue, £3.02M).
   - **Classe C (5% CA)** : 2 590 références (52.8% du catalogue, £1.01M).
-  - **Candidats à la suppression** : 1 737 références C en baisse et non achetées par les Champions (CA à risque : £639k).
+  - **Candidats à la suppression** : 176 références C en baisse et avec moins de 20 % du volume d'achats réalisé par des clients Champions ou Fidèles (CA cumulé 2 ans à risque : £14.02k).
 - Questions d'entretien travaillées : Pourquoi ne pas supprimer toute la Classe C ; impact logistique et coût de complexité de la longue traîne.
 - Prochaine étape : Étape 5 (Business Cases Chiffrés A & B).
 
 ## [Projet 2 : Segmentation & Portefeuille] - Étape 5 : Business Cases Chiffrés A & B
 - Date : 2026-09-30
 - Fait : Implémentation des modèles financiers `compute_business_case_a`, `compute_business_case_b` et `compute_sensitivity_tables` dans `portfolio/business_case.py`. Création des tests unitaires validés dans `tests/test_business_case.py`.
-- Ce que j'ai compris : Différence essentielle entre gain brut et gain net, rôle clé du groupe de contrôle AB testing pour mesurer la conversion additionnelle (incrementality), et sensibilité du Business Case B au taux de transfert d'achat sur les références substituts.
+- Ce que j'ai compris : Utilisation du panier transactionnel moyen (£362.01) plutôt que du CA cumulé 2 ans, rôle clé du groupe de contrôle AB testing pour mesurer la conversion additionnelle (incrementality), et sensibilité du Business Case B au coût logistique par SKU.
 - Points où j'ai été aidé (niveau d'aide) : Niveau 1.
 - Résultats obtenus (chiffres réels) :
-  - **Business Case A (Reconquête Clients À risque)** : 745 clients ciblés (83 en groupe contrôle), Coût £1,490, Gain Net £39,779.84, ROI **2 669.8 %**, Taux de Rentabilité (Break-even) **0.29 %**.
-  - **Business Case B (Rationalisation Catalogue SKUs)** : 1 737 références C déréférencées, Économies logistiques £868,500, Marge perdue £111,830.36 (avec 50% de transfert), Gain Net **£756,669.64**.
+  - **Business Case A (Reconquête Clients À risque)** : 745 clients ciblés (83 en groupe contrôle), Coût £1 490.00, Panier transactionnel moyen **£362.01**, Gain Net **£6 061.53** (à 8% de réengagement), ROI **406.8 %**, Seuil de Rentabilité (Break-even) **1.58 %**.
+  - **Business Case B (Rationalisation Catalogue SKUs)** : 176 références C déréférencées, Économies logistiques £88 000/an (£500/SKU), Marge perdue £2 453.65 (avec 50% de transfert), Gain Net **£85 546.35**, Seuil logistique **£13.94 / SKU / an**.
 - Questions d'entretien travaillées : Utilité du groupe de contrôle AB testing (incrémentalité vs achats spontanés) ; sensibilité du Business Case B au transfert d'achat.
 - Prochaine étape : Étape 6 (Restitution & Application Interactive Streamlit).
 
@@ -163,16 +163,19 @@
   - Intégration dans Streamlit avec redémarrage à chaud du serveur.
 - Statut : **Projet 1 et Projet 2 intégralement finalisés et validés !**
 
-## [Projet 2 : Segmentation & Portefeuille] - Étape 8 : Harmonisation Monétaire (£ GBP), Précision de la Terminologie & Reformulation en Seuil de Rentabilité
+## [Projet 2 : Segmentation & Portefeuille] - Étape 8 : Source Unique de Vérité, Panier Transactionnel AOV & Rigueur des Formulations
 - Date : 2026-09-30
 - Fait :
-  - **Harmonisation Monétaire (£ GBP)** : Conversion intégrale des clés de configuration et des fichiers de calcul (`config.py`, `portfolio/business_case.py`, `tests/test_business_case.py`) en livres sterling (`contact_cost_gbp`, `cost_per_sku_gbp`).
-  - **Précision de la Terminologie** : Remplacement de la dénomination « panier moyen » par **« CA moyen par client sur la période »** (`ca_moyen_client`) pour qualifier la valeur cumulée par client sur l'ensemble de la période d'analyse.
-  - **Reformulation des Business Cases en Seuil de Rentabilité (Ton Conseil Factuel)** :
-    - **Business Case A (Reconquête)** : Seuil de rentabilité dès **0.29 %** de taux de réponse incrémentale.
-    - **Business Case B (Rationalisation SKUs)** : Rentable dès que le coût annuel de complexité logistique dépasse **£76.89 / SKU / an** (vs £500 retenus, dégageant £756 670 net) et dès **0 %** de transfert d'achat.
-  - **Ajout de la Section Limites & Périmètre d'Interprétation** : Rédaction des contraintes méthodologiques et opérationnelles dans `README.md`, `slides/Projet2_Segmentation_Portefeuille_Slides.md` et `portfolio/app.py`.
-- Résultats obtenus : 12/12 tests unitaires passés au vert (100%), exportation Excel interactive `outputs/portfolio/business_case.xlsx` regénérée avec formules d'apprentissage dynamiques, application Streamlit validée.
+  - **Correction du Business Case A** : Calcul basé sur la valeur moyenne d'une commande `(df_at_risk["Monetary"] / df_at_risk["Frequency"]).mean()` (**£362.01** / commande), ramenant le ROI Net à **406.8 %** et le Seuil de rentabilité à **1.58 %**.
+  - **Source Unique de Vérité (`portfolio/export_summary.py`)** : Script de génération unifiée produisant un fichier de métriques synthétiques léger (12 Ko vs 2.3 Mo) [`outputs/portfolio/summary_metrics.json`](outputs/portfolio/summary_metrics.json) et le modèle Excel interactif [`outputs/portfolio/business_case.xlsx`](outputs/portfolio/business_case.xlsx).
+  - **Support Cloud Run & `.gitignore`** : Inclusion explicite de `!outputs/portfolio/summary_metrics.json` dans `.gitignore` et suppression des replis silencieux dans `portfolio/app.py` (chargement direct par clé sans valeurs par défaut en dur).
+  - **Précision des Formulations & Limites** :
+    - Remplacement de « panier moyen » par **« CA moyen par client sur la période »** pour le cumul RFM.
+    - Précision de la formulation du critère C : *« moins de 20 % du volume d'achats réalisé par des clients Champions ou Fidèles »*.
+    - Précision du périmètre du CA des grossistes : *« 32.06 % du CA des clients identifiés »*.
+    - Précision du CA menacé : *« £1.64M de CA historique sur deux ans »*.
+    - Ajout dans la section *Limites* du décalage temporel du Business Case B (CA à risque sur 2 ans vs économies logistiques annuelles).
+- Résultats obtenus : 12/12 tests unitaires passés au vert (100%), déploiement Cloud Run 100% synchronisé avec le README et les slides PDF.
 
 
 

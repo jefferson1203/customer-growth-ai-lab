@@ -35,7 +35,7 @@ def test_compute_business_case_a(sample_rfm_data):
     assert res["n_control"] == 2
     assert res["n_treatment"] == 18
     assert res["cost"] == 36.0  # 18 * 2.0
-    assert res["ca_moyen_par_client"] == 100.0
+    assert res["valeur_commande"] == 100.0
     assert res["gross_margin"] == 54.0  # 1.8 * 100 * 0.30
     assert res["net_margin"] == 18.0   # 54 - 36
     assert res["roi_pct"] == 50.0      # (18 / 36) * 100

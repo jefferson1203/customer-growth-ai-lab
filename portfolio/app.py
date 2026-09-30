@@ -16,37 +16,36 @@ from common.pdf_exporter import export_markdown_slides_to_pdf
 def load_all_portfolio_data():
     summary_path = OUTPUTS / "portfolio" / "summary_metrics.json"
     if not summary_path.exists():
-        from portfolio.export_summary import export_portfolio_summary
-        export_portfolio_summary()
+        raise FileNotFoundError(f"Fichier {summary_path} introuvable. Exécutez 'python portfolio/export_summary.py' pour le générer.")
 
     with open(summary_path, "r", encoding="utf-8") as f:
         s = json.load(f)
 
-    sens_a_df = pd.DataFrame(s["sens_a"]) if "sens_a" in s else pd.DataFrame()
-    sens_b_df = pd.DataFrame(s["sens_b"]) if "sens_b" in s else pd.DataFrame()
+    sens_a_df = pd.DataFrame(s["sens_a"])
+    sens_b_df = pd.DataFrame(s["sens_b"])
 
     personas_dict = {}
-    for seg_name, pdata in s.get("personas_cache", {}).items():
+    for seg_name, pdata in s["personas_cache"].items():
         if isinstance(pdata, dict):
             personas_dict[seg_name] = SegmentPersona(**pdata)
         else:
             personas_dict[seg_name] = pdata
 
     return {
-        "overview_metrics": s.get("overview_metrics", {}),
-        "rfm_summary": pd.DataFrame(s.get("rfm_summary", [])),
-        "stats_wholesalers": s.get("stats_wholesalers", {}),
-        "silhouette_score": s.get("silhouette_score", 0.3423),
-        "rfm_vs_kmeans": pd.DataFrame(s.get("rfm_vs_kmeans", [])),
-        "abc_summary": pd.DataFrame(s.get("abc_summary", [])),
-        "candidates_summary": s.get("candidates_summary", {}),
-        "candidates_top20": pd.DataFrame(s.get("candidates_top20", [])),
+        "overview_metrics": s["overview_metrics"],
+        "rfm_summary": pd.DataFrame(s["rfm_summary"]),
+        "stats_wholesalers": s["stats_wholesalers"],
+        "silhouette_score": s["silhouette_score"],
+        "rfm_vs_kmeans": pd.DataFrame(s["rfm_vs_kmeans"]),
+        "abc_summary": pd.DataFrame(s["abc_summary"]),
+        "candidates_summary": s["candidates_summary"],
+        "candidates_top20": pd.DataFrame(s["candidates_top20"]),
         "personas_cache": personas_dict,
-        "bc_a": s.get("bc_a", {}),
-        "bc_b": s.get("bc_b", {}),
+        "bc_a": s["bc_a"],
+        "bc_b": s["bc_b"],
         "sens_a": sens_a_df,
         "sens_b": sens_b_df,
-        "excel_path": s.get("excel_path", str(OUTPUTS / "portfolio" / "business_case.xlsx"))
+        "excel_path": s["excel_path"]
     }
 
 

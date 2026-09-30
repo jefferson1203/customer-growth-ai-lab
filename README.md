@@ -71,10 +71,10 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 ### 🌟 Synthèse des Résultats & Business Cases
 
 * **Segmentation Métier RFM** :
-  * **Champions (25.2 % des clients)** : Concentrent **69.3 % du CA** (£12.08M, CA moyen par client sur la période £8 190.82).
+  * **Champions (25.2 % des clients)** : Concentrent **69.3 % du CA des clients identifiés** (£12.08M, CA moyen par client sur la période £8 190.82).
   * **Fidèles (20.6 % des clients)** : Génèrent **14.1 % du CA** (£2.46M).
-  * **À risque (14.1 % des clients)** : **£1.64M de CA menacé** (récence moyenne de 368 jours).
-  * **Top 1% Grossistes (59 clients)** : Génèrent **32.06 % du CA global** (£5.59M).
+  * **À risque (14.1 % des clients)** : **£1.64M de CA historique sur deux ans** (récence moyenne de 368 jours).
+  * **Top 1% Grossistes (59 clients)** : Génèrent **32.06 % du CA des clients identifiés** (£5.59M).
 * **Clustérisation 3D K-Means** :
   * Standardisation `log1p(R, F, M)` + `StandardScaler` (Score de Silhouette = **0.342** pour k=5).
   * Scatter plot 3D interactif Plotly pour l'exploration visuelle des comportements.
@@ -83,7 +83,7 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 * **Rationalisation du Catalogue SKUs (Analyse Pareto ABC)** :
   * **Classe A (80 % du CA)** : 1 036 références (21.1 % du catalogue).
   * **Classe C (5 % du CA)** : 2 590 références (52.8 % du catalogue).
-  * **Déréférenciation ciblée** : **176 références C** identifiées pour suppression (ventes en baisse + absentes des paniers Champions, £14.02k de CA à risque).
+  * **Déréférenciation ciblée** : **176 références C** identifiées pour suppression (ventes en baisse + moins de 20 % du volume d'achats réalisé par des clients Champions ou Fidèles, £14.02k de CA cumulé sur deux ans).
 * **Évaluation Financière des Business Cases & Seuils de Rentabilité** :
   * **Business Case A (Reconquête Clients À risque)** : Seuil de rentabilité dès **1.58 %** de taux de réponse incrémentale basé sur le panier transactionnel moyen de **£362.01** (Gain Net de **£6 061.53** à 8% de conversion, ROI : **406.8 %**).
   * **Business Case B (Rationalisation SKUs)** : Seuil de rentabilité dès **£13.94 / SKU / an** de coût de complexité logistique (vs £500 retenus dans le scénario central, dégageant **£85 546.35** net) et dès **0 %** de transfert d'achat.
@@ -93,6 +93,7 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 1. **Données transactionnelles historiques (Online Retail II)** : Ingestion limitée aux enregistrements 2009-2011; absence de données sociodémographiques ou de satisfaction directe des acheteurs.
 2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
 3. **Coûts logistiques fixes par SKU** : La valeur de £500 / SKU / an constitue une moyenne forfaitaire; l'exécution impose la validation des engagements contractuels fournisseurs (MOQ, remises sur volume) et des coûts de déstockage.
+4. **Périmètres temporels des Business Cases** : Le CA à risque des SKUs candidates (£14 020.87) est un chiffre d'affaires cumulé sur deux ans, alors que les économies logistiques (£88 000/an) sont calculées sur une base annuelle.
 
 ---
 
