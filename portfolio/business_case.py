@@ -86,8 +86,8 @@ def compute_sensitivity_tables(
     return sens_a, sens_b
 
 
-def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFrame, output_path: str = "outputs/portfolio/business_case.xlsx") -> str:
-    """Génère un fichier Excel dynamique avec des formules natives qui se recalculent automatiquement."""
+def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFrame, config: dict = BUSINESS_CASE, output_path: str = "outputs/portfolio/business_case.xlsx") -> str:
+    """Génère un fichier Excel dynamique avec des valeurs initiales calculées et des formules natives."""
     import openpyxl
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from openpyxl.utils import get_column_letter
@@ -161,106 +161,137 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
             ws_hyp.cell(row=idx, column=col).border = thin_border
 
     # -------------------------------------------------------------
-    # Onglet 2 : Business Case A (Formules Excel dynamiques)
+    # Onglet 2 : Business Case A (Valeurs & Formules Excel)
     # -------------------------------------------------------------
     ws_a = wb.create_sheet(title="Business Case A (Reconquête)")
     ws_a.views.sheetView[0].showGridLines = True
 
     df_at_risk = df_rfm[df_rfm["segment"] == "À risque"]
     nb_at_risk = df_at_risk["CustomerID"].nunique()
-    pm_at_risk = float(df_at_risk["Monetary"].mean())
+    pm_at_risk = float(round(df_at_risk["Monetary"].mean(), 2))
 
     ws_a["A1"] = "BUSINESS CASE A : RECONQUÊTE DES CLIENTS À RISQUE"
     ws_a["A1"].font = title_font
-    ws_a["A2"] = "Recalcul dynamique lié aux cellules de l'onglet 'Hypothèses'."
+    ws_a["A2"] = "La colonne B affiche les valeurs initiales calculées. La colonne C contient les formules dynamiques liées à l'onglet 'Hypothèses'."
     ws_a["A2"].font = subtitle_font
 
-    ws_a["A4"] = "Indicateur Financier / Opérationnel"
-    ws_a["B4"] = "Formule Excel / Valeur"
-    ws_a["C4"] = "Unité"
-    for col in (ws_a["A4"], ws_a["B4"], ws_a["C4"]):
-        col.fill = header_fill
-        col.font = header_font
+    headers_a = ["Indicateur Financier / Opérationnel", "Valeur Initiale Calculée", "Formule Excel Dynamique", "Unité"]
+    for col_num, h in enumerate(headers_a, 1):
+        cell = ws_a.cell(row=4, column=col_num)
+        cell.value = h
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    n_ctrl = int(round(nb_at_risk * config["control_group_pct"]))
+    n_treat = nb_at_risk - n_ctrl
+    c_contact = config["contact_cost_eur"]
+    c_total = n_treat * c_contact
+    r_rate = config["response_rate"]
+    n_resp = n_treat * r_rate
+    m_rate = config["margin_rate"]
+    ca_gross = n_resp * pm_at_risk
+    margin_gross = ca_gross * m_rate
+    net_margin_a = margin_gross - c_total
+    be_rate_a = c_contact / (pm_at_risk * m_rate)
+    roi_a = (net_margin_a / c_total) if c_total > 0 else 0.0
 
     rows_a = [
-        ("Volume de clients ciblés (À risque)", nb_at_risk, num_fmt_int, "clients"),
-        ("Part du groupe de contrôle", "='Hypothèses'!C10", num_fmt_pct, "%"),
-        ("Volume du groupe de contrôle", "=ROUND(B5*B6, 0)", num_fmt_int, "clients (AB Testing)"),
-        ("Volume réellement contacté (Traitement)", "=B5-B7", num_fmt_int, "clients"),
-        ("Coût unitaire de contact", "='Hypothèses'!C5", num_fmt_curr, "£ / client"),
-        ("Investissement Total (Coût Campagne)", "=B8*B9", num_fmt_curr, "£"),
-        ("Panier Moyen Historique du Segment", pm_at_risk, num_fmt_curr, "£"),
-        ("Taux de Réponse (Conversion)", "='Hypothèses'!C6", num_fmt_pct, "%"),
-        ("Nombre de clients réengagés", "=B8*B12", num_fmt_int, "clients"),
-        ("Chiffre d'Affaires Brut Généré", "=B13*B11", num_fmt_curr, "£"),
-        ("Taux de Marge Brute", "='Hypothèses'!C7", num_fmt_pct, "%"),
-        ("Marge Brute Générée", "=B14*B15", num_fmt_curr, "£"),
-        ("GAIN NET FINANCIER (Marge - Coût)", "=B16-B10", num_fmt_curr, "£"),
-        ("Seuil de Rentabilité (Break-even Rate)", "=B9/(B11*B15)", num_fmt_pct, "% réengagement minimum"),
-        ("RETOUR SUR INVESTISSEMENT (ROI)", "=B17/B10", num_fmt_pct, "% ROI Net")
+        ("Volume de clients ciblés (À risque)", nb_at_risk, "=828", num_fmt_int, "clients"),
+        ("Part du groupe de contrôle", config["control_group_pct"], "='Hypothèses'!C10", num_fmt_pct, "%"),
+        ("Volume du groupe de contrôle", n_ctrl, "=ROUND(C5*C6, 0)", num_fmt_int, "clients (AB Testing)"),
+        ("Volume réellement contacté (Traitement)", n_treat, "=C5-C7", num_fmt_int, "clients"),
+        ("Coût unitaire de contact", c_contact, "='Hypothèses'!C5", num_fmt_curr, "£ / client"),
+        ("Investissement Total (Coût Campagne)", c_total, "=C8*C9", num_fmt_curr, "£"),
+        ("Panier Moyen Historique du Segment", pm_at_risk, f"={pm_at_risk}", num_fmt_curr, "£"),
+        ("Taux de Réponse (Conversion)", r_rate, "='Hypothèses'!C6", num_fmt_pct, "%"),
+        ("Nombre de clients réengagés", n_resp, "=C8*C12", num_fmt_int, "clients"),
+        ("Chiffre d'Affaires Brut Généré", ca_gross, "=C13*C11", num_fmt_curr, "£"),
+        ("Taux de Marge Brute", m_rate, "='Hypothèses'!C7", num_fmt_pct, "%"),
+        ("Marge Brute Générée", margin_gross, "=C14*C15", num_fmt_curr, "£"),
+        ("GAIN NET FINANCIER (Marge - Coût)", net_margin_a, "=C16-C10", num_fmt_curr, "£"),
+        ("Seuil de Rentabilité (Break-even Rate)", be_rate_a, "=C9/(C11*C15)", num_fmt_pct, "% réengagement minimum"),
+        ("RETOUR SUR INVESTISSEMENT (ROI)", roi_a, "=C17/C10", num_fmt_pct, "% ROI Net")
     ]
 
-    for idx, (label, formula_val, fmt, unit) in enumerate(rows_a, start=5):
+    for idx, (label, val_calc, formula_val, fmt, unit) in enumerate(rows_a, start=5):
         cell_lbl = ws_a.cell(row=idx, column=1, value=label)
-        cell_val = ws_a.cell(row=idx, column=2, value=formula_val)
-        cell_unit = ws_a.cell(row=idx, column=3, value=unit)
+        cell_val = ws_a.cell(row=idx, column=2, value=val_calc)
+        cell_form = ws_a.cell(row=idx, column=3, value=formula_val)
+        cell_unit = ws_a.cell(row=idx, column=4, value=unit)
+        
         cell_val.number_format = fmt
+        cell_form.number_format = fmt
 
         if "GAIN NET" in label or "RETOUR SUR INVESTISSEMENT" in label:
             cell_lbl.font = bold_font
             cell_val.font = bold_font
             cell_val.fill = input_fill
+            cell_form.font = bold_font
 
-        for c in (cell_lbl, cell_val, cell_unit):
+        for c in (cell_lbl, cell_val, cell_form, cell_unit):
             c.border = thin_border
 
     # -------------------------------------------------------------
-    # Onglet 3 : Business Case B (Formules Excel dynamiques)
+    # Onglet 3 : Business Case B (Valeurs & Formules Excel)
     # -------------------------------------------------------------
     ws_b = wb.create_sheet(title="Business Case B (SKUs)")
     ws_b.views.sheetView[0].showGridLines = True
 
     nb_sku_candidates = len(df_candidates)
-    ca_candidates = float(df_candidates["ca_total"].sum())
+    ca_candidates = float(round(df_candidates["ca_total"].sum(), 2))
+    t_rate = config["transfer_rate"]
+    lost_pct = 1.0 - t_rate
+    ca_lost = ca_candidates * lost_pct
+    margin_lost = ca_lost * m_rate
+    sku_cost_val = config["cost_per_sku_eur"]
+    saving_b = nb_sku_candidates * sku_cost_val
+    net_gain_b = saving_b - margin_lost
 
     ws_b["A1"] = "BUSINESS CASE B : RATIONALISATION DU CATALOGUE SKUS"
     ws_b["A1"].font = title_font
-    ws_b["A2"] = "Recalcul dynamique lié aux cellules de l'onglet 'Hypothèses'."
+    ws_b["A2"] = "La colonne B affiche les valeurs initiales calculées. La colonne C contient les formules dynamiques liées à l'onglet 'Hypothèses'."
     ws_b["A2"].font = subtitle_font
 
-    ws_b["A4"] = "Indicateur Financier / Logistique"
-    ws_b["B4"] = "Formule Excel / Valeur"
-    ws_b["C4"] = "Unité"
-    for col in (ws_b["A4"], ws_b["B4"], ws_b["C4"]):
-        col.fill = header_fill
-        col.font = header_font
+    headers_b = ["Indicateur Financier / Logistique", "Valeur Initiale Calculée", "Formule Excel Dynamique", "Unité"]
+    for col_num, h in enumerate(headers_b, 1):
+        cell = ws_b.cell(row=4, column=col_num)
+        cell.value = h
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal="center", vertical="center")
 
     rows_b = [
-        ("Volume de SKUs C déréférencés", nb_sku_candidates, num_fmt_int, "références C"),
-        ("Chiffre d'Affaires Historique des SKUs", ca_candidates, num_fmt_curr, "£"),
-        ("Taux de transfert d'achat vers SKUs A/B", "='Hypothèses'!C9", num_fmt_pct, "%"),
-        ("Part de CA perdu définitivement", "=1-B7", num_fmt_pct, "%"),
-        ("Chiffre d'Affaires Perdu", "=B6*B8", num_fmt_curr, "£"),
-        ("Taux de Marge Brute", "='Hypothèses'!C7", num_fmt_pct, "%"),
-        ("Marge Brute Perdue", "=B9*B10", num_fmt_curr, "£ (Coût d'opportunité)"),
-        ("Coût annuel de complexité par SKU", "='Hypothèses'!C8", num_fmt_curr, "£ / SKU / an"),
-        ("Économies Logistiques Annuelles", "=B5*B12", num_fmt_curr, "£ de coûts fixes économisés"),
-        ("GAIN NET FINANCIER ANNUEL", "=B13-B11", num_fmt_curr, "£ Gain Net")
+        ("Volume de SKUs C déréférencés", nb_sku_candidates, f"={nb_sku_candidates}", num_fmt_int, "références C"),
+        ("Chiffre d'Affaires Historique des SKUs", ca_candidates, f"={ca_candidates}", num_fmt_curr, "£"),
+        ("Taux de transfert d'achat vers SKUs A/B", t_rate, "='Hypothèses'!C9", num_fmt_pct, "%"),
+        ("Part de CA perdu définitivement", lost_pct, "=1-C7", num_fmt_pct, "%"),
+        ("Chiffre d'Affaires Perdu", ca_lost, "=C6*C8", num_fmt_curr, "£"),
+        ("Taux de Marge Brute", m_rate, "='Hypothèses'!C7", num_fmt_pct, "%"),
+        ("Marge Brute Perdue", margin_lost, "=C9*C10", num_fmt_curr, "£ (Coût d'opportunité)"),
+        ("Coût annuel de complexité par SKU", sku_cost_val, "='Hypothèses'!C8", num_fmt_curr, "£ / SKU / an"),
+        ("Économies Logistiques Annuelles", saving_b, "=C5*C12", num_fmt_curr, "£ de coûts fixes économisés"),
+        ("GAIN NET FINANCIER ANNUEL", net_gain_b, "=C13-C11", num_fmt_curr, "£ Gain Net")
     ]
 
-    for idx, (label, formula_val, fmt, unit) in enumerate(rows_b, start=5):
+    for idx, (label, val_calc, formula_val, fmt, unit) in enumerate(rows_b, start=5):
         cell_lbl = ws_b.cell(row=idx, column=1, value=label)
-        cell_val = ws_b.cell(row=idx, column=2, value=formula_val)
-        cell_unit = ws_b.cell(row=idx, column=3, value=unit)
+        cell_val = ws_b.cell(row=idx, column=2, value=val_calc)
+        cell_form = ws_b.cell(row=idx, column=3, value=formula_val)
+        cell_unit = ws_b.cell(row=idx, column=4, value=unit)
+        
         cell_val.number_format = fmt
+        cell_form.number_format = fmt
 
         if "GAIN NET" in label or "Économies Logistiques" in label:
             cell_lbl.font = bold_font
             cell_val.font = bold_font
             cell_val.fill = input_fill
+            cell_form.font = bold_font
 
-        for c in (cell_lbl, cell_val, cell_unit):
+        for c in (cell_lbl, cell_val, cell_form, cell_unit):
             c.border = thin_border
+
 
     # -------------------------------------------------------------
     # Onglet 4 : Liste détaillée des Clients À Risque (Data)
