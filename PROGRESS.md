@@ -120,5 +120,19 @@
 - Questions d'entretien travaillées : Complémentarité entre statistiques RFM et récit LLM ; protection des données clients (RGPD) avec l'IA.
 - Prochaine étape : Étape 4 (Segmentation produits ABC & Longue traîne).
 
+## [Projet 2 : Segmentation & Portefeuille] - Étape 4 : Segmentation produits ABC & Longue traîne
+- Date : 2026-09-30
+- Fait : Implémentation de l'analyse Pareto ABC (`compute_abc_analysis`), identification des 1 737 candidats à la déréférenciation (`identify_deletion_candidates` dans `portfolio/product_analysis.py`), et création de la suite de tests unitaires (`tests/test_product_analysis.py`).
+- Ce que j'ai compris : Loi de Pareto appliquée au retail (80/15/5), arbitrage stratégique entre rationalisation de catalogue et préservation de la complétude du panier des clients VIP (Champions), et évaluation des coûts de complexité logistique.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (jointure multi-périodes P1/P2 et harmonisation des types `CustomerID` float vs str).
+- Résultats obtenus (chiffres réels) :
+  - **Classe A (80% CA)** : 1 036 références (21.1% du catalogue, £16.10M).
+  - **Classe B (15% CA)** : 1 281 références (26.1% du catalogue, £3.02M).
+  - **Classe C (5% CA)** : 2 590 références (52.8% du catalogue, £1.01M).
+  - **Candidats à la suppression** : 1 737 références C en baisse et non achetées par les Champions (CA à risque : £639k).
+- Questions d'entretien travaillées : Pourquoi ne pas supprimer toute la Classe C ; impact logistique et coût de complexité de la longue traîne.
+- Prochaine étape : Étape 5 (Business Cases Chiffrés A & B).
+
+
 
 

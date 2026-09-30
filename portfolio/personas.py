@@ -31,6 +31,7 @@ def generate_persona_for_segment(segment_stats: dict, client: LLMClient) -> Segm
 
 
 def generate_all_personas(summary_df: pd.DataFrame, cache_path: Path) -> dict[str, SegmentPersona]:
+   
     prompt_path = PROMPTS / "portfolio_persona.txt"
     client = LLMClient(prompt_path=prompt_path, cache_path=cache_path)
     
