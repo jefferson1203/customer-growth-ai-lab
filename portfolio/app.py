@@ -254,3 +254,7 @@ with tab3:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             help="Télécharger le fichier Excel interactif avec formules de recalcul dynamique."
         )
+
+st.divider()
+st.caption("⚡ **Customer & Growth AI Lab** — Code source et documentation complets sur le dépôt GitHub : [https://github.com/jefferson1203/customer-growth-ai-lab](https://github.com/jefferson1203/customer-growth-ai-lab)")
+

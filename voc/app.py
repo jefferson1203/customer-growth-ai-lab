@@ -244,3 +244,7 @@ with tab4:
         
         st.pyplot(fig)
         st.info("Efficacité opérationnelle : Le ciblage du Top 10 % des commandes les plus à risque par Gradient Boosting capte 90 % de vrais détracteurs, permettant une intervention proactive du Service Client.")
+
+st.divider()
+st.caption("⚡ **Customer & Growth AI Lab** — Code source et documentation complets sur le dépôt GitHub : [https://github.com/jefferson1203/customer-growth-ai-lab](https://github.com/jefferson1203/customer-growth-ai-lab)")
+

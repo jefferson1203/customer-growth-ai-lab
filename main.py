@@ -21,3 +21,7 @@ pg = st.navigation({
 
 # Lancement de la page sélectionnée
 pg.run()
+
+# Barre latérale - Footer global
+st.sidebar.markdown("---")
+st.sidebar.markdown("🔗 **Dépôt GitHub** : [customer-growth-ai-lab](https://github.com/jefferson1203/customer-growth-ai-lab)")
