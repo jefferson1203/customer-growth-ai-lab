@@ -262,10 +262,58 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
         for c in (cell_lbl, cell_val, cell_unit):
             c.border = thin_border
 
+    # -------------------------------------------------------------
+    # Onglet 4 : Liste détaillée des Clients À Risque (Data)
+    # -------------------------------------------------------------
+    ws_clients = wb.create_sheet(title="Clients À Risque (Data)")
+    ws_clients.views.sheetView[0].showGridLines = True
+
+    ws_clients["A1"] = "LISTE NATIVE DES CLIENTS DU SEGMENT À RISQUE (828 CLIENTS)"
+    ws_clients["A1"].font = title_font
+
+    headers_clients = ["CustomerID", "Récence (Jours)", "Fréquence (Achats)", "Montant Total (£)", "Segment RFM"]
+    for col_num, h in enumerate(headers_clients, 1):
+        cell = ws_clients.cell(row=3, column=col_num)
+        cell.value = h
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    for idx, r in enumerate(df_at_risk.itertuples(), start=4):
+        ws_clients.cell(row=idx, column=1, value=str(getattr(r, "CustomerID", "")))
+        ws_clients.cell(row=idx, column=2, value=int(getattr(r, "Recency", 0))).number_format = num_fmt_int
+        ws_clients.cell(row=idx, column=3, value=int(getattr(r, "Frequency", 0))).number_format = num_fmt_int
+        ws_clients.cell(row=idx, column=4, value=float(getattr(r, "Monetary", 0.0))).number_format = num_fmt_curr
+        ws_clients.cell(row=idx, column=5, value=str(getattr(r, "segment", "À risque")))
+
+    # -------------------------------------------------------------
+    # Onglet 5 : Liste détaillée des SKUs Candidats (Data)
+    # -------------------------------------------------------------
+    ws_skus = wb.create_sheet(title="SKUs Candidats (Data)")
+    ws_skus.views.sheetView[0].showGridLines = True
+
+    ws_skus["A1"] = "LISTE NATIVE DES 1 737 SKUS C CANDIDATS À LA DÉRÉFÉRENCIATION"
+    ws_skus["A1"].font = title_font
+
+    headers_skus = ["StockCode", "Description", "Chiffre d'Affaires (£)", "Quantité Vendue", "Classe Pareto ABC"]
+    for col_num, h in enumerate(headers_skus, 1):
+        cell = ws_skus.cell(row=3, column=col_num)
+        cell.value = h
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    for idx, r in enumerate(df_candidates.itertuples(), start=4):
+        ws_skus.cell(row=idx, column=1, value=str(getattr(r, "StockCode", "")))
+        ws_skus.cell(row=idx, column=2, value=str(getattr(r, "Description", "N/A")))
+        ws_skus.cell(row=idx, column=3, value=float(getattr(r, "ca_total", 0.0))).number_format = num_fmt_curr
+        ws_skus.cell(row=idx, column=4, value=int(getattr(r, "quantity_total", 0))).number_format = num_fmt_int
+        ws_skus.cell(row=idx, column=5, value=str(getattr(r, "categorie_abc", "C")))
+
     # Ajustement automatique des largeurs de colonnes
-    for ws in [ws_hyp, ws_a, ws_b]:
+    for ws in [ws_hyp, ws_a, ws_b, ws_clients, ws_skus]:
         for col in ws.columns:
-            max_len = max(len(str(cell.value or '')) for cell in col)
+            max_len = max(len(str(cell.value or '')) for cell in col[:50]) # échantillon pour performance
             col_letter = get_column_letter(col[0].column)
             ws.column_dimensions[col_letter].width = max(max_len + 4, 14)
 
@@ -273,5 +321,6 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     wb.save(output_path)
     return output_path
+
 
 
