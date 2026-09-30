@@ -83,15 +83,15 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
 * **Rationalisation du Catalogue SKUs (Analyse Pareto ABC)** :
   * **Classe A (80 % du CA)** : 1 036 références (21.1 % du catalogue).
   * **Classe C (5 % du CA)** : 2 590 références (52.8 % du catalogue).
-  * **Déréférenciation ciblée** : **1 737 références C** identifiées pour suppression (ventes en baisse + absentes des paniers Champions).
+  * **Déréférenciation ciblée** : **176 références C** identifiées pour suppression (ventes en baisse + absentes des paniers Champions, £14.02k de CA à risque).
 * **Évaluation Financière des Business Cases & Seuils de Rentabilité** :
-  * **Business Case A (Reconquête Clients À risque)** : Seuil de rentabilité dès **0.29 %** de taux de réponse incrémentale (Gain Net de **£39 779.84** à 6% de conversion, ROI : **2 669.8 %**).
-  * **Business Case B (Rationalisation SKUs)** : Seuil de rentabilité dès **£76.89 / SKU / an** de coût de complexité logistique (vs £500 retenus, dégageant **£756 669.64** net) et dès **0 %** de transfert d'achat.
+  * **Business Case A (Reconquête Clients À risque)** : Seuil de rentabilité dès **1.58 %** de taux de réponse incrémentale basé sur le panier transactionnel moyen de **£362.01** (Gain Net de **£6 061.53** à 8% de conversion, ROI : **406.8 %**).
+  * **Business Case B (Rationalisation SKUs)** : Seuil de rentabilité dès **£13.94 / SKU / an** de coût de complexité logistique (vs £500 retenus dans le scénario central, dégageant **£85 546.35** net) et dès **0 %** de transfert d'achat.
 
 ### ⚠️ Limites & Périmètre d'Interprétation (Projet 2)
 
 1. **Données transactionnelles historiques (Online Retail II)** : Ingestion limitée aux enregistrements 2009-2011; absence de données sociodémographiques ou de satisfaction directe des acheteurs.
-2. **Hypothèses des Business Cases** : Les taux de réengagement (6 %) et de transfert d'achat (50 %) s'appuient sur des benchmarks sectoriels et doivent être confirmés par A/B Testing direct.
+2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
 3. **Coûts logistiques fixes par SKU** : La valeur de £500 / SKU / an constitue une moyenne forfaitaire; l'exécution impose la validation des engagements contractuels fournisseurs (MOQ, remises sur volume) et des coûts de déstockage.
 
 ---

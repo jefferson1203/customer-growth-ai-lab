@@ -15,7 +15,7 @@ class SegmentPersona(BaseModel):
 
 
 def generate_persona_for_segment(segment_stats: dict, client: LLMClient) -> SegmentPersona:
-    ca_moyen = segment_stats.get("ca_moyen_client", segment_stats.get("ca_moyen_par_client", segment_stats.get("panier_moyen", 0.0)))
+    ca_moyen = segment_stats["ca_moyen_client"]
     variables = {
         "segment": str(segment_stats["segment"]),
         "nb_clients": str(segment_stats["nb_clients"]),

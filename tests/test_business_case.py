@@ -12,6 +12,7 @@ def sample_rfm_data():
         "CustomerID": [str(i) for i in range(100)],
         "segment": ["À risque"] * 20 + ["Champions"] * 50 + ["Fidèles"] * 30,
         "Monetary": [100.0] * 20 + [500.0] * 50 + [200.0] * 30,
+        "Frequency": [1] * 20 + [5] * 50 + [2] * 30,
     })
 
 @pytest.fixture

@@ -11,13 +11,13 @@ def compute_business_case_a(df_rfm: pd.DataFrame, config: dict = BUSINESS_CASE) 
     n_treatment = nb_client - n_control
 
     cost = float(round(n_treatment * config["contact_cost_gbp"], 2))
-    ca_moyen_par_client = float(round(df_at_risk["Monetary"].mean(), 2))
+    valeur_commande = float(round((df_at_risk["Monetary"] / df_at_risk["Frequency"]).mean(), 2))
     
     n_responder = n_treatment * config["response_rate"]
-    gross_margin = float(round(n_responder * ca_moyen_par_client * config["margin_rate"], 2))
+    gross_margin = float(round(n_responder * valeur_commande * config["margin_rate"], 2))
     net_margin = float(round(gross_margin - cost, 2))
 
-    break_event_rate = float(round(config["contact_cost_gbp"] / (ca_moyen_par_client * config["margin_rate"]), 4))
+    break_event_rate = float(round(config["contact_cost_gbp"] / (valeur_commande * config["margin_rate"]), 4))
     roi = float(round((net_margin / cost) * 100, 1)) if cost > 0 else 0.0
 
     return {
@@ -25,7 +25,8 @@ def compute_business_case_a(df_rfm: pd.DataFrame, config: dict = BUSINESS_CASE) 
         "n_control": n_control,
         "n_treatment": n_treatment,
         "cost": cost,
-        "ca_moyen_par_client": ca_moyen_par_client,
+        "valeur_commande": valeur_commande,
+        "ca_moyen_par_client": valeur_commande,
         "n_responder": round(n_responder, 1),
         "gross_margin": gross_margin,
         "net_margin": net_margin,
@@ -60,7 +61,7 @@ def compute_sensitivity_tables(
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     df_at_risk = df_rfm[df_rfm["segment"] == "À risque"]
     n_treatment = len(df_at_risk) * (1 - config["control_group_pct"])
-    ca_moyen_par_client = df_at_risk["Monetary"].mean()
+    valeur_commande = (df_at_risk["Monetary"] / df_at_risk["Frequency"]).mean()
     cost_a = n_treatment * config["contact_cost_gbp"]
 
     # Table Sensibilité Case A : Response Rate vs Margin Rate
@@ -70,7 +71,7 @@ def compute_sensitivity_tables(
     sens_a = pd.DataFrame(index=[f"{r*100:.0f}%" for r in response_rates], columns=[f"{m*100:.0f}%" for m in margin_rates])
     for r in response_rates:
         for m in margin_rates:
-            gain = (n_treatment * r * ca_moyen_par_client * m) - cost_a
+            gain = (n_treatment * r * valeur_commande * m) - cost_a
             sens_a.loc[f"{r*100:.0f}%", f"{m*100:.0f}%"] = float(round(gain, 2))
 
     # Table Sensibilité Case B : Transfer Rate vs Cost per SKU
@@ -135,10 +136,10 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
 
     hyp_data = [
         ("COST_CONTACT", "Coût unitaire de contact CRM (Phoning / SMS)", 2.00, "£ / client", "Estimation CRM direct"),
-        ("RESP_RATE", "Taux de conversion / réengagement estimé", 0.06, "%", "Historique campagnes CRM"),
-        ("MARGIN_RATE", "Taux de marge brute moyen sur les ventes", 0.40, "%", "Comptabilité analytique"),
+        ("RESP_RATE", "Taux de conversion / réengagement estimé", 0.08, "%", "Hypothèse de travail à valider par A/B testing"),
+        ("MARGIN_RATE", "Taux de marge brute moyen sur les ventes", 0.35, "%", "Comptabilité analytique"),
         ("SKU_COST", "Coût de complexité logistique annuel par SKU", 500.00, "£ / SKU / an", "Analyse coûts fixes Supply"),
-        ("TRANSFER_RATE", "Taux de transfert d'achat vers SKUs A/B", 0.50, "%", "Merchandising / Substituts"),
+        ("TRANSFER_RATE", "Taux de transfert d'achat vers SKUs A/B", 0.50, "%", "Hypothèse de travail à valider par A/B testing"),
         ("CONTROL_PCT", "Part des clients réservés au groupe de contrôle", 0.10, "%", "Méthodologie AB Testing")
     ]
 
@@ -170,7 +171,7 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
 
     df_at_risk = df_rfm[df_rfm["segment"] == "À risque"]
     nb_at_risk = df_at_risk["CustomerID"].nunique()
-    pm_at_risk = float(round(df_at_risk["Monetary"].mean(), 2))
+    valeur_commande = float(round((df_at_risk["Monetary"] / df_at_risk["Frequency"]).mean(), 2))
 
     ws_a["A1"] = "BUSINESS CASE A : RECONQUÊTE DES CLIENTS À RISQUE"
     ws_a["A1"].font = title_font
@@ -192,20 +193,20 @@ def generate_business_case_excel(df_rfm: pd.DataFrame, df_candidates: pd.DataFra
     r_rate = config["response_rate"]
     n_resp = n_treat * r_rate
     m_rate = config["margin_rate"]
-    ca_gross = n_resp * pm_at_risk
+    ca_gross = n_resp * valeur_commande
     margin_gross = ca_gross * m_rate
     net_margin_a = margin_gross - c_total
-    be_rate_a = c_contact / (pm_at_risk * m_rate)
+    be_rate_a = c_contact / (valeur_commande * m_rate)
     roi_a = (net_margin_a / c_total) if c_total > 0 else 0.0
 
     rows_a = [
-        ("Volume de clients ciblés (À risque)", nb_at_risk, "=828", num_fmt_int, "clients"),
+        ("Volume de clients ciblés (À risque)", nb_at_risk, f"={nb_at_risk}", num_fmt_int, "clients"),
         ("Part du groupe de contrôle", config["control_group_pct"], "='Hypothèses'!C10", num_fmt_pct, "%"),
         ("Volume du groupe de contrôle", n_ctrl, "=ROUND(C5*C6, 0)", num_fmt_int, "clients (AB Testing)"),
         ("Volume réellement contacté (Traitement)", n_treat, "=C5-C7", num_fmt_int, "clients"),
         ("Coût unitaire de contact", c_contact, "='Hypothèses'!C5", num_fmt_curr, "£ / client"),
         ("Investissement Total (Coût Campagne)", c_total, "=C8*C9", num_fmt_curr, "£"),
-        ("CA Moyen par Client sur la Période", pm_at_risk, f"={pm_at_risk}", num_fmt_curr, "£"),
+        ("Valeur Moyenne d'une Commande", valeur_commande, f"={valeur_commande}", num_fmt_curr, "£ / commande"),
         ("Taux de Réponse (Conversion)", r_rate, "='Hypothèses'!C6", num_fmt_pct, "%"),
         ("Nombre de clients réengagés", n_resp, "=C8*C12", num_fmt_int, "clients"),
         ("Chiffre d'Affaires Brut Généré", ca_gross, "=C13*C11", num_fmt_curr, "£"),
