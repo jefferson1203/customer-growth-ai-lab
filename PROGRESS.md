@@ -177,14 +177,15 @@
     - Ajout dans la section *Limites* du décalage temporel du Business Case B (CA à risque sur 2 ans vs économies logistiques annuelles).
 - Résultats obtenus : 12/12 tests unitaires passés au vert (100%), déploiement Cloud Run 100% synchronisé avec le README et les slides PDF.
 
-## [Projet 3 : Pricing & Élasticité] - Étape 1 : Préparation & Agrégation hebdomadaire par SKU
+## [Projet 3 : Pricing & Élasticité] - Étape 2 : Diagnostic de la politique tarifaire actuelle
 - Date : 2026-10-01
-- Fait : Implémentation de `prepare_weekly_pricing_data()` dans `pricing/data_prep.py` (agrégation hebdomadaire ISO `%Y-W%V`, calcul du prix médian et du CA, calcul du CV du prix et filtrage des SKUs éligibles).
-- Ce que j'ai compris : Importance du tri temporel ISO `%Y-W%V` sur 2 ans d'historique, rôle de la variabilité du prix ($CV \ge 5\%$) et de la taille d'échantillon ($\ge 40$ semaines) pour stabiliser la régression, et identification du biais d'endogénéité dû aux remises sur volume B2B.
-- Points où j'ai été aidé (niveau d'aide) : Niveau 4 (Squelette et correction de la syntaxe pandas `.agg()`).
-- Résultats obtenus (chiffres réels) : 4 905 SKUs analysés, **1 993 SKUs éligibles** (40.6% du catalogue), 50 SKUs éligibles retenus dans le top CA (4 811 observations hebdomadaires).
-- Questions d'entretien travaillées : Nécessité de la variabilité du prix pour la régression ; biais d'endogénéité des remises sur volume.
-- Prochaine étape : Étape 2 (Estimation de l'élasticité-prix par régression Log-Log).
+- Fait : Implémentation de `analyze_price_dispersion()`, `analyze_customer_discounts()`, `analyze_price_trends()` et `run_pricing_diagnostic()` dans `pricing/pricing_analysis.py`.
+- Ce que j'ai compris : Mesure de la dispersion tarifaire ($P_{\max}/P_{\min}$), évaluation du taux de remise unitaire implicite accordé au Top 1% des clients (5.13%), et utilité du Volume Tiering / Price Waterfall pour restructurer la marge.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (explication du concept de remise implicite B2B).
+- Résultats obtenus (chiffres réels) : 4 905 SKUs analysés, ratio médian $P_{\max}/P_{\min} = \mathbf{2.6x}$, **75.4% des SKUs** présentent une dispersion $\ge 2x$, prix unitaire médian Top 1% = **£1.85** vs Autres = **£1.95** (remise de **5.13%**).
+- Questions d'entretien travaillées : Interprétation d'une forte dispersion de prix (opportunité de captation de marge) ; diagnostic d'une politique de remises B2B informelle et recommandation de grille par tranches de volume.
+- Prochaine étape : Étape 3 (Estimation économétrique de l'élasticité-prix par régression Log-Log).
+
 
 
 
