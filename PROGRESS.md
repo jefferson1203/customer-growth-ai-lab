@@ -177,6 +177,16 @@
     - Ajout dans la section *Limites* du décalage temporel du Business Case B (CA à risque sur 2 ans vs économies logistiques annuelles).
 - Résultats obtenus : 12/12 tests unitaires passés au vert (100%), déploiement Cloud Run 100% synchronisé avec le README et les slides PDF.
 
+## [Projet 3 : Pricing & Élasticité] - Étape 1 : Préparation & Agrégation hebdomadaire par SKU
+- Date : 2026-10-01
+- Fait : Implémentation de `prepare_weekly_pricing_data()` dans `pricing/data_prep.py` (agrégation hebdomadaire ISO `%Y-W%V`, calcul du prix médian et du CA, calcul du CV du prix et filtrage des SKUs éligibles).
+- Ce que j'ai compris : Importance du tri temporel ISO `%Y-W%V` sur 2 ans d'historique, rôle de la variabilité du prix ($CV \ge 5\%$) et de la taille d'échantillon ($\ge 40$ semaines) pour stabiliser la régression, et identification du biais d'endogénéité dû aux remises sur volume B2B.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 4 (Squelette et correction de la syntaxe pandas `.agg()`).
+- Résultats obtenus (chiffres réels) : 4 905 SKUs analysés, **1 993 SKUs éligibles** (40.6% du catalogue), 50 SKUs éligibles retenus dans le top CA (4 811 observations hebdomadaires).
+- Questions d'entretien travaillées : Nécessité de la variabilité du prix pour la régression ; biais d'endogénéité des remises sur volume.
+- Prochaine étape : Étape 2 (Estimation de l'élasticité-prix par régression Log-Log).
+
+
 
 
 

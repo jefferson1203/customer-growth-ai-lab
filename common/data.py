@@ -109,6 +109,7 @@ def load_retail(raw_dir: Path, with_customer_only: bool = False) -> tuple[pd.Dat
     ]
     stock_clean = df_step2["StockCode"].astype(str).str.strip().str.upper()
     df_step3 = df_step2[~stock_clean.isin(non_product_codes)].copy()
+    df_step3 = df_step3[~stock_clean.str.startswith("TEST")].copy()
     non_prod_removed = len(df_step2) - len(df_step3)
     audit_logs.append({"Etape": "4. Retrait Frais & Non-produits (POST, DOT, M...)", "Lignes": len(df_step3), "Retirées": non_prod_removed})
 
@@ -127,3 +128,6 @@ def load_retail(raw_dir: Path, with_customer_only: bool = False) -> tuple[pd.Dat
 
     audit_df = pd.DataFrame(audit_logs)
     return df_clean, audit_df
+        
+    
+    
