@@ -177,14 +177,16 @@
     - Ajout dans la section *Limites* du décalage temporel du Business Case B (CA à risque sur 2 ans vs économies logistiques annuelles).
 - Résultats obtenus : 12/12 tests unitaires passés au vert (100%), déploiement Cloud Run 100% synchronisé avec le README et les slides PDF.
 
-## [Projet 3 : Pricing & Élasticité] - Étape 2 : Diagnostic de la politique tarifaire actuelle
+## [Projet 3 : Pricing & Élasticité] - Étape 4 : Moteur de Recommandation de Prix & Garde-fous Métier
 - Date : 2026-10-01
-- Fait : Implémentation de `analyze_price_dispersion()`, `analyze_customer_discounts()`, `analyze_price_trends()` et `run_pricing_diagnostic()` dans `pricing/pricing_analysis.py`.
-- Ce que j'ai compris : Mesure de la dispersion tarifaire ($P_{\max}/P_{\min}$), évaluation du taux de remise unitaire implicite accordé au Top 1% des clients (5.13%), et utilité du Volume Tiering / Price Waterfall pour restructurer la marge.
-- Points où j'ai été aidé (niveau d'aide) : Niveau 2 (explication du concept de remise implicite B2B).
-- Résultats obtenus (chiffres réels) : 4 905 SKUs analysés, ratio médian $P_{\max}/P_{\min} = \mathbf{2.6x}$, **75.4% des SKUs** présentent une dispersion $\ge 2x$, prix unitaire médian Top 1% = **£1.85** vs Autres = **£1.95** (remise de **5.13%**).
-- Questions d'entretien travaillées : Interprétation d'une forte dispersion de prix (opportunité de captation de marge) ; diagnostic d'une politique de remises B2B informelle et recommandation de grille par tranches de volume.
-- Prochaine étape : Étape 3 (Estimation économétrique de l'élasticité-prix par régression Log-Log).
+- Fait : Implémentation de `round_psychological_price()`, `optimize_sku_prices()` et `run_sensitivity_analysis()` dans `pricing/optimization.py`.
+- Ce que j'ai compris : Formule du prix théorique optimal $P^* = c \cdot \frac{\epsilon}{1+\epsilon}$, rôle des garde-fous métier ($\pm 10\%$ max, markup $\ge 1.2$, prix psychologiques en `,49` ou `,99`), et utilité de l'analyse de sensibilité pour prouver la robustesse financière face au Directeur Financier.
+- Points où j'ai été aidé (niveau d'aide) : Niveau 4 (Squelette et calcul de la demande à élasticité constante $Q_{\text{rec}} = Q_{\text{curr}} \cdot (P_{\text{rec}}/P_{\text{curr}})^\epsilon$).
+- Résultats obtenus (chiffres réels) : Marge Baseline Scénario Central (50% coût) = **£1 829 983.55**, Marge Optimisée sous garde-fous = **£1 952 996.32**, **Gain de Marge Potentiel = +£123 012.77 (+6.72%)**. Analyse de sensibilité : **+£167 416.84 (+7.62%)** à 40% coût, **+£92 039.77 (+6.29%)** à 60% coût.
+- Questions d'entretien travaillées : Justification de l'analyse de sensibilité auprès de la Direction Financière ; risques majeurs de la suppression des garde-fous (erreur d'extrapolation, guerre des prix et dégradation d'image).
+- Prochaine étape : Étape 5 (Génération des métriques synthétiques JSON & Modèle Financier Excel).
+
+
 
 
 
