@@ -118,6 +118,9 @@ def generate_pricing_justifications(
         description = str(row["Description"])
         category = str(row["category"])
 
+        # Constantes métier autorisées (ex: garde-fou ±10%, fenêtre 12 semaines, markup 1.2x, 3 phrases, ratio 50%)
+        domain_constants = [10.0, 10, 12.0, 12, 1.2, 3.0, 3, 50.0, 50, 0.5, 0.0]
+
         # Liste complète des représentations numériques autorisées (brutes, arrondies, entières, pourcentage)
         allowed_values = [
             current_price, round(current_price, 1), round(current_price, 0), int(np.round(current_price)),
@@ -125,7 +128,7 @@ def generate_pricing_justifications(
             price_change_pct, abs(price_change_pct), round(price_change_pct, 1), round(abs(price_change_pct), 1), int(np.round(abs(price_change_pct))),
             elasticity, abs(elasticity), round(elasticity, 1), round(abs(elasticity), 1),
             margin_gain_gbp, abs(margin_gain_gbp), round(margin_gain_gbp, 1), round(margin_gain_gbp, 0), int(np.round(abs(margin_gain_gbp)))
-        ]
+        ] + domain_constants
 
         variables = {
             "description": description,

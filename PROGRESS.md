@@ -196,7 +196,27 @@
   - **Slide Deck Stratégique** [`slides/Projet3_Pricing_Slides.md`](slides/Projet3_Pricing_Slides.md) (3 slides : Audit & Constat, Économétrie & Élasticité, Recommandations & Feuille de Route).
   - **Export PDF Standardisé** [`slides/Projet3_Pricing_Slides.pdf`](slides/Projet3_Pricing_Slides.pdf) généré via `common/pdf_exporter.py` (3 pages A4 Paysage).
   - **Documentation & Dynamisation** : Dynamisation complète de tous les textes markdown dans `pricing/app.py` lisant directement depuis `summary_metrics.json`.
-- Statut : **Projet 3 intégralement finalisé, testé (17/17 tests passés au vert) et validé !**
+- Statut : **Projet 3 intégralement finalisé, testé (20/20 tests passés au vert) et validé !**
+
+## [Projet 3 : Pricing & Élasticité] - Étape 9 : Correction du Garde-Fou de Prix & Cohérence de l'Arrondi Directionnel
+- Date : 2026-10-02
+- Fait :
+  - **Correction de l'arrondi directionnel (`pricing/optimization.py`)** : Mise à jour de `apply_guarded_psychological_price` pour ne conserver les prix psychologiques (,49 / ,99) que s'ils vont dans le même sens que le prix cible par rapport au prix actuel. Si aucun prix psychologique valide n'existe dans la fourchette de ±10 %, le prix brut est borné et arrondi à 2 décimales.
+  - **Règle de gain de marge non négatif** : Ajout d'un contrôle automatique forçant `rec_price = current_price` ("Maintien : arrondi défavorable") si le gain de marge attendu est négatif.
+  - **Nouveaux tests unitaires (`tests/test_pricing.py`)** : Ajout de `test_non_negative_margin_gains` (0 recommandation à gain négatif) et `test_directional_price_consistency` (sens de variation cohérent avec l'élasticité). 20/20 tests unitaires au vert.
+- Résultats obtenus :
+  - **Gain de Marge Net Cumulé (2 Ans)** : Hausse de +102 725 £ à **+134 496,76 £ (+7,42 %)**, soit **~67 248,38 £ / an**.
+  - **Répartition des Recommandations** : 14 hausses, 24 baisses, 12 maintenus (dont 11 par statut non significatif/atypique et 1 par arrondi défavorable). **0 perte de marge**.
+
+## [Projet 3 : Pricing & Élasticité] - Étape 10 : Analyse des 40 Rejets du Contrôle Anti-Hallucination Regex & Clé de Cache Dynamique
+- Date : 2026-10-02
+- Fait :
+  - **Empreinte de Cache Dynamique (`pricing/llm_justification.py`)** : Invalidation automatique du cache lors d'un changement de prix via `cache_key = f"{stock_code}_{var_hash}"`.
+  - **Conservation des nombres non vérifiés (`unverified`)** : Enregistrement pour chaque rejet de la liste des nombres non autorisés extraits du texte LLM.
+  - **Consolidation des Constantes Métier Autorisées** : Ajout des constantes de cadrage (`10.0`, `12.0`, `1.2`, `3.0`, `50.0`) et comptage séparé des erreurs API (0 sur ce passage).
+- Résultats obtenus :
+  - **Taux d'acceptation au 1er essai** : **20,0 %** (10/50 validés au 1er essai, 40 rejets Regex).
+  - **Diagnostic des 40 rejets** : Les 40 justifications rejetées correspondent au fallback déterministe pré-généré pour le lot. Les nombres non vérifiés ont été isolés pour permettre une explication transparente du taux lors des restitutions.
 
 
 

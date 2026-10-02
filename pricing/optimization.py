@@ -27,23 +27,30 @@ def round_psychological_price(price: float) -> float:
         return float(integer_part + 0.99)
 
 
-def apply_guarded_psychological_price(p_raw: float, lower_bound: float, upper_bound: float) -> float:
-    """Arrondit un prix au niveau psychologique le plus proche tout en GARANTISSANT qu'il reste dans [lower_bound, upper_bound].
+def apply_guarded_psychological_price(p_raw: float, p_curr: float, lower_bound: float, upper_bound: float) -> float:
+    """Arrondit un prix au niveau psychologique le plus proche en GARANTISSANT qu'il reste dans [lower_bound, upper_bound]
+    ET qu'il conserve le même sens de variation (hausse vs baisse) par rapport au prix actuel.
 
     Args:
         p_raw (float): Prix brut cible.
+        p_curr (float): Prix actuel de référence.
         lower_bound (float): Borne inférieure absolue (ex: -10% ou markup min).
         upper_bound (float): Borne supérieure absolue (ex: +10%).
 
     Returns:
-        float: Prix recommandé respectant STRICTEMENT les garde-fous.
+        float: Prix recommandé respectant STRICTEMENT les garde-fous et la direction.
     """
+    if p_raw == p_curr:
+        return p_curr
+
     # 1. Tester l'arrondi standard
     p_psych = round_psychological_price(p_raw)
-    if lower_bound <= p_psych <= upper_bound:
+    is_direction_ok = (p_psych >= p_curr) if p_raw > p_curr else (p_psych <= p_curr)
+    
+    if lower_bound <= p_psych <= upper_bound and is_direction_ok:
         return round(p_psych, 2)
 
-    # 2. Chercher d'autres prix psychologiques (.49 ou .99) à l'intérieur des bornes
+    # 2. Chercher d'autres prix psychologiques (.49 ou .99) dans les bornes ET de même sens
     k_min = int(np.floor(lower_bound)) - 1
     k_max = int(np.ceil(upper_bound)) + 1
     
@@ -51,7 +58,8 @@ def apply_guarded_psychological_price(p_raw: float, lower_bound: float, upper_bo
     for k in range(k_min, k_max + 1):
         for cent in (0.49, 0.99):
             cand = round(k + cent, 2)
-            if lower_bound <= cand <= upper_bound:
+            cand_direction_ok = (cand >= p_curr) if p_raw > p_curr else (cand <= p_curr)
+            if lower_bound <= cand <= upper_bound and cand_direction_ok:
                 valid_psych_candidates.append(cand)
 
     if valid_psych_candidates:
@@ -59,7 +67,7 @@ def apply_guarded_psychological_price(p_raw: float, lower_bound: float, upper_bo
         best_cand = min(valid_psych_candidates, key=lambda c: abs(c - p_raw))
         return round(best_cand, 2)
 
-    # 3. Si aucun prix .49 ou .99 ne rentre dans l'intervalle étroit, clamber et arrondir à 2 décimales
+    # 3. Si aucun prix .49 ou .99 cohérent ne rentre dans l'intervalle, clamber et arrondir au centime
     clamped = float(np.clip(p_raw, lower_bound, upper_bound))
     return round(clamped, 2)
 
@@ -69,7 +77,7 @@ def optimize_sku_prices(
     config: dict = PRICING,
     cost_ratio: float = None
 ) -> pd.DataFrame:
-    """Optimise les prix par SKU avec garde-fous métier stricts (±10% max après arrondi, markup >= 1.2).
+    """Optimise les prix par SKU avec garde-fous métier stricts (±10% max après arrondi, markup >= 1.2, gain de marge >= 0).
 
     Args:
         df_elasticity (pd.DataFrame): Données d'élasticités par SKU.
@@ -107,6 +115,7 @@ def optimize_sku_prices(
         eps = float(row["elasticity"])
         cat = str(row["category"])
         q_curr = float(row["current_quantity"])
+        m_curr = float(row["current_margin"])
 
         # Bornes de prix opérationnelles (Garde-fous stricts ±10.00% max)
         p_min = round(np.ceil(p_curr * (1.0 - max_change) * 100.0) / 100.0, 2)
@@ -119,14 +128,13 @@ def optimize_sku_prices(
         if cat == "Élastique" and eps < -1.0:
             p_star = (eps / (1.0 + eps)) * cost
             p_rec_raw = float(np.clip(p_star, lower_bound, upper_bound))
-            p_rec = apply_guarded_psychological_price(p_rec_raw, lower_bound, upper_bound)
+            p_rec = apply_guarded_psychological_price(p_rec_raw, p_curr, lower_bound, upper_bound)
             reason = "Optimisation Marge (Élastique)"
         elif cat == "Inélastique":
             p_rec_raw = upper_bound
-            p_rec = apply_guarded_psychological_price(p_rec_raw, lower_bound, upper_bound)
+            p_rec = apply_guarded_psychological_price(p_rec_raw, p_curr, lower_bound, upper_bound)
             reason = "Ajustement Hausse (Inélastique)"
         else:
-            # Maintien exact du prix actuel pour non significatifs et atypiques
             p_rec = p_curr
             reason = "Maintien (Non Significatif / Atypique)"
 
@@ -139,6 +147,14 @@ def optimize_sku_prices(
         r_rec = round(p_rec * q_rec, 2)
         m_rec = round((p_rec - cost) * q_rec, 2)
 
+        # RÈGLE DE SÉCURITÉ FINALE : Si le gain de marge attendu est négatif, maintenir le prix actuel
+        if m_rec < m_curr:
+            p_rec = p_curr
+            q_rec = q_curr
+            r_rec = round(p_curr * q_curr, 2)
+            m_rec = m_curr
+            reason = "Maintien (Gain de Marge Défavorable)"
+
         rec_prices.append(round(p_rec, 2))
         rec_quantities.append(round(q_rec, 2))
         rec_revenues.append(r_rec)
@@ -146,7 +162,6 @@ def optimize_sku_prices(
         opt_reasons.append(reason)
 
     df_opt["rec_price"] = rec_prices
-    # Calcul propre du changement relatif après arrondi des prix
     df_opt["price_change_pct"] = ((df_opt["rec_price"] - df_opt["current_price"]) / df_opt["current_price"]).round(4)
     df_opt["rec_quantity"] = rec_quantities
     df_opt["rec_revenue"] = rec_revenues
@@ -201,9 +216,12 @@ if __name__ == "__main__":
     sensitivity = run_sensitivity_analysis(df_elasticity, PRICING)
 
     max_dev = (df_opt["rec_price"] - df_opt["current_price"]).abs() / df_opt["current_price"]
-    print("--- VERIFICATION DES GARDE-FOUS STRICTS ---")
+    neg_gains = (df_opt["margin_gain_gbp"] < 0).sum()
+
+    print("--- VERIFICATION DES GARDE-FOUS STRICTS & COHÉRENCE DE MARGE ---")
     print(f"Écart relatif maximal observé : {max_dev.max() * 100:.2f}%")
     print(f"Nombre de SKUs en dehors de +/- 10% : {(max_dev > 0.1001).sum()}")
+    print(f"Nombre de SKUs à gain de marge négatif : {neg_gains}")
 
     print("\n--- RÉSULTATS DE L'OPTIMISATION DU PRICING ---")
     print(f"Marge Baseline Total : £{df_opt['current_margin'].sum():,.2f}")

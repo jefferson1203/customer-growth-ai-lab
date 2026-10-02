@@ -94,3 +94,26 @@ def test_strict_guardrail_bounds(sample_retail_df):
     max_dev = (df_opt["rec_price"] - df_opt["current_price"]).abs() / df_opt["current_price"]
     assert (max_dev <= 0.1001).all(), f"Certains prix dépassent le garde-fou de ±10% : {max_dev[max_dev > 0.1001]}"
 
+
+def test_non_negative_margin_gains(sample_retail_df):
+    df_weekly, sku_stats = prepare_weekly_pricing_data(sample_retail_df, PRICING)
+    df_elasticity = compute_sku_elasticity(df_weekly, sku_stats)
+    df_opt = optimize_sku_prices(df_elasticity, config=PRICING, cost_ratio=0.50)
+    
+    assert (df_opt["margin_gain_gbp"] >= 0).all(), f"Des gains de marge négatifs ont été détectés : {df_opt[df_opt['margin_gain_gbp'] < 0]}"
+
+
+def test_directional_price_consistency(sample_retail_df):
+    df_weekly, sku_stats = prepare_weekly_pricing_data(sample_retail_df, PRICING)
+    df_elasticity = compute_sku_elasticity(df_weekly, sku_stats)
+    df_opt = optimize_sku_prices(df_elasticity, config=PRICING, cost_ratio=0.50)
+    
+    # Pour les inélastiques, le prix recommandé doit être supérieur ou égal au prix actuel
+    inelastic = df_opt[df_opt["category"] == "Inélastique"]
+    assert (inelastic["rec_price"] >= inelastic["current_price"]).all()
+
+    # Pour les non significatifs, le prix doit être strictement maintenu
+    non_sig = df_opt[df_opt["category"] == "Non significatif"]
+    assert (non_sig["rec_price"] == non_sig["current_price"]).all()
+
+
