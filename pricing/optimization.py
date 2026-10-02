@@ -87,11 +87,8 @@ def optimize_sku_prices(
 
     df_opt = df_elasticity.copy()
 
-    # Utiliser le prix récent sur les 12 dernières semaines (ou mean_price à défaut)
-    if "recent_12w_price" in df_opt.columns:
-        df_opt["current_price"] = df_opt["recent_12w_price"].round(2)
-    else:
-        df_opt["current_price"] = df_opt["mean_price"].round(2)
+    # Utiliser le prix récent sur les 12 dernières semaines observées
+    df_opt["current_price"] = df_opt["recent_12w_price"].round(2)
 
     df_opt["unit_cost"] = (df_opt["current_price"] * cost_ratio).round(2)
     df_opt["current_quantity"] = df_opt["total_qty"]

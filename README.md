@@ -119,9 +119,9 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
   * **Gain de Marge Net Cumulé sur 2 Ans (Scénario Central 50% coût)** : **+£102 724,99 (+5,67 %)** (de £1,81M à £1,91M), soit **~£51 362,50 / an**.
   * **Analyse de Sensibilité (2 Ans)** : Gain de **+£160 125,86 (+7,36 %)** à 40% de coût et **+£52 277,71 (+3,61 %)** à 60% de coût.
 * **Gouvernance IA & Validation Humaine** :
-  * Génération de justifications Gemini structurées via `LLMClient.complete_json`.
-  * **Contrôle Anti-Hallucination Regex** : Extraction et vérification numérique de 100% des chiffres cités.
-  * **Validation Humaine (Human-in-the-Loop)** : Journalisation des arbitrages Category Manager dans `outputs/pricing/decisions.csv` (stockage temporaire conteneur Cloud Run).
+  * Génération de justifications Gemini structurées via `LLMClient.complete_json` (clé de cache dynamique `stock_code_varhash`).
+  * **Contrôle Anti-Hallucination Regex Mesuré** : **20,0 % d'acceptation au 1er essai** (10/50 validés au 1er essai, 40 rejets par contrôle Regex anti-hallucination, 0 erreur API).
+  * **Validation Humaine (Human-in-the-Loop)** : Journalisation des arbitrages Category Manager dans `outputs/pricing/decisions.csv` (stockage temporaire sur le disque éphémère du conteneur Cloud Run, à relier à une BDD persistante en production).
 
 ---
 

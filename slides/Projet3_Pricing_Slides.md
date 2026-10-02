@@ -42,5 +42,7 @@
 - **Impact Financier (Période historique de 2 ans)** :
   * **Scénario Central (Coût = 50% prix)** : **+£102 724.99** de marge additionnelle cumulée sur 2 ans (**+5.67 %**), soit **~£51 362 / an**.
   * **Analyse de Sensibilité sur 2 ans** : Gain de **+£160 125.86 (+7.36 %)** à 40% de coût et **+£52 277.71 (+3.61 %)** à 60% de coût.
-- **Validation Humaine (Human-in-the-Loop)** : Décisions consignées dans `outputs/pricing/decisions.csv` (stockage temporaire conteneur Cloud Run).
+- **Contrôle Anti-Hallucination & Validation Humaine** :
+  * **Taux d'acceptation au 1er essai** : **20.0 %** (10/50 validés, 40 rejets par contrôle Regex anti-hallucination, 0 erreur API).
+  * **Validation Humaine (Human-in-the-Loop)** : Décisions consignées dans `outputs/pricing/decisions.csv` (stockage temporaire conteneur Cloud Run).
 - **Prochaine Étape Opérationnelle** : Lancer un **Test A/B in vivo sur 5 références clés** pour mesurer l'élasticité réelle sur 4 semaines avant le déploiement généralisé.

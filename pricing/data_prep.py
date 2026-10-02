@@ -3,7 +3,7 @@ import pandas as pd
 def prepare_weekly_pricing_data(df_clean: pd.DataFrame, config: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
     df_clean_w = df_clean.copy()
 
-    df_clean_w["YearWeek"] = df_clean_w["InvoiceDate"].dt.strftime("%Y-W%V")
+    df_clean_w["YearWeek"] = df_clean_w["InvoiceDate"].dt.strftime("%G-W%V")
     df_clean_w = df_clean_w.groupby(['StockCode', 'YearWeek']).agg(
         Description=("Description", "last"),
         quantity=("Quantity", "sum"),
@@ -27,7 +27,7 @@ def prepare_weekly_pricing_data(df_clean: pd.DataFrame, config: dict) -> tuple[p
     ).reset_index()
 
     df_sku_stat = df_sku_stat.merge(recent_prices, on="StockCode", how="left")
-    df_sku_stat["recent_12w_price"] = df_sku_stat["recent_12w_price"].fillna(df_sku_stat["mean_price"]).round(2)
+    df_sku_stat["recent_12w_price"] = df_sku_stat["recent_12w_price"].round(2)
 
     df_sku_stat["std_price"] = df_sku_stat["std_price"].fillna(0)
     df_sku_stat["cv_price"] = (df_sku_stat["std_price"] / df_sku_stat["mean_price"]).round(4)

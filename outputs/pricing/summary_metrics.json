@@ -1,6 +1,6 @@
 {
   "project": "Projet 3 - Optimisation du Pricing & Élasticité-Prix",
-  "generated_at": "2026-10-02T12:49:13.282435",
+  "generated_at": "2026-10-02T13:05:10.453459",
   "global_metrics": {
     "total_skus_raw": 4905,
     "eligible_skus": 1993,
@@ -237,10 +237,13 @@
   },
   "llm_control_metrics": {
     "total_recommendations": 50,
-    "first_try_successes": 0,
-    "first_try_acceptance_rate": 0.0,
+    "first_try_successes": 10,
+    "regex_rejections": 40,
+    "api_errors": 0,
+    "first_try_acceptance_rate": 0.2,
     "status_breakdown": {
-      "Rejeté (Fallback Modèle)": 50
+      "Rejeté (Hallucination Regex)": 40,
+      "Validé (1er essai)": 10
     }
   },
   "top_opportunities": [
@@ -259,7 +262,7 @@
       "margin_gain_gbp": 26375.2,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 11.49 £ (variation de -9.9 %). Cette décision repose sur une élasticité mesurée à -3.46 (catégorie Élastique) visant un gain de marge de 26375.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48138",
@@ -276,7 +279,7 @@
       "margin_gain_gbp": 17171.79,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -5.65 (catégorie Élastique) visant un gain de marge de 17171.79 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "20685",
@@ -293,7 +296,7 @@
       "margin_gain_gbp": 12804.74,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -4.91 (catégorie Élastique) visant un gain de marge de 12804.74 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48187",
@@ -310,7 +313,7 @@
       "margin_gain_gbp": 10294.66,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -5.10 (catégorie Élastique) visant un gain de marge de 10294.66 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21137",
@@ -327,7 +330,7 @@
       "margin_gain_gbp": 6813.03,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 3.49 £ (variation de -6.9 %). Cette décision repose sur une élasticité mesurée à -4.42 (catégorie Élastique) visant un gain de marge de 6813.03 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48194",
@@ -344,7 +347,7 @@
       "margin_gain_gbp": 5826.36,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.99 £ (variation de -8.6 %). Cette décision repose sur une élasticité mesurée à -3.85 (catégorie Élastique) visant un gain de marge de 5826.36 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21843",
@@ -361,7 +364,7 @@
       "margin_gain_gbp": 5015.15,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 9.99 £ (variation de -6.9 %). Cette décision repose sur une élasticité mesurée à -4.01 (catégorie Élastique) visant un gain de marge de 5015.15 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "15056N",
@@ -378,7 +381,7 @@
       "margin_gain_gbp": 4641.85,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -7.7 %). Cette décision repose sur une élasticité mesurée à -3.56 (catégorie Élastique) visant un gain de marge de 4641.85 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21754",
@@ -395,7 +398,7 @@
       "margin_gain_gbp": 4082.2,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -4.2 %). Cette décision repose sur une élasticité mesurée à -5.66 (catégorie Élastique) visant un gain de marge de 4082.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22469",
@@ -412,7 +415,7 @@
       "margin_gain_gbp": 3167.76,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de -9.7 %). Cette décision repose sur une élasticité mesurée à -3.31 (catégorie Élastique) visant un gain de marge de 3167.76 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22139",
@@ -429,7 +432,7 @@
       "margin_gain_gbp": 3061.56,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 4.49 £ (variation de -9.3 %). Cette décision repose sur une élasticité mesurée à -3.24 (catégorie Élastique) visant un gain de marge de 3061.56 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21621",
@@ -446,7 +449,7 @@
       "margin_gain_gbp": 3022.14,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.99 £ (variation de -6.0 %). Cette décision repose sur une élasticité mesurée à -3.64 (catégorie Élastique) visant un gain de marge de 3022.14 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22090",
@@ -462,8 +465,8 @@
       "rec_margin": 28753.34,
       "margin_gain_gbp": 2028.62,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 3.49 £ (variation de +9.4 %). Cette décision repose sur une élasticité mesurée à -1.11 (catégorie Élastique) visant un gain de marge de 2028.62 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du produit PAPER BUNTING RETRO SPOTS à 3.49 £, ce qui représente une variation de +9.40 %. Bien que l'élasticité-prix s'établisse à -1.11 dans une catégorie élastique, cette décision permet de capter un gain de marge attendu de 2028.62 £. Une vigilance commerciale reste toutefois indispensable face au risque de sensibilité accrue et de réaction défavorable des clients sur les volumes commandés.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21181",
@@ -480,7 +483,7 @@
       "margin_gain_gbp": 1660.14,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.49 £ (variation de -4.6 %). Cette décision repose sur une élasticité mesurée à -3.09 (catégorie Élastique) visant un gain de marge de 1660.14 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "84946",
@@ -497,7 +500,7 @@
       "margin_gain_gbp": 1310.22,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.37 £ (variation de +9.6 %). Cette décision repose sur une élasticité mesurée à -1.32 (catégorie Élastique) visant un gain de marge de 1310.22 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     }
   ],
   "skus_summary": [
@@ -517,7 +520,7 @@
       "margin_gain_gbp": 4641.85,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -7.7 %). Cette décision repose sur une élasticité mesurée à -3.56 (catégorie Élastique) visant un gain de marge de 4641.85 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "20685",
@@ -535,7 +538,7 @@
       "margin_gain_gbp": 12804.74,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -4.91 (catégorie Élastique) visant un gain de marge de 12804.74 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "20725",
@@ -553,7 +556,7 @@
       "margin_gain_gbp": -928.84,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de -9.7 %). Cette décision repose sur une élasticité mesurée à -1.83 (catégorie Élastique) visant un gain de marge de -928.84 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "20727",
@@ -571,7 +574,7 @@
       "margin_gain_gbp": -1122.73,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de -9.7 %). Cette décision repose sur une élasticité mesurée à -1.60 (catégorie Élastique) visant un gain de marge de -1122.73 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21137",
@@ -589,7 +592,7 @@
       "margin_gain_gbp": 6813.03,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 3.49 £ (variation de -6.9 %). Cette décision repose sur une élasticité mesurée à -4.42 (catégorie Élastique) visant un gain de marge de 6813.03 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21181",
@@ -607,7 +610,7 @@
       "margin_gain_gbp": 1660.14,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.49 £ (variation de -4.6 %). Cette décision repose sur une élasticité mesurée à -3.09 (catégorie Élastique) visant un gain de marge de 1660.14 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21212",
@@ -625,7 +628,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 0.55 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.32 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21232",
@@ -642,8 +645,8 @@
       "rec_margin": 26756.96,
       "margin_gain_gbp": -529.74,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de +6.4 %). Cette décision repose sur une élasticité mesurée à -2.26 (catégorie Élastique) visant un gain de marge de -529.74 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du produit STRAWBERRY CERAMIC TRINKET BOX à 1.49 £, ce qui représente une variation de +6.43 %. Cet ajustement entraîne un gain de marge attendu de -529.74 £ en raison d'une élasticité-prix mesurée à -2.26. Le risque commercial principal réside donc dans la forte sensibilité des clients face à cette hausse, susceptible de pénaliser les volumes commandés.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21523",
@@ -660,8 +663,8 @@
       "rec_margin": 29765.84,
       "margin_gain_gbp": 719.84,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 8.99 £ (variation de +9.1 %). Cette décision repose sur une élasticité mesurée à -1.64 (catégorie Élastique) visant un gain de marge de 719.84 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit FANCY FONT HOME SWEET HOME DOORMAT à 8.99 £, ce qui correspond à une variation de +9.10 %. Cet arbitrage tarifaire permet de générer un gain de marge attendu de 719.84 £, malgré une élasticité-prix mesurée à -1.64 qui confirme une demande élastique. Il faudra néanmoins surveiller de près le risque de baisse des volumes face à la sensibilité importante des clients à cette hausse.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21621",
@@ -679,7 +682,7 @@
       "margin_gain_gbp": 3022.14,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.99 £ (variation de -6.0 %). Cette décision repose sur une élasticité mesurée à -3.64 (catégorie Élastique) visant un gain de marge de 3022.14 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21623",
@@ -697,7 +700,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 9.95 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -2.34 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21731",
@@ -715,7 +718,7 @@
       "margin_gain_gbp": -2815.3,
       "opt_reason": "Ajustement Hausse (Inélastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de -9.7 %). Cette décision repose sur une élasticité mesurée à -0.91 (catégorie Inélastique) visant un gain de marge de -2815.30 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21733",
@@ -733,7 +736,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.95 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.62 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21754",
@@ -751,7 +754,7 @@
       "margin_gain_gbp": 4082.2,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -4.2 %). Cette décision repose sur une élasticité mesurée à -5.66 (catégorie Élastique) visant un gain de marge de 4082.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21843",
@@ -769,7 +772,7 @@
       "margin_gain_gbp": 5015.15,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 9.99 £ (variation de -6.9 %). Cette décision repose sur une élasticité mesurée à -4.01 (catégorie Élastique) visant un gain de marge de 5015.15 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21928",
@@ -787,7 +790,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.08 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -1.17 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21929",
@@ -805,7 +808,7 @@
       "margin_gain_gbp": 696.56,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.03 £ (variation de -9.8 %). Cette décision repose sur une élasticité mesurée à -2.33 (catégorie Élastique) visant un gain de marge de 696.56 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "21931",
@@ -822,8 +825,8 @@
       "rec_margin": 29025.6,
       "margin_gain_gbp": -1657.52,
       "opt_reason": "Ajustement Hausse (Inélastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 1.99 £ (variation de -4.3 %). Cette décision repose sur une élasticité mesurée à -0.79 (catégorie Inélastique) visant un gain de marge de -1657.52 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous recommandons d'ajuster le prix du JUMBO STORAGE BAG SUKI à 1.99 £, ce qui représente une variation de -4.33 %. Cette décision s'explique par une élasticité-prix de -0.79 indiquant une demande inélastique, générant ainsi un gain de marge attendu de -1657.52 £. Le principal risque commercial réside dans la dégradation de la rentabilité globale, la faible sensibilité des acheteurs ne permettant pas de compenser la baisse de prix par des volumes supplémentaires.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22086",
@@ -840,8 +843,8 @@
       "rec_margin": 53679.84,
       "margin_gain_gbp": -94.23,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 2.99 £ (variation de +1.4 %). Cette décision repose sur une élasticité mesurée à -2.12 (catégorie Élastique) visant un gain de marge de -94.23 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous recommandons d'ajuster le prix de vente à 2.99 £, ce qui correspond à une variation de +1.36 %. Cette proposition intègre une élasticité-prix de -2.12 ainsi qu'un gain de marge attendu de -94.23 £. Le principal risque commercial concerne la forte sensibilité des clients au tarif, susceptible d'entraîner une contraction immédiate des volumes commandés.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22090",
@@ -858,8 +861,8 @@
       "rec_margin": 28753.34,
       "margin_gain_gbp": 2028.62,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 3.49 £ (variation de +9.4 %). Cette décision repose sur une élasticité mesurée à -1.11 (catégorie Élastique) visant un gain de marge de 2028.62 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du produit PAPER BUNTING RETRO SPOTS à 3.49 £, ce qui représente une variation de +9.40 %. Bien que l'élasticité-prix s'établisse à -1.11 dans une catégorie élastique, cette décision permet de capter un gain de marge attendu de 2028.62 £. Une vigilance commerciale reste toutefois indispensable face au risque de sensibilité accrue et de réaction défavorable des clients sur les volumes commandés.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22111",
@@ -877,7 +880,7 @@
       "margin_gain_gbp": 17.42,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 4.99 £ (variation de +0.8 %). Cette décision repose sur une élasticité mesurée à -1.91 (catégorie Élastique) visant un gain de marge de 17.42 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22112",
@@ -895,7 +898,7 @@
       "margin_gain_gbp": 218.59,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 4.99 £ (variation de +0.8 %). Cette décision repose sur une élasticité mesurée à -1.05 (catégorie Élastique) visant un gain de marge de 218.59 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22114",
@@ -913,7 +916,7 @@
       "margin_gain_gbp": 487.82,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 3.99 £ (variation de -6.1 %). Cette décision repose sur une élasticité mesurée à -2.35 (catégorie Élastique) visant un gain de marge de 487.82 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22139",
@@ -931,7 +934,7 @@
       "margin_gain_gbp": 3061.56,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 4.49 £ (variation de -9.3 %). Cette décision repose sur une élasticité mesurée à -3.24 (catégorie Élastique) visant un gain de marge de 3061.56 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22178",
@@ -949,7 +952,7 @@
       "margin_gain_gbp": 627.16,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.99 £ (variation de +2.1 %). Cette décision repose sur une élasticité mesurée à -1.21 (catégorie Élastique) visant un gain de marge de 627.16 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22197",
@@ -967,7 +970,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 0.85 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.65 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22326",
@@ -985,7 +988,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.95 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à 0.36 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22355",
@@ -1002,8 +1005,8 @@
       "rec_margin": 15038.32,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 0.92 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.24 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de maintenir le prix de vente à 0.92 £, ce qui représente une variation de +0.00 %. Cette décision est justifiée par une élasticité-prix de -0.24 considérée comme non significatif, pour un gain de marge attendu de 0.00 £. Ce statu quo permet ainsi de préserver la relation commerciale en évitant toute réaction défavorable liée à la sensibilité des clients.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22386",
@@ -1021,7 +1024,7 @@
       "margin_gain_gbp": -926.01,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.99 £ (variation de -4.3 %). Cette décision repose sur une élasticité mesurée à -1.54 (catégorie Élastique) visant un gain de marge de -926.01 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22411",
@@ -1039,7 +1042,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.08 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à 0.07 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22423",
@@ -1057,7 +1060,7 @@
       "margin_gain_gbp": 26375.2,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 11.49 £ (variation de -9.9 %). Cette décision repose sur une élasticité mesurée à -3.46 (catégorie Élastique) visant un gain de marge de 26375.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22457",
@@ -1074,8 +1077,8 @@
       "rec_margin": 22702.39,
       "margin_gain_gbp": -480.98,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 2.99 £ (variation de +1.4 %). Cette décision repose sur une élasticité mesurée à -3.55 (catégorie Élastique) visant un gain de marge de -480.98 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous recommandons d'ajuster le prix de vente à 2.99 £, ce qui représente une variation de +1.36 %. Cette évolution engendre un gain de marge attendu de -480.98 £ en raison d'une élasticité-prix mesurée à -3.55 qui indique une demande élastique. Le risque commercial principal réside dans la forte sensibilité des clients au tarif, pouvant conduire à un recul important des volumes vendus.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22469",
@@ -1093,7 +1096,7 @@
       "margin_gain_gbp": 3167.76,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.49 £ (variation de -9.7 %). Cette décision repose sur une élasticité mesurée à -3.31 (catégorie Élastique) visant un gain de marge de 3167.76 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22470",
@@ -1111,7 +1114,7 @@
       "margin_gain_gbp": -22.59,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.99 £ (variation de +1.4 %). Cette décision repose sur une élasticité mesurée à -2.05 (catégorie Élastique) visant un gain de marge de -22.59 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "22502",
@@ -1128,8 +1131,8 @@
       "rec_margin": 15225.71,
       "margin_gain_gbp": 446.13,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 7.99 £ (variation de +4.6 %). Cette décision repose sur une élasticité mesurée à -1.29 (catégorie Élastique) visant un gain de marge de 446.13 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de porter le prix du PICNIC BASKET WICKER SMALL à 7.99 £, ce qui correspond à une variation de +4.58 %. Bien que la demande présente une élasticité-prix de -1.29, cet ajustement demeure pertinent car il génère un gain de marge attendu de 446.13 £. Il convient toutefois de piloter attentivement la réaction des clients face à cette hausse afin de maîtriser la sensibilité au prix sur ce segment.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22910",
@@ -1146,8 +1149,8 @@
       "rec_margin": 28374.77,
       "margin_gain_gbp": -432.82,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 2.99 £ (variation de +1.4 %). Cette décision repose sur une élasticité mesurée à -3.12 (catégorie Élastique) visant un gain de marge de -432.82 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons de positionner le PAPER CHAIN KIT VINTAGE CHRISTMAS à un prix de 2.99 £, ce qui représente une variation de +1.36 %. Cette proposition prend en compte une élasticité-prix mesurée à -3.12, générant un gain de marge attendu de -432.82 £. Le risque commercial principal réside dans la forte sensibilité au prix des clients, susceptible de freiner la demande.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "47566",
@@ -1165,7 +1168,7 @@
       "margin_gain_gbp": -103.3,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 4.49 £ (variation de -9.3 %). Cette décision repose sur une élasticité mesurée à -2.10 (catégorie Élastique) visant un gain de marge de -103.30 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48138",
@@ -1183,7 +1186,7 @@
       "margin_gain_gbp": 17171.79,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -5.65 (catégorie Élastique) visant un gain de marge de 17171.79 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48185",
@@ -1201,7 +1204,7 @@
       "margin_gain_gbp": 12.33,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 9.49 £ (variation de +5.7 %). Cette décision repose sur une élasticité mesurée à -1.94 (catégorie Élastique) visant un gain de marge de 12.33 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48187",
@@ -1219,7 +1222,7 @@
       "margin_gain_gbp": 10294.66,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.49 £ (variation de -9.2 %). Cette décision repose sur une élasticité mesurée à -5.10 (catégorie Élastique) visant un gain de marge de 10294.66 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "48194",
@@ -1237,7 +1240,7 @@
       "margin_gain_gbp": 5826.36,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.99 £ (variation de -8.6 %). Cette décision repose sur une élasticité mesurée à -3.85 (catégorie Élastique) visant un gain de marge de 5826.36 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "71477",
@@ -1255,7 +1258,7 @@
       "margin_gain_gbp": -496.8,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 3.99 £ (variation de +1.0 %). Cette décision repose sur une élasticité mesurée à -3.60 (catégorie Élastique) visant un gain de marge de -496.80 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "79321",
@@ -1273,7 +1276,7 @@
       "margin_gain_gbp": 238.38,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 5.49 £ (variation de -4.5 %). Cette décision repose sur une élasticité mesurée à -2.16 (catégorie Élastique) visant un gain de marge de 238.38 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "82484",
@@ -1291,7 +1294,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 7.95 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.54 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "84029E",
@@ -1309,7 +1312,7 @@
       "margin_gain_gbp": 1105.51,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 3.99 £ (variation de -6.1 %). Cette décision repose sur une élasticité mesurée à -2.74 (catégorie Élastique) visant un gain de marge de 1105.51 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "84347",
@@ -1326,8 +1329,8 @@
       "rec_margin": 41237.08,
       "margin_gain_gbp": -394.92,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 2.49 £ (variation de -2.4 %). Cette décision repose sur une élasticité mesurée à -1.62 (catégorie Élastique) visant un gain de marge de -394.92 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "llm_justification": "Nous vous recommandons d'ajuster le tarif du produit ROTATING SILVER ANGELS T-LIGHT HLDR à 2.49 £, soit une variation de -2.35 %. Cette décision prend en compte une élasticité-prix de -1.62 indiquant une forte sensibilité de la demande, bien que le gain de marge attendu soit de -394.92 £. Le risque commercial principal réside dans la réaction des clients face à la volatilité tarifaire et dans l'incapacité des volumes supplémentaires à compenser cette perte de rentabilité.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "84946",
@@ -1345,7 +1348,7 @@
       "margin_gain_gbp": 1310.22,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.37 £ (variation de +9.6 %). Cette décision repose sur une élasticité mesurée à -1.32 (catégorie Élastique) visant un gain de marge de 1310.22 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "85099B",
@@ -1363,7 +1366,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.08 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.94 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "85099C",
@@ -1381,7 +1384,7 @@
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
       "llm_justification": "Nous recommandons un prix ajusté à 2.16 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.29 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     },
     {
       "StockCode": "85099F",
@@ -1399,7 +1402,7 @@
       "margin_gain_gbp": 885.61,
       "opt_reason": "Optimisation Marge (Élastique)",
       "llm_justification": "Nous recommandons un prix ajusté à 1.99 £ (variation de -4.3 %). Cette décision repose sur une élasticité mesurée à -2.56 (catégorie Élastique) visant un gain de marge de 885.61 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Fallback Modèle)"
+      "control_status": "Rejeté (Hallucination Regex)"
     }
   ]
 }
