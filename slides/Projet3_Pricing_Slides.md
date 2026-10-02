@@ -31,18 +31,20 @@
 ---
 
 ## Slide 3 : Le Moteur d'Optimisation & Plan d'Action
-### Un gain cumulé sur 2 ans de +£102 724.99 (+5.67 %) soit ~£51 362 / an, strictement borné à +/- 10.00 %.
+### Un gain cumulé sur 2 ans de +£134 496.76 (+7.42 %) soit ~£67 248 / an, strictement borné à +/- 10.00 %.
 
 > **Moteur de Recommandation & Gouvernance** : Application de prix cibles sous contraintes métiers strictes (+/- 10% max après arrondi), contrôlés par LLM anti-hallucination (Regex) et soumis à arbitrage humain.
 
 ### Impact Financier, Garde-fous et Feuille de Route
 - **Garde-fous Métier Stricts (100 % Respectés)** :
   * Variation maximale plafonnée à **+/- 10.00 % max après arrondi** (0 SKU en dehors des bornes).
-  * Markup minimum de **1.2x**, arrondis psychologiques en `,49` ou `,99` soumis au respect strict de la fourchette.
+  * Markup minimum de **1.2x**, arrondis psychologiques directionnels en `,49` ou `,99` soumis au respect strict de la fourchette et à la règle de gain de marge non négatif.
 - **Impact Financier (Période historique de 2 ans)** :
-  * **Scénario Central (Coût = 50% prix)** : **+£102 724.99** de marge additionnelle cumulée sur 2 ans (**+5.67 %**), soit **~£51 362 / an**.
-  * **Analyse de Sensibilité sur 2 ans** : Gain de **+£160 125.86 (+7.36 %)** à 40% de coût et **+£52 277.71 (+3.61 %)** à 60% de coût.
-- **Contrôle Anti-Hallucination & Validation Humaine** :
-  * **Taux d'acceptation au 1er essai** : **20.0 %** (10/50 validés, 40 rejets par contrôle Regex anti-hallucination, 0 erreur API).
+  * **Scénario Central (Coût = 50% prix)** : **+£134 496.76** de marge additionnelle cumulée sur 2 ans (**+7.42 %**), soit **~£67 248 / an**.
+  * **Analyse de Sensibilité sur 2 ans** : Gain de **+£198 822.64 (+9.14 %)** à 40% de coût et **+£84 353.78 (+5.82 %)** à 60% de coût.
+- **Contrôle Anti-Hallucination avec Retry & Validation Humaine** :
+  * **Taux d'acceptation 1er essai** : **20.0 %** (10/50 validés au 1er essai).
+  * **Taux d'acceptation 2ème essai (Retry)** : **76.0 %** (38/50 corrigés au 2ème essai).
+  * **Taux d'acceptation global** : **96.0 %** (48/50 validés au total, 2 rejets définitifs basculés sur le modèle déterministe de repli).
   * **Validation Humaine (Human-in-the-Loop)** : Décisions consignées dans `outputs/pricing/decisions.csv` (stockage temporaire conteneur Cloud Run).
 - **Prochaine Étape Opérationnelle** : Lancer un **Test A/B in vivo sur 5 références clés** pour mesurer l'élasticité réelle sur 4 semaines avant le déploiement généralisé.

@@ -169,12 +169,28 @@ with tabs[2]:
 with tabs[3]:
     st.header("Moteur de Recommandation, Validation Humaine & Sensibilité")
 
-    # Metrics Financières
+    # Metrics Financières & Contrôle LLM
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Marge Baseline Total", f"£{global_m['baseline_margin_gbp']:,.2f}")
     m2.metric("Marge Optimisée Total", f"£{global_m['optimized_margin_gbp']:,.2f}")
     m3.metric("Gain de Marge Potentiel", f"+£{global_m['margin_gain_gbp']:,.2f}", f"+{global_m['margin_gain_pct']*100:.2f} %")
-    m4.metric("Contrôle LLM (1er essai)", f"{llm_m['first_try_acceptance_rate']*100:.1f} %")
+    
+    overall_rate = llm_m.get("overall_acceptance_rate", llm_m.get("first_try_acceptance_rate", 0.0)) * 100
+    first_try_rate = llm_m.get("first_try_acceptance_rate", 0.0) * 100
+    second_try_rate = llm_m.get("second_try_acceptance_rate", 0.0) * 100
+    
+    m4.metric(
+        "Taux d'Acceptation LLM", 
+        f"{overall_rate:.1f} %", 
+        f"{first_try_rate:.0f}% 1er essai | {second_try_rate:.0f}% retry"
+    )
+
+    st.caption(
+        f"🛡️ **Gouvernance & Contrôle Anti-Hallucination Regex** : "
+        f"**{first_try_rate:.1f} %** validés au 1er essai (10/50), "
+        f"**{second_try_rate:.1f} %** récupérés au 2ème essai avec réinstruction corrective (38/50), "
+        f"soit **{overall_rate:.1f} % d'acceptation globale** (48/50). 2 rejets basculés sur le modèle déterministe de repli."
+    )
 
     st.divider()
 
