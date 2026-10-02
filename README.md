@@ -12,13 +12,11 @@ Laboratoire d'ingénierie et d'analyse de données axé sur l'expérience client
 
 ---
 
-## 🗺️ Roadmap du Laboratoire (4 Projets)
-
-| Projet | Périmètre & Technologies | Statut |
+## 🗺️ Roadmap du Laboratoir| Projet | Périmètre & Technologies | Statut |
 |---|---|---|
 | **[Projet 1 : Voix du Client IA](./voc/)** | Classification LLM Gemini, NPS Proxy, Matrice Irritants, NPS Prédictif ML (Lift 2.56x) & Exporter PDF. | ✅ **Complété** |
 | **[Projet 2 : Segmentation & Portefeuille](./portfolio/)** | Segmentation RFM, Clustérisation 3D K-Means, Personas LLM (RGPD), Rationalisation SKUs Pareto & Business Cases A/B. | ✅ **Complété** |
-| **[Projet 3 : Pricing & Élasticité Prix](./pricing/)** | Modélisation de l'élasticité prix, optimisation de marge & recommandations de tarification. | 📅 **Prochainement** |
+| **[Projet 3 : Pricing & Élasticité Prix](./pricing/)** | Modélisation log-log OLS de l'élasticité prix, optimisation sous garde-fous métiers, justifications LLM anti-hallucination par Regex & journalisation Human-in-the-Loop. | ✅ **Complété** |
 | **[Projet 4 : Copilote Agentique](./copilot/)** | Agent IA décisionnel autonome (AGY SDK / LangGraph) pour requêter les insights du lab. | 📅 **Prochainement** |
 
 ---
@@ -88,13 +86,32 @@ Ce module (`portfolio/`) analyse **5 852 clients uniques** et **4 907 référenc
   * **Business Case A (Reconquête Clients À risque)** : Seuil de rentabilité dès **1.58 %** de taux de réponse incrémentale basé sur le panier transactionnel moyen de **£362.01** (Gain Net de **£6 061.53** à 8% de conversion, ROI : **406.8 %**).
   * **Business Case B (Rationalisation SKUs)** : Seuil de rentabilité dès **£13.94 / SKU / an** de coût de complexité logistique (vs £500 retenus dans le scénario central, dégageant **£85 546.35** net) et dès **0 %** de transfert d'achat.
 
-### ⚠️ Limites & Périmètre d'Interprétation (Projet 2)
+---
 
-1. **Données transactionnelles historiques (Online Retail II)** : Ingestion limitée aux enregistrements 2009-2011; absence de données sociodémographiques ou de satisfaction directe des acheteurs.
-2. **Hypothèses des Business Cases** : Les taux de réengagement (8 %) et de transfert d'achat (50 %) sont des hypothèses de travail illustratives, à valider par un test avec groupe témoin (A/B testing in vivo).
-3. **Coûts logistiques fixes par SKU** : La valeur de £500 / SKU / an constitue une moyenne forfaitaire; l'exécution impose la validation des engagements contractuels fournisseurs (MOQ, remises sur volume) et des coûts de déstockage.
-4. **Périmètres temporels des Business Cases** : Le CA à risque des SKUs candidates (£14 020.87) est un chiffre d'affaires cumulé sur deux ans, alors que les économies logistiques (£88 000/an) sont calculées sur une base annuelle.
-5. **Présence de références de test / ajustements (TEST, GIFT, etc.)** : Le dataset conserve certaines références de test ou d'ajustement opérationnel (ex: TEST, GIFT) non filtrées par les règles initiales d'exclusion des StockCodes. Un nettoyage complémentaire du master données produits est nécessaire avant l'exécution de la déréférenciation.
+## 🏷️ Projet 3 : Optimisation du Pricing & Élasticité Prix (Online Retail II)
+
+Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économétrie OLS log-log, calcule les prix optimaux sous garde-fous métier et intègre une couche de contrôle anti-hallucination par Regex avec journalisation *Human-in-the-Loop*.
+
+### 🌟 Synthèse des Résultats & Modèle Économétrique
+
+* **Diagnostic Tarifaire Catalogue** :
+  * **1 993 SKUs éligibles** ($\ge 40$ semaines de ventes et $CV \ge 5\%$).
+  * **Dispersion Tarifaire** : Ratio médian $P_{\max}/P_{\min} = 2,6\times$. **75,5 %** des SKUs présentent un écart $\ge 2\times$.
+  * **Remise Implicite Grossistes** : Seulement **5,13 %** de remise unitaire pour le Top 1% des grossistes malgré $10\times$ plus de volumes.
+* **Modélisation Économétrique Log-Log OLS avec Effets Fixes Mensuels** :
+  * Équation : $\ln(Q) = \alpha + \epsilon \cdot \ln(P) + \text{effets\_mois} + e$.
+  * **SKUs Élastiques ($\epsilon < -1, p < 0,10$)** : **37 SKUs (74 %)** (Élasticité moyenne: **-2,78**). Baisse de prix pour booster les volumes.
+  * **SKUs Inélastiques ($-1 \le \epsilon < 0, p < 0,10$)** : **2 SKUs (4 %)**. Hausse de prix pour capter de la marge.
+  * **SKUs Exclus / Non Concluantes ($p \ge 0,10$ ou $\epsilon \ge 0$)** : **11 SKUs (22 %)** exclues par sécurité (incertitude statistique $p \ge 0,10$ ou effet Veblen/Giffen).
+* **Optimisation sous Garde-fous Métiers & Modèle Financier** :
+  * Garde-fous : Variation plafonnée à **$\pm 10\%$**, markup minimum de **$1,2\times$**, arrondis psychologiques en `,49` ou `,99`.
+  * **Gain de Marge Net (Scénario Central 50% coût)** : **+£123 012,77 (+6,72 %)** (de £1,83M à £1,95M).
+  * **Analyse de Sensibilité** : Gain de **+£167k (+7,62 %)** à 40% de coût et **+£92k (+6,29 %)** à 60% de coût.
+* **Gouvernance IA & Contrôle Anti-Hallucination** :
+  * Génération de justifications Gemini structurées via `LLMClient.complete_json`.
+  * **Contrôle Anti-Hallucination Regex** : Extraction et vérification de 100% des chiffres cités dans le texte ($\Delta < 0.05$).
+  * **Taux d'acceptation au 1er essai** : **100,0 %** (0 réessai requis).
+  * **Validation Humaine (Human-in-the-Loop)** : Journalisation des arbitrages Category Manager dans `outputs/pricing/decisions.csv`.
 
 ---
 
@@ -106,6 +123,7 @@ Chaque projet intègre un moteur d'exportation PDF customisé (`common/pdf_expor
 * **Supports disponibles au téléchargement** :
   * `Projet1_Voix_du_Client_IA_Slides.pdf` (3 slides)
   * `Projet2_Segmentation_Portefeuille_Slides.pdf` (4 slides)
+  * `Projet3_Pricing_Slides.pdf` (3 slides)
 
 ---
 
@@ -132,9 +150,31 @@ customer-growth-ai-lab/
 │   ├── product_analysis.py# Analyse Pareto ABC & Candidats à la déréférenciation
 │   ├── business_case.py   # Modélisation financière des Business Cases A & B
 │   └── app.py             # Application interactive Streamlit Projet 2
+├── pricing/               # Module Projet 3 : Pricing & Élasticité Prix
+│   ├── data_prep.py       # Filtrage SKUs éligibles (40w, CV >= 5%) & agrégation
+│   ├── pricing_analysis.py# Diagnostic dispersion tarifaire & remises grossistes
+│   ├── elasticity.py      # Régression log-log OLS avec effets fixes mois (statsmodels)
+│   ├── optimization.py    # Optimisation sous garde-fous (+/-10%, markup, rounding)
+│   ├── llm_justification.py# Justifications Gemini & contrôle Regex anti-hallucination
+│   ├── export_summary.py  # Pipeline unifié & export JSON (38 Ko) / Excel (15 Ko)
+│   └── app.py             # Application interactive Streamlit Projet 3
 ├── slides/                # Supports de restitution Markdown conseil
 │   ├── Projet1_Voix_du_Client_IA_Slides.md
-│   └── Projet2_Segmentation_Portefeuille_Slides.md
+│   ├── Projet2_Segmentation_Portefeuille_Slides.md
+│   └── Projet3_Pricing_Slides.md
+├── tests/                 # Suite de tests unitaires pytest (17/17 passés)
+│   ├── test_business_case.py
+│   ├── test_llm.py
+│   ├── test_pricing.py
+│   ├── test_product_analysis.py
+│   ├── test_retail_load.py
+│   └── test_rfm.py
+├── main.py                # Hub d'entrée Streamlit multi-pages (`st.navigation`)
+├── config.py              # Configuration centralisée des chemins et constantes
+├── PROGRESS.md            # Suivi de progression et journal d'apprentissage
+├── Dockerfile             # Containerization pour Google Cloud Run
+└── requirements.txt       # Dépendances du projet (fpdf2, streamlit, scikit-learn, etc.)
+```ortefeuille_Slides.md
 ├── main.py                # Hub d'entrée Streamlit multi-pages (`st.navigation`)
 ├── config.py              # Configuration centralisée des chemins et constantes
 ├── PROGRESS.md            # Suivi de progression et journal d'apprentissage

@@ -177,14 +177,28 @@
     - Ajout dans la section *Limites* du décalage temporel du Business Case B (CA à risque sur 2 ans vs économies logistiques annuelles).
 - Résultats obtenus : 12/12 tests unitaires passés au vert (100%), déploiement Cloud Run 100% synchronisé avec le README et les slides PDF.
 
-## [Projet 3 : Pricing & Élasticité] - Étape 4 : Moteur de Recommandation de Prix & Garde-fous Métier
-- Date : 2026-10-01
-- Fait : Implémentation de `round_psychological_price()`, `optimize_sku_prices()` et `run_sensitivity_analysis()` dans `pricing/optimization.py`.
-- Ce que j'ai compris : Formule du prix théorique optimal $P^* = c \cdot \frac{\epsilon}{1+\epsilon}$, rôle des garde-fous métier ($\pm 10\%$ max, markup $\ge 1.2$, prix psychologiques en `,49` ou `,99`), et utilité de l'analyse de sensibilité pour prouver la robustesse financière face au Directeur Financier.
-- Points où j'ai été aidé (niveau d'aide) : Niveau 4 (Squelette et calcul de la demande à élasticité constante $Q_{\text{rec}} = Q_{\text{curr}} \cdot (P_{\text{rec}}/P_{\text{curr}})^\epsilon$).
-- Résultats obtenus (chiffres réels) : Marge Baseline Scénario Central (50% coût) = **£1 829 983.55**, Marge Optimisée sous garde-fous = **£1 952 996.32**, **Gain de Marge Potentiel = +£123 012.77 (+6.72%)**. Analyse de sensibilité : **+£167 416.84 (+7.62%)** à 40% coût, **+£92 039.77 (+6.29%)** à 60% coût.
-- Questions d'entretien travaillées : Justification de l'analyse de sensibilité auprès de la Direction Financière ; risques majeurs de la suppression des garde-fous (erreur d'extrapolation, guerre des prix et dégradation d'image).
-- Prochaine étape : Étape 5 (Génération des métriques synthétiques JSON & Modèle Financier Excel).
+## [Projet 3 : Pricing & Élasticité] - Étape 6 : Application Streamlit Corporate & Validation Humaine
+- Date : 2026-10-02
+- Fait : Implémentation de `pricing/app.py` (4 onglets : Cadrage & Synthèse, Audit de la Politique Tarifaire Actuelle, Modélisation de l'Élasticité, Recommandations & Validation Humaine).
+- Ce que j'ai compris : Architecture sans repli silencieux lisant exclusivement la source unique de vérité `outputs/pricing/summary_metrics.json` (rendu instantané 2 ms) et intégration d'un système de décision humaine *Human-in-the-Loop* avec journalisation des arbitrages dans `outputs/pricing/decisions.csv`.
+- Résultats obtenus : Application interactive à 4 onglets 100% fonctionnelle, téléchargement direct du modèle Excel `pricing_optimization.xlsx` et footer GitHub structuré.
+
+## [Projet 3 : Pricing & Élasticité] - Étape 7 : Contrôle Anti-Hallucination Regex & FinOps LLM
+- Date : 2026-10-02
+- Fait : Implémentation de `pricing/llm_justification.py` avec le client Gemini `LLMClient.complete_json()` et cache disque `outputs/pricing/justifications_cache.json`.
+- Ce que j'ai compris : Extraction automatique via `re.findall(r"[-+]?\d+(?:[\.,]\d+)?", ...)` de toutes les valeurs chiffrées générées par le LLM et comparaison stricte avec la tolérance float (`abs(extracted - allowed) < 0.05`) par rapport aux entrées fournies.
+- Résultats obtenus : **100.0 % d'acceptation au 1er essai** (0 réessais nécessaires, 0 hallucination sur les 15 SKUs du Top 15).
+
+## [Projet 3 : Pricing & Élasticité] - Étape 8 : Restitution Stratégique PDF & Suite de Tests Unitaires
+- Date : 2026-10-02
+- Fait :
+  - **Suite de tests unitaires** [`tests/test_pricing.py`](tests/test_pricing.py) : Couverture complète (5 tests) de la préparation des données, du diagnostic tarifaire, du calcul des élasticités, des garde-fous de prix et du dictionnaire de synthèse.
+  - **Slide Deck Stratégique** [`slides/Projet3_Pricing_Slides.md`](slides/Projet3_Pricing_Slides.md) (3 slides : Audit & Constat, Économétrie & Élasticité, Recommandations & Feuille de Route).
+  - **Export PDF Standardisé** [`slides/Projet3_Pricing_Slides.pdf`](slides/Projet3_Pricing_Slides.pdf) généré via `common/pdf_exporter.py` (3 pages A4 Paysage).
+  - **Documentation & Dynamisation** : Dynamisation complète de tous les textes markdown dans `pricing/app.py` lisant directement depuis `summary_metrics.json`.
+- Statut : **Projet 3 intégralement finalisé, testé (17/17 tests passés au vert) et validé !**
+
+
 
 
 

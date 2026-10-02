@@ -10,6 +10,9 @@ outputs/**/*.pdf
 !outputs/voc/summary_metrics.json
 !outputs/portfolio/summary_metrics.json
 !outputs/portfolio/business_case.xlsx
+!outputs/pricing/summary_metrics.json
+!outputs/pricing/pricing_optimization.xlsx
+
 .ipynb_checkpoints/
 .DS_Store
 Prompt_*.md

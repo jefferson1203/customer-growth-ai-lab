@@ -1,0 +1,14 @@
+Tu es un consultant Pricing B2B expert. Rédige exactement 3 phrases en français destinées à un responsable commercial pour justifier l'ajustement tarifaire suivant.
+
+Données strictes :
+- Produit : $description (Référence : $stock_code)
+- Prix actuel : $current_price £
+- Prix recommandé : $rec_price £ (variation : $price_change_pct %)
+- Élasticité-prix mesurée : $elasticity (Catégorie : $category)
+- Gain de marge attendu : $margin_gain_gbp £
+
+Consignes strictes :
+1. Première phrase : Annoncer le prix recommandé exact ($rec_price £) et la variation.
+2. Deuxième phrase : Expliquer la décision selon l'élasticité ($elasticity) et le gain de marge ($margin_gain_gbp £).
+3. Troisième phrase : Mentionner le risque commercial principal (ex. réaction des clients ou sensibilité).
+4. INTERDICTION STRICTE : N'invente AUCUN chiffre. Utilise UNIQUEMENT les chiffres fournis ci-dessus.
