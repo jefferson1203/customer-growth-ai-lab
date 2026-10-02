@@ -105,6 +105,7 @@ def generate_pricing_justifications(
     justifications = []
     statuses = []
     first_try_successes = 0
+    second_try_successes = 0
     api_errors = 0
     regex_rejections = 0
 
@@ -153,35 +154,62 @@ def generate_pricing_justifications(
             text = generate_fallback_justification(row.to_dict())
             api_success = False
 
+        justifications.append(text)
+
         if not api_success:
-            justifications.append(text)
             statuses.append("Erreur API (Fallback Modèle)")
             api_errors += 1
         else:
             is_valid, unverified = verify_justification_numbers(text, allowed_values)
 
             if is_valid:
-                justifications.append(text)
                 statuses.append("Validé (1er essai)")
                 first_try_successes += 1
             else:
-                fallback_text = generate_fallback_justification(row.to_dict())
-                justifications.append(fallback_text)
-                statuses.append("Rejeté (Hallucination Regex)")
-                regex_rejections += 1
+                # Tentative de 2ème essai (retry avec consigne de correction)
+                retry_cache_key = f"{cache_key}_retry"
+                retry_variables = variables.copy()
+                retry_variables["description"] = (
+                    f"{description} (ATTENTION CORRECTION : Les nombres {unverified} de votre réponse précédente "
+                    f"étaient interdits. Citez UNIQUEMENT les chiffres exacts fournis : prix {rec_price:.2f} £, "
+                    f"variation {price_change_pct:+.2f} %, élasticité {elasticity:.2f}, gain {margin_gain_gbp:.2f} £)."
+                )
+
+                try:
+                    res_retry = client.complete_json(variables=retry_variables, cache_key=retry_cache_key, schema=PricingJustificationSchema)
+                    text_retry = res_retry.justification.strip()
+                    is_valid_retry, unverified_retry = verify_justification_numbers(text_retry, allowed_values)
+
+                    if is_valid_retry:
+                        justifications[-1] = text_retry
+                        statuses.append("Validé (2ème essai)")
+                        second_try_successes += 1
+                    else:
+                        justifications[-1] = generate_fallback_justification(row.to_dict())
+                        statuses.append("Rejeté (Hallucination Regex)")
+                        regex_rejections += 1
+                except Exception:
+                    justifications[-1] = generate_fallback_justification(row.to_dict())
+                    statuses.append("Rejeté (Hallucination Regex)")
+                    regex_rejections += 1
 
     df_res["llm_justification"] = justifications
     df_res["control_status"] = statuses
 
     total_count = len(df_res)
     first_try_rate = (first_try_successes / total_count) if total_count > 0 else 0.0
+    second_try_rate = (second_try_successes / total_count) if total_count > 0 else 0.0
+    overall_acceptance_rate = ((first_try_successes + second_try_successes) / total_count) if total_count > 0 else 0.0
 
     control_metrics = {
         "total_recommendations": total_count,
         "first_try_successes": first_try_successes,
+        "second_try_successes": second_try_successes,
         "regex_rejections": regex_rejections,
         "api_errors": api_errors,
         "first_try_acceptance_rate": round(first_try_rate, 4),
+        "second_try_acceptance_rate": round(second_try_rate, 4),
+        "overall_acceptance_rate": round(overall_acceptance_rate, 4),
         "status_breakdown": pd.Series(statuses).value_counts().to_dict()
     }
 

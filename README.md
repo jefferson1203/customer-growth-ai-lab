@@ -116,11 +116,14 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
   * **SKUs Exclus / Non Concluantes (p >= 0.10 ou élasticité >= 0)** : **11 SKUs (22 %)** exclues par sécurité (incertitude statistique p >= 0.10 ou effet Veblen/Giffen). Prix maintenu exact (0.00% de variation).
 * **Optimisation sous Garde-fous Métiers (100 % Respectés)** :
   * Garde-fous : Variation maximale plafonnée à **±10.00% max après arrondi** (**0 SKU en dehors des bornes**, écart max 9.88%), markup minimum de **1.2x**, arrondis psychologiques sous contrainte stricte en `,49` ou `,99`.
-  * **Gain de Marge Net Cumulé sur 2 Ans (Scénario Central 50% coût)** : **+£102 724,99 (+5,67 %)** (de £1,81M à £1,91M), soit **~£51 362,50 / an**.
-  * **Analyse de Sensibilité (2 Ans)** : Gain de **+£160 125,86 (+7,36 %)** à 40% de coût et **+£52 277,71 (+3,61 %)** à 60% de coût.
+  * **Gain de Marge Net Cumulé sur 2 Ans (Scénario Central 50% coût)** : **+£134 496,76 (+7,42 %)** (de £1,81M à £1,95M), soit **~£67 248,38 / an**.
+  * **Analyse de Sensibilité (2 Ans)** : Gain de **+£198 822,64 (+9,14 %)** à 40% de coût et **+£84 353,78 (+5,82 %)** à 60% de coût.
 * **Gouvernance IA & Validation Humaine** :
   * Génération de justifications Gemini structurées via `LLMClient.complete_json` (clé de cache dynamique `stock_code_varhash`).
-  * **Contrôle Anti-Hallucination Regex Mesuré** : **20,0 % d'acceptation au 1er essai** (10/50 validés au 1er essai, 40 rejets par contrôle Regex anti-hallucination, 0 erreur API).
+  * **Contrôle Anti-Hallucination Regex Mesuré avec Boucle de Correction (Retry)** :
+    * **20,0 % d'acceptation au 1er essai** (10/50 validés directement).
+    * **76,0 % récupérés au 2ème essai** (38/50 corrigés suite à l'instruction de rappel des nombres autorisés).
+    * **96,0 % de Taux d'Acceptation Global** (48/50 validés au total, 2 rejets définitifs basculés sur le modèle déterministe de repli, 0 erreur API).
   * **Validation Humaine (Human-in-the-Loop)** : Journalisation des arbitrages Category Manager dans `outputs/pricing/decisions.csv` (stockage temporaire sur le disque éphémère du conteneur Cloud Run, à relier à une BDD persistante en production).
 
 ---
