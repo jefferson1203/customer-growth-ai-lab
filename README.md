@@ -105,17 +105,17 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
 ### 🌟 Synthèse des Résultats & Modèle Économétrique
 
 * **Diagnostic Tarifaire Catalogue** :
-  * **1 993 SKUs éligibles** ($\ge 40$ semaines de ventes et $CV \ge 5\%$).
+  * **1 993 SKUs éligibles** (présence ≥ 40 semaines de ventes et CV ≥ 5%).
   * **Prix Actuel de Référence** : Calculé sur la moyenne des 12 dernières semaines observées.
-  * **Dispersion Tarifaire** : Ratio médian $P_{\max}/P_{\min} = 2,6\times$. **75,5 %** des SKUs présentent un écart $\ge 2\times$.
-  * **Remise Implicite Grossistes** : Seulement **5,13 %** de remise unitaire pour le Top 1% des grossistes malgré $10\times$ plus de volumes.
+  * **Dispersion Tarifaire** : Ratio médian Pmax / Pmin = 2.6x. **75,5 %** des SKUs présentent un écart ≥ 2x.
+  * **Remise Implicite Grossistes** : Seulement **5,13 %** de remise unitaire pour le Top 1% des grossistes malgré 10x plus de volumes.
 * **Modélisation Économétrique Log-Log OLS avec Effets Fixes Mensuels** :
-  * Équation : $\ln(Q) = \alpha + \epsilon \cdot \ln(P) + \text{effets\_mois} + e$.
-  * **SKUs Élastiques ($\epsilon < -1, p < 0,10$)** : **37 SKUs (74 %)** (Élasticité moyenne: **-2,78**). Baisse de prix pour booster les volumes.
-  * **SKUs Inélastiques ($-1 \le \epsilon < 0, p < 0,10$)** : **2 SKUs (4 %)**. Hausse de prix pour capter de la marge.
-  * **SKUs Exclus / Non Concluantes ($p \ge 0,10$ ou $\epsilon \ge 0$)** : **11 SKUs (22 %)** exclues par sécurité (incertitude statistique $p \ge 0,10$ ou effet Veblen/Giffen). Prix maintenu exact ($0.00\%$ de variation).
+  * Équation : `ln(Q) = alpha + elasticity * ln(P) + effets_mois + e`
+  * **SKUs Élastiques (élasticité < -1.0, p < 0.10)** : **37 SKUs (74 %)** (Élasticité moyenne: **-2.78**). Baisse de prix pour booster les volumes.
+  * **SKUs Inélastiques (-1.0 <= élasticité < 0, p < 0.10)** : **2 SKUs (4 %)**. Hausse de prix pour capter de la marge.
+  * **SKUs Exclus / Non Concluantes (p >= 0.10 ou élasticité >= 0)** : **11 SKUs (22 %)** exclues par sécurité (incertitude statistique p >= 0.10 ou effet Veblen/Giffen). Prix maintenu exact (0.00% de variation).
 * **Optimisation sous Garde-fous Métiers (100 % Respectés)** :
-  * Garde-fous : Variation maximale plafonnée à **$\pm 10.00\%$ max après arrondi** (**0 SKU en dehors des bornes**, écart max 9.88%), markup minimum de **$1,2\times$**, arrondis psychologiques sous contrainte stricte en `,49` ou `,99`.
+  * Garde-fous : Variation maximale plafonnée à **±10.00% max après arrondi** (**0 SKU en dehors des bornes**, écart max 9.88%), markup minimum de **1.2x**, arrondis psychologiques sous contrainte stricte en `,49` ou `,99`.
   * **Gain de Marge Net Cumulé sur 2 Ans (Scénario Central 50% coût)** : **+£102 724,99 (+5,67 %)** (de £1,81M à £1,91M), soit **~£51 362,50 / an**.
   * **Analyse de Sensibilité (2 Ans)** : Gain de **+£160 125,86 (+7,36 %)** à 40% de coût et **+£52 277,71 (+3,61 %)** à 60% de coût.
 * **Gouvernance IA & Validation Humaine** :
