@@ -208,15 +208,20 @@
   - **Gain de Marge Net Cumulé (2 Ans)** : Hausse de +102 725 £ à **+134 496,76 £ (+7,42 %)**, soit **~67 248,38 £ / an**.
   - **Répartition des Recommandations** : 14 hausses, 24 baisses, 12 maintenus (dont 11 par statut non significatif/atypique et 1 par arrondi défavorable). **0 perte de marge**.
 
-## [Projet 3 : Pricing & Élasticité] - Étape 10 : Analyse des 40 Rejets du Contrôle Anti-Hallucination Regex & Clé de Cache Dynamique
+## [Projet 3 : Pricing & Élasticité] - Étape 10 : Assainissement du Contrôle Anti-Hallucination, Traçabilité `unverified` et Diagnostic des Rejets LLM
 - Date : 2026-10-02
 - Fait :
-  - **Empreinte de Cache Dynamique (`pricing/llm_justification.py`)** : Invalidation automatique du cache lors d'un changement de prix via `cache_key = f"{stock_code}_{var_hash}"`.
-  - **Conservation des nombres non vérifiés (`unverified`)** : Enregistrement pour chaque rejet de la liste des nombres non autorisés extraits du texte LLM.
-  - **Consolidation des Constantes Métier Autorisées** : Ajout des constantes de cadrage (`10.0`, `12.0`, `1.2`, `3.0`, `50.0`) et comptage séparé des erreurs API (0 sur ce passage).
+  - **Resserrage des constantes autorisées (`pricing/llm_justification.py`)** : Retrait des constantes permissives (`0.0`, `0.5`, `50.0`) qui affaiblissaient le contrôle Regex (risques d'hallucinations de type "50% de marge" ou "0.5 £" passant sous tolérance). Seules les constantes métier explicites du cadrage (`10.0` pour le garde-fou, `12.0` pour la fenêtre de semaines, `3.0` pour les phrases) ont été conservées.
+  - **Traçabilité complète des nombres non vérifiés (`unverified_try1` et `unverified_try2`)** : Conservation et enregistrement systématique dans le DataFrame et dans `summary_metrics.json` des nombres ayant motivé le rejet lors de chaque essai.
+  - **Gestion étanche des erreurs API au retry** : Traitement distinct des erreurs API survenant lors du 2ème essai (`"Erreur API au Retry (Fallback Modèle)"`) pour éviter de qualifier un échec réseau d'hallucination.
+  - **Désambiguïsation des identifiants StockCodes** : Préfixage textuel `REF-{stock_code}` dans les variables transmises au prompt afin que le LLM ne cite plus les identifiants numériques bruts susceptibles d'être captés par le parser Regex.
 - Résultats obtenus :
-  - **Taux d'acceptation au 1er essai** : **20,0 %** (10/50 validés au 1er essai, 40 rejets Regex).
-  - **Diagnostic des 40 rejets** : Les 40 justifications rejetées correspondent au fallback déterministe pré-généré pour le lot. Les nombres non vérifiés ont été isolés pour permettre une explication transparente du taux lors des restitutions.
+  - **Taux d'acceptation 1er essai** : Remonté à **30,0 %** (15/50 validés au 1er essai sans retry).
+  - **Taux d'acceptation 2ème essai (Retry)** : **70,0 %** (35/50 corrigés et validés après instruction ciblée).
+  - **Taux d'acceptation Global** : **100,0 %** (50/50 validés, 0 rejet définitif, 0 erreur API).
+  - **Diagnostic des rejets 1er essai (Question d'entretien)** :
+    * *Nombres issus des StockCodes* (ex: `22139`, `48187`) : Cités par le modèle comme référence produit et rejetés par Regex car non autorisés en tant que métriques. (Corrigé par le préfixe `REF-` et le retry).
+    * *Nombres issus des intitulés de produits* (ex: `72` cake cases, `11` pc set) : Extraits par Regex comme nombres libres et rejetés. La boucle de retry ré-oriente efficacement Gemini sur les métriques exactes sans ces chiffres parasites.
 
 
 

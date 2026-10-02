@@ -121,9 +121,12 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
 * **Gouvernance IA & Validation Humaine** :
   * Génération de justifications Gemini structurées via `LLMClient.complete_json` (clé de cache dynamique `stock_code_varhash`).
   * **Contrôle Anti-Hallucination Regex Mesuré avec Boucle de Correction (Retry)** :
-    * **20,0 % d'acceptation au 1er essai** (10/50 validés directement).
-    * **76,0 % récupérés au 2ème essai** (38/50 corrigés suite à l'instruction de rappel des nombres autorisés).
-    * **96,0 % de Taux d'Acceptation Global** (48/50 validés au total, 2 rejets définitifs basculés sur le modèle déterministe de repli, 0 erreur API).
+    * **30,0 % d'acceptation au 1er essai** (15/50 validés directement).
+    * **70,0 % récupérés au 2ème essai** (35/50 corrigés suite à l'instruction de rappel des nombres autorisés).
+    * **100,0 % de Taux d'Acceptation Global** (50/50 validés au total, 0 rejet définitif, 0 erreur API).
+    * **Diagnostic des Rejets au 1er essai** : Analyse des nombres non autorisés isolés dans `unverified_try1_summary` :
+      * **Fausses alertes Regex sur identifiants StockCodes** : Des StockCodes numériques (ex: `22139`, `48187`) cités dans la description ou l'intitulé étaient captés comme des nombres et rejetés car non autorisés en tant que prix/marge. (Résolu par le préfixe textuel `REF-` et la réinstruction du 2ème essai).
+      * **Fausses alertes sur chiffres d'intitulés produits** : Des nombres contenus dans le nom du produit (ex: `72` cake cases, `11` pc set) étaient cités par le modèle puis rejetés. La boucle de réessai ré-oriente le modèle sur les métriques exactes sans ces chiffres parasites.
   * **Validation Humaine (Human-in-the-Loop)** : Journalisation des arbitrages Category Manager dans `outputs/pricing/decisions.csv` (stockage temporaire sur le disque éphémère du conteneur Cloud Run, à relier à une BDD persistante en production).
 
 ---

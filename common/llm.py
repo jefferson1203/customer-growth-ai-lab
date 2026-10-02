@@ -81,12 +81,12 @@ class LLMClient:
         return {}
 
     def _save_cache(self) -> None:
-        """Écriture atomique du cache via un fichier temporaire .tmp (supporte pathlib.Path)."""
+        """Écriture atomique du cache via un fichier temporaire .tmp."""
         self.cache_path.parent.mkdir(parents=True, exist_ok=True)
-        tmp_path = self.cache_path.with_name(self.cache_path.name + ".tmp")
+        tmp_path = self.cache_path.with_suffix(".tmp")
         with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(self.cache, f, ensure_ascii=False, indent=2)
-        tmp_path.replace(self.cache_path)
+        os.replace(tmp_path, self.cache_path)
 
     def complete_json(self, variables: Dict[str, Any], cache_key: str, schema: Type[BaseModel]) -> BaseModel:
         """

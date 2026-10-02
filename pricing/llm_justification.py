@@ -104,6 +104,8 @@ def generate_pricing_justifications(
 
     justifications = []
     statuses = []
+    unverified_try1 = []
+    unverified_try2 = []
     first_try_successes = 0
     second_try_successes = 0
     api_errors = 0
@@ -119,8 +121,8 @@ def generate_pricing_justifications(
         description = str(row["Description"])
         category = str(row["category"])
 
-        # Constantes métier autorisées (ex: garde-fou ±10%, fenêtre 12 semaines, markup 1.2x, 3 phrases, ratio 50%)
-        domain_constants = [10.0, 10, 12.0, 12, 1.2, 3.0, 3, 50.0, 50, 0.5, 0.0]
+        # Constantes métier strictly autorisées (ex: garde-fou ±10%, fenêtre 12 semaines, 3 phrases)
+        domain_constants = [10.0, 10, 12.0, 12, 3.0, 3]
 
         # Liste complète des représentations numériques autorisées (brutes, arrondies, entières, pourcentage)
         allowed_values = [
@@ -133,7 +135,7 @@ def generate_pricing_justifications(
 
         variables = {
             "description": description,
-            "stock_code": stock_code,
+            "stock_code": f"REF-{stock_code}",
             "current_price": f"{current_price:.2f}",
             "rec_price": f"{rec_price:.2f}",
             "price_change_pct": f"{price_change_pct:+.2f}",
@@ -158,12 +160,16 @@ def generate_pricing_justifications(
 
         if not api_success:
             statuses.append("Erreur API (Fallback Modèle)")
+            unverified_try1.append([])
+            unverified_try2.append([])
             api_errors += 1
         else:
             is_valid, unverified = verify_justification_numbers(text, allowed_values)
+            unverified_try1.append(unverified)
 
             if is_valid:
                 statuses.append("Validé (1er essai)")
+                unverified_try2.append([])
                 first_try_successes += 1
             else:
                 # Tentative de 2ème essai (retry avec consigne de correction)
@@ -179,6 +185,7 @@ def generate_pricing_justifications(
                     res_retry = client.complete_json(variables=retry_variables, cache_key=retry_cache_key, schema=PricingJustificationSchema)
                     text_retry = res_retry.justification.strip()
                     is_valid_retry, unverified_retry = verify_justification_numbers(text_retry, allowed_values)
+                    unverified_try2.append(unverified_retry)
 
                     if is_valid_retry:
                         justifications[-1] = text_retry
@@ -190,11 +197,14 @@ def generate_pricing_justifications(
                         regex_rejections += 1
                 except Exception:
                     justifications[-1] = generate_fallback_justification(row.to_dict())
-                    statuses.append("Rejeté (Hallucination Regex)")
-                    regex_rejections += 1
+                    statuses.append("Erreur API au Retry (Fallback Modèle)")
+                    unverified_try2.append([])
+                    api_errors += 1
 
     df_res["llm_justification"] = justifications
     df_res["control_status"] = statuses
+    df_res["unverified_try1"] = unverified_try1
+    df_res["unverified_try2"] = unverified_try2
 
     total_count = len(df_res)
     first_try_rate = (first_try_successes / total_count) if total_count > 0 else 0.0
@@ -210,6 +220,7 @@ def generate_pricing_justifications(
         "first_try_acceptance_rate": round(first_try_rate, 4),
         "second_try_acceptance_rate": round(second_try_rate, 4),
         "overall_acceptance_rate": round(overall_acceptance_rate, 4),
+        "unverified_try1_summary": [num for sublist in unverified_try1 for num in sublist],
         "status_breakdown": pd.Series(statuses).value_counts().to_dict()
     }
 
