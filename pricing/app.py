@@ -65,6 +65,17 @@ with tabs[0]:
 
     st.subheader("Slides de Synthèse Stratégique Direction")
     
+    SLIDES_PDF_PATH = Path("slides/Projet3_Pricing_Slides.pdf")
+    if SLIDES_PDF_PATH.exists():
+        with open(SLIDES_PDF_PATH, "rb") as f_pdf:
+            st.download_button(
+                label="📄 Télécharger les Slides de Synthèse Stratégique Pricing (PDF A4 Paysage)",
+                data=f_pdf.read(),
+                file_name="Projet3_Pricing_Slides.pdf",
+                mime="application/pdf",
+                help="Télécharger le support de présentation executive au format PDF A4 Paysage (3 slides)."
+            )
+    
     pct_dispersion = diag_m['pct_skus_high_dispersion'] * 100
     imp_discount = diag_m['discounts_summary']['implicit_discount_pct'] * 100
     modeled_n = global_m['modeled_skus']
