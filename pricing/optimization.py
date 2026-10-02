@@ -27,12 +27,49 @@ def round_psychological_price(price: float) -> float:
         return float(integer_part + 0.99)
 
 
+def apply_guarded_psychological_price(p_raw: float, lower_bound: float, upper_bound: float) -> float:
+    """Arrondit un prix au niveau psychologique le plus proche tout en GARANTISSANT qu'il reste dans [lower_bound, upper_bound].
+
+    Args:
+        p_raw (float): Prix brut cible.
+        lower_bound (float): Borne inférieure absolue (ex: -10% ou markup min).
+        upper_bound (float): Borne supérieure absolue (ex: +10%).
+
+    Returns:
+        float: Prix recommandé respectant STRICTEMENT les garde-fous.
+    """
+    # 1. Tester l'arrondi standard
+    p_psych = round_psychological_price(p_raw)
+    if lower_bound <= p_psych <= upper_bound:
+        return round(p_psych, 2)
+
+    # 2. Chercher d'autres prix psychologiques (.49 ou .99) à l'intérieur des bornes
+    k_min = int(np.floor(lower_bound)) - 1
+    k_max = int(np.ceil(upper_bound)) + 1
+    
+    valid_psych_candidates = []
+    for k in range(k_min, k_max + 1):
+        for cent in (0.49, 0.99):
+            cand = round(k + cent, 2)
+            if lower_bound <= cand <= upper_bound:
+                valid_psych_candidates.append(cand)
+
+    if valid_psych_candidates:
+        # Prendre le candidat le plus proche du prix brut cible
+        best_cand = min(valid_psych_candidates, key=lambda c: abs(c - p_raw))
+        return round(best_cand, 2)
+
+    # 3. Si aucun prix .49 ou .99 ne rentre dans l'intervalle étroit, clamber et arrondir à 2 décimales
+    clamped = float(np.clip(p_raw, lower_bound, upper_bound))
+    return round(clamped, 2)
+
+
 def optimize_sku_prices(
     df_elasticity: pd.DataFrame,
     config: dict = PRICING,
     cost_ratio: float = None
 ) -> pd.DataFrame:
-    """Optimise les prix par SKU avec garde-fous métier (±10% max, markup >= 1.2, arrondi psychologique).
+    """Optimise les prix par SKU avec garde-fous métier stricts (±10% max après arrondi, markup >= 1.2).
 
     Args:
         df_elasticity (pd.DataFrame): Données d'élasticités par SKU.
@@ -50,11 +87,16 @@ def optimize_sku_prices(
 
     df_opt = df_elasticity.copy()
 
-    df_opt["current_price"] = df_opt["mean_price"]
-    df_opt["unit_cost"] = df_opt["current_price"] * cost_ratio
+    # Utiliser le prix récent sur les 12 dernières semaines (ou mean_price à défaut)
+    if "recent_12w_price" in df_opt.columns:
+        df_opt["current_price"] = df_opt["recent_12w_price"].round(2)
+    else:
+        df_opt["current_price"] = df_opt["mean_price"].round(2)
+
+    df_opt["unit_cost"] = (df_opt["current_price"] * cost_ratio).round(2)
     df_opt["current_quantity"] = df_opt["total_qty"]
-    df_opt["current_revenue"] = df_opt["current_price"] * df_opt["current_quantity"]
-    df_opt["current_margin"] = (df_opt["current_price"] - df_opt["unit_cost"]) * df_opt["current_quantity"]
+    df_opt["current_revenue"] = (df_opt["current_price"] * df_opt["current_quantity"]).round(2)
+    df_opt["current_margin"] = ((df_opt["current_price"] - df_opt["unit_cost"]) * df_opt["current_quantity"]).round(2)
 
     rec_prices = []
     rec_quantities = []
@@ -63,16 +105,16 @@ def optimize_sku_prices(
     opt_reasons = []
 
     for idx, row in df_opt.iterrows():
-        p_curr = row["current_price"]
-        cost = row["unit_cost"]
-        eps = row["elasticity"]
-        cat = row["category"]
-        q_curr = row["current_quantity"]
+        p_curr = round(float(row["current_price"]), 2)
+        cost = float(row["unit_cost"])
+        eps = float(row["elasticity"])
+        cat = str(row["category"])
+        q_curr = float(row["current_quantity"])
 
-        # Bornes de prix opérationnelles (Garde-fous)
-        p_min = p_curr * (1.0 - max_change)
-        p_max = p_curr * (1.0 + max_change)
-        p_floor = cost * min_markup
+        # Bornes de prix opérationnelles (Garde-fous stricts ±10.00% max)
+        p_min = round(np.ceil(p_curr * (1.0 - max_change) * 100.0) / 100.0, 2)
+        p_max = round(np.floor(p_curr * (1.0 + max_change) * 100.0) / 100.0, 2)
+        p_floor = round(np.ceil(cost * min_markup * 100.0) / 100.0, 2)
 
         lower_bound = max(p_min, p_floor)
         upper_bound = p_max
@@ -80,13 +122,14 @@ def optimize_sku_prices(
         if cat == "Élastique" and eps < -1.0:
             p_star = (eps / (1.0 + eps)) * cost
             p_rec_raw = float(np.clip(p_star, lower_bound, upper_bound))
-            p_rec = round_psychological_price(p_rec_raw)
+            p_rec = apply_guarded_psychological_price(p_rec_raw, lower_bound, upper_bound)
             reason = "Optimisation Marge (Élastique)"
         elif cat == "Inélastique":
             p_rec_raw = upper_bound
-            p_rec = round_psychological_price(p_rec_raw)
+            p_rec = apply_guarded_psychological_price(p_rec_raw, lower_bound, upper_bound)
             reason = "Ajustement Hausse (Inélastique)"
         else:
+            # Maintien exact du prix actuel pour non significatifs et atypiques
             p_rec = p_curr
             reason = "Maintien (Non Significatif / Atypique)"
 
@@ -96,16 +139,17 @@ def optimize_sku_prices(
             q_rec = q_curr * ((p_rec / p_curr) ** eps)
 
         q_rec = float(np.maximum(q_rec, 0))
-        r_rec = p_rec * q_rec
-        m_rec = (p_rec - cost) * q_rec
+        r_rec = round(p_rec * q_rec, 2)
+        m_rec = round((p_rec - cost) * q_rec, 2)
 
         rec_prices.append(round(p_rec, 2))
         rec_quantities.append(round(q_rec, 2))
-        rec_revenues.append(round(r_rec, 2))
-        rec_margins.append(round(m_rec, 2))
+        rec_revenues.append(r_rec)
+        rec_margins.append(m_rec)
         opt_reasons.append(reason)
 
     df_opt["rec_price"] = rec_prices
+    # Calcul propre du changement relatif après arrondi des prix
     df_opt["price_change_pct"] = ((df_opt["rec_price"] - df_opt["current_price"]) / df_opt["current_price"]).round(4)
     df_opt["rec_quantity"] = rec_quantities
     df_opt["rec_revenue"] = rec_revenues
@@ -140,7 +184,7 @@ def run_sensitivity_analysis(df_elasticity: pd.DataFrame, config: dict = PRICING
         tot_margin_gain = float(df_opt["margin_gain_gbp"].sum())
         gain_pct = (tot_margin_gain / tot_curr_margin) if tot_curr_margin > 0 else 0.0
 
-        sensitivity_results[f"cost_ratio_{int(cr*100)}"] = {
+        sensitivity_results[f"{int(cr*100)}"] = {
             "cost_ratio": cr,
             "cost_ratio_pct": f"{int(cr*100)}%",
             "current_margin_gbp": round(tot_curr_margin, 2),
@@ -159,7 +203,12 @@ if __name__ == "__main__":
     df_opt = optimize_sku_prices(df_elasticity, PRICING, cost_ratio=0.50)
     sensitivity = run_sensitivity_analysis(df_elasticity, PRICING)
 
-    print("--- RÉSULTATS DE L'OPTIMISATION DU PRICING ---")
+    max_dev = (df_opt["rec_price"] - df_opt["current_price"]).abs() / df_opt["current_price"]
+    print("--- VERIFICATION DES GARDE-FOUS STRICTS ---")
+    print(f"Écart relatif maximal observé : {max_dev.max() * 100:.2f}%")
+    print(f"Nombre de SKUs en dehors de +/- 10% : {(max_dev > 0.1001).sum()}")
+
+    print("\n--- RÉSULTATS DE L'OPTIMISATION DU PRICING ---")
     print(f"Marge Baseline Total : £{df_opt['current_margin'].sum():,.2f}")
     print(f"Marge Optimisée Total : £{df_opt['rec_margin'].sum():,.2f}")
     print(f"Gain de Marge Potentiel : £{df_opt['margin_gain_gbp'].sum():,.2f} ({df_opt['margin_gain_gbp'].sum()/df_opt['current_margin'].sum()*100:.2f}%)")

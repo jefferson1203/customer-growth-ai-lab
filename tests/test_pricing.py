@@ -84,3 +84,13 @@ def test_optimize_sku_prices(sample_retail_df):
     
     assert set(["rec_price", "rec_revenue", "rec_margin", "margin_gain_gbp"]).issubset(df_opt.columns)
     assert len(df_opt) == len(df_elasticity)
+
+
+def test_strict_guardrail_bounds(sample_retail_df):
+    df_weekly, sku_stats = prepare_weekly_pricing_data(sample_retail_df, PRICING)
+    df_elasticity = compute_sku_elasticity(df_weekly, sku_stats)
+    df_opt = optimize_sku_prices(df_elasticity, config=PRICING, cost_ratio=0.50)
+    
+    max_dev = (df_opt["rec_price"] - df_opt["current_price"]).abs() / df_opt["current_price"]
+    assert (max_dev <= 0.1001).all(), f"Certains prix dépassent le garde-fou de ±10% : {max_dev[max_dev > 0.1001]}"
+

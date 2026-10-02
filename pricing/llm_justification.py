@@ -106,23 +106,23 @@ def generate_pricing_justifications(
     first_try_successes = 0
 
     for idx, row in df_res.iterrows():
-        stock_code = str(row.get("StockCode", f"sku_{idx}"))
-        current_price = float(row.get("current_price", 0.0))
-        rec_price = float(row.get("rec_price", 0.0))
-        price_change_pct = round(float(row.get("price_change_pct", 0.0)) * 100, 2)
-        elasticity = float(row.get("elasticity", 0.0))
-        margin_gain_gbp = float(row.get("margin_gain_gbp", 0.0))
-        description = str(row.get("Description", "Produit"))
-        category = str(row.get("category", "Non spécifié"))
+        stock_code = str(row["StockCode"])
+        current_price = float(row["current_price"])
+        rec_price = float(row["rec_price"])
+        price_change_pct = round(float(row["price_change_pct"]) * 100, 2)
+        elasticity = float(row["elasticity"])
+        margin_gain_gbp = float(row["margin_gain_gbp"])
+        description = str(row["Description"])
+        category = str(row["category"])
 
+        # Liste complète des représentations numériques autorisées (brutes, arrondies, entières, pourcentage)
         allowed_values = [
-            current_price, round(current_price, 1),
-            rec_price, round(rec_price, 1),
-            price_change_pct, abs(price_change_pct), round(price_change_pct, 1), round(abs(price_change_pct), 1),
+            current_price, round(current_price, 1), round(current_price, 0), int(np.round(current_price)),
+            rec_price, round(rec_price, 1), round(rec_price, 0), int(np.round(rec_price)),
+            price_change_pct, abs(price_change_pct), round(price_change_pct, 1), round(abs(price_change_pct), 1), int(np.round(abs(price_change_pct))),
             elasticity, abs(elasticity), round(elasticity, 1), round(abs(elasticity), 1),
-            margin_gain_gbp, abs(margin_gain_gbp), round(margin_gain_gbp, 1), round(margin_gain_gbp, 0)
+            margin_gain_gbp, abs(margin_gain_gbp), round(margin_gain_gbp, 1), round(margin_gain_gbp, 0), int(np.round(abs(margin_gain_gbp)))
         ]
-
 
         variables = {
             "description": description,

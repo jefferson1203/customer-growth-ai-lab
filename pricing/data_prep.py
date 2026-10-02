@@ -15,6 +15,9 @@ def prepare_weekly_pricing_data(df_clean: pd.DataFrame, config: dict) -> tuple[p
 
     df_clean_w_filtered = df_clean_w[(df_clean_w["quantity"] > 0) & (df_clean_w["median_price"] > 0)]
 
+    # Calcul du prix moyen récent sur les 12 dernières semaines observées pour chaque SKU
+    recent_prices = df_clean_w_filtered.sort_values(by="YearWeek").groupby("StockCode").tail(12).groupby("StockCode")["median_price"].mean().round(2).rename("recent_12w_price")
+
     df_sku_stat = df_clean_w_filtered.groupby("StockCode").agg(
         nb_weeks=("YearWeek", "count"),
         mean_price=("median_price", "mean"),
@@ -23,6 +26,8 @@ def prepare_weekly_pricing_data(df_clean: pd.DataFrame, config: dict) -> tuple[p
         total_rev=("revenue", "sum"),
     ).reset_index()
 
+    df_sku_stat = df_sku_stat.merge(recent_prices, on="StockCode", how="left")
+    df_sku_stat["recent_12w_price"] = df_sku_stat["recent_12w_price"].fillna(df_sku_stat["mean_price"]).round(2)
 
     df_sku_stat["std_price"] = df_sku_stat["std_price"].fillna(0)
     df_sku_stat["cv_price"] = (df_sku_stat["std_price"] / df_sku_stat["mean_price"]).round(4)
