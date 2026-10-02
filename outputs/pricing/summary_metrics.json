@@ -1,6 +1,6 @@
 {
   "project": "Projet 3 - Optimisation du Pricing & Élasticité-Prix",
-  "generated_at": "2026-10-02T13:33:32.872186",
+  "generated_at": "2026-10-02T14:36:43.232535",
   "global_metrics": {
     "total_skus_raw": 4905,
     "eligible_skus": 1993,
@@ -237,17 +237,55 @@
   },
   "llm_control_metrics": {
     "total_recommendations": 50,
-    "first_try_successes": 10,
-    "second_try_successes": 38,
-    "regex_rejections": 2,
+    "first_try_successes": 15,
+    "second_try_successes": 35,
+    "regex_rejections": 0,
     "api_errors": 0,
-    "first_try_acceptance_rate": 0.2,
-    "second_try_acceptance_rate": 0.76,
-    "overall_acceptance_rate": 0.96,
+    "first_try_acceptance_rate": 0.3,
+    "second_try_acceptance_rate": 0.7,
+    "overall_acceptance_rate": 1.0,
+    "unverified_try1_summary": [
+      -15056.0,
+      -20725.0,
+      -20727.0,
+      -21137.0,
+      72.0,
+      -21232.0,
+      -21621.0,
+      -21623.0,
+      -21733.0,
+      -21928.0,
+      -21929.0,
+      -21931.0,
+      -22090.0,
+      -22111.0,
+      -22112.0,
+      -22139.0,
+      11.0,
+      -22178.0,
+      -22197.0,
+      4.0,
+      -22326.0,
+      -22355.0,
+      -22386.0,
+      -22411.0,
+      -22457.0,
+      -22469.0,
+      -22470.0,
+      -47566.0,
+      -48185.0,
+      -48187.0,
+      -71477.0,
+      -79321.0,
+      -82484.0,
+      -84347.0,
+      -85099.0,
+      -85099.0,
+      -85099.0
+    ],
     "status_breakdown": {
-      "Validé (2ème essai)": 38,
-      "Validé (1er essai)": 10,
-      "Rejeté (Hallucination Regex)": 2
+      "Validé (2ème essai)": 35,
+      "Validé (1er essai)": 15
     }
   },
   "top_opportunities": [
@@ -265,7 +303,7 @@
       "rec_margin": 202040.69,
       "margin_gain_gbp": 26375.2,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons d'ajuster le prix du REGENCY CAKESTAND 3 TIER à 11.49 £, soit une variation de -9.88 %. Avec une élasticité-prix mesurée à -3.46, cette baisse permettra de stimuler la demande pour dégager un gain de marge attendu de 26375.20 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'éventuelle dégradation de la valeur perçue du produit.",
+      "llm_justification": "Pour le produit REGENCY CAKESTAND 3 TIER, nous préconisons un prix recommandé de 11.49 £, ce qui représente une variation de -9.88 %. Cette décision s'appuie sur une forte élasticité-prix de -3.46, permettant d'accélérer les volumes pour générer un gain de marge attendu de 26375.20 £. Le principal risque commercial réside dans la réaction des clients quant à la perception de la valeur du produit et à la pérennité de ce nouveau positionnement tarifaire.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -282,8 +320,8 @@
       "rec_margin": 59194.54,
       "margin_gain_gbp": 17171.79,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de positionner le prix du DOOR MAT UNION FLAG à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette décision s'appuie sur une élasticité-prix de -5.65 garantissant une hausse des volumes pour générer un gain de marge attendu de 17171.79 £. Le risque commercial principal réside dans la gestion de la chaîne d'approvisionnement face à cette forte sensibilité de la demande pour éviter toute rupture de stock.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de positionner le DOOR MAT UNION FLAG au prix de 7.49 £, soit une variation de -9.21 %. Cette décision tire parti d'une forte élasticité-prix mesurée à -5.65 pour stimuler les volumes et générer un gain de marge attendu de 17171.79 £. Le principal risque commercial réside dans la réaction des clients et la capacité opérationnelle à absorber la forte hausse de la demande sans dégrader l'image de marque.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "20685",
@@ -299,8 +337,8 @@
       "rec_margin": 53997.36,
       "margin_gain_gbp": 12804.74,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit RED SPOTTY COIR DOORMAT, nous vous recommandons d'adopter un prix de 7.49 £, soit une variation de -9.21 %. Cette décision stratégique repose sur une élasticité-prix de -4.91, ce qui permettra de stimuler la demande pour capter un gain de marge attendu de 12804.74 £. Il conviendra toutefois de maîtriser le risque commercial lié à la sensibilité des clients et à la perception de la valeur de l'offre suite à cette baisse.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du RED SPOTTY COIR DOORMAT à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.91, permettant de générer un gain de marge attendu de 12804.74 £ grâce à la stimulation des volumes. Le principal risque commercial à anticiper concerne la sensibilité des clients et la gestion de leur perception de valeur face à cette baisse tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "48187",
@@ -316,7 +354,7 @@
       "rec_margin": 40959.91,
       "margin_gain_gbp": 10294.66,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit DOOR MAT NEW ENGLAND, nous préconisons de fixer le prix à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette baisse tarifaire s'appuie sur une forte élasticité-prix mesurée à -5.10, un levier efficace pour stimuler les volumes et générer un gain de marge attendu de 10294.66 £. Le principal risque commercial à surveiller réside dans la capacité logistique à absorber ce surcroît soudain de demande sans créer de ruptures préjudiciables à la relation client.",
+      "llm_justification": "Nous recommandons de positionner le prix du DOOR MAT NEW ENGLAND à 7.49 £, ce qui représente une variation de -9.21 % par rapport au tarif actuel. Cette baisse stratégique s'appuie sur une forte élasticité-prix de -5.10, permettant de maximiser les volumes pour dégager un gain de marge attendu de 10294.66 £. Le principal risque commercial réside dans la gestion de la sensibilité des clients et le maintien d'une capacité de livraison suffisante face à l'afflux de commandes.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -333,7 +371,7 @@
       "rec_margin": 44127.01,
       "margin_gain_gbp": 6813.03,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du produit BLACK RECORD COVER FRAME à 3.49 £, ce qui représente une variation de -6.93 %. Cette décision s'appuie sur une forte élasticité-prix mesurée à -4.42, permettant de stimuler la demande pour dégager un gain de marge attendu de 6813.03 £. Le principal risque commercial à anticiper concerne la gestion des stocks face à cette forte sensibilité de la demande ainsi que l'impact sur l'image de marque.",
+      "llm_justification": "Pour le produit BLACK RECORD COVER FRAME, nous recommandons de fixer le tarif à 3.49 £, ce qui correspond à une variation de -6.93 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.42, garantissant une forte hausse des volumes pour un gain de marge attendu de 6813.03 £. Le principal risque commercial à surveiller concerne la capacité opérationnelle à absorber ce surcroît soudain de demande sans créer de ruptures pour les clients.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -350,8 +388,8 @@
       "rec_margin": 40117.75,
       "margin_gain_gbp": 5826.36,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit DOORMAT HEARTS à 7.99 £, soit une variation de -8.58 %. Cette décision stratégique exploite une élasticité-prix de -3.85 pour dynamiser les volumes et dégager un gain de marge attendu de 5826.36 £. Le principal risque commercial réside dans la sensibilité des clients quant à la perception de la qualité du produit suite à cette baisse tarifaire.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous recommandons d'ajuster le tarif du produit DOORMAT HEARTS à 7.99 £, ce qui représente une variation de -8.58 %. Cette décision s'appuie sur une élasticité-prix de -3.85 indiquant une demande élastique, ce qui permettra de générer un gain de marge attendu de 5826.36 £. Le principal risque commercial à surveiller concerne la forte sensibilité des clients ainsi que la capacité à honorer la hausse de volume sans dégrader le niveau de service.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "71477",
@@ -367,8 +405,8 @@
       "rec_margin": 36124.8,
       "margin_gain_gbp": 5142.61,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix de vente à 3.56 £, ce qui correspond à une variation de -9.87 %. Cette décision est motivée par une élasticité-prix mesurée à -3.60, un niveau élastique qui permettra de générer un gain de marge attendu de 5142.61 £. Le risque commercial principal réside dans la sensibilité des clients et le risque d'accoutumance à ce positionnement tarifaire plus bas.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit à 3.56 £, ce qui représente une variation de -9.87 %. Cette décision est justifiée par une forte élasticité-prix de -3.60 qui stimulera la demande pour dégager un gain de marge attendu de 5142.61 £. Le principal risque commercial réside dans la sensibilité des clients et la capacité de la demande à compenser immédiatement cette réduction de tarif unitaire.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "21843",
@@ -384,8 +422,8 @@
       "rec_margin": 38792.45,
       "margin_gain_gbp": 5015.15,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix de vente du produit RETRO SPOT CAKE STAND à 9.99 £, ce qui représente une variation de -6.90 %. Cette baisse tarifaire s'appuie sur une élasticité-prix mesurée à -4.01, un niveau très élastique qui permettra de stimuler la demande pour dégager un gain de marge attendu de 5015.15 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'éventuelle dégradation de la valeur perçue de l'offre.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du RETRO SPOT CAKE STAND à 9.99 £, ce qui correspond à une variation de -6.90 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.01, permettant de cibler un gain de marge attendu de 5015.15 £ grâce à la hausse des volumes. Il conviendra toutefois de surveiller la forte sensibilité des clients et les réactions concurrentielles lors du déploiement de cette baisse tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "15056N",
@@ -401,7 +439,7 @@
       "rec_margin": 41594.35,
       "margin_gain_gbp": 4641.85,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit EDWARDIAN PARASOL NATURAL, nous recommandons d'ajuster le prix à 5.99 £, soit une variation de -7.70 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.56, permettant de stimuler la demande afin d'obtenir un gain de marge attendu de 4641.85 £. Le principal risque commercial réside dans la perception de la valeur du produit par les clients et une éventuelle réaction concurrentielle agressive face à cette baisse.",
+      "llm_justification": "Pour le produit EDWARDIAN PARASOL NATURAL, nous recommandons de fixer le prix à 5.99 £, soit une variation de -7.70 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.56, permettant de stimuler les volumes de vente afin de dégager un gain de marge attendu de 4641.85 £. Le principal risque commercial réside dans la forte sensibilité des clients et la nécessité de préserver la valeur perçue du produit face à cette baisse.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -418,8 +456,8 @@
       "rec_margin": 28643.31,
       "margin_gain_gbp": 4082.2,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -4.2 %). Cette décision repose sur une élasticité mesurée à -5.66 (catégorie Élastique) visant un gain de marge de 4082.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Hallucination Regex)"
+      "llm_justification": "Pour le produit HOME BUILDING BLOCK WORD, nous recommandons de fixer le prix à 5.99 £, ce qui représente une variation de -4.16 %. Cette décision s'appuie sur une élasticité-prix mesurée à -5.66 qui stimulera les volumes pour dégager un gain de marge attendu de 4082.20 £. Le principal risque commercial réside dans la très forte sensibilité des clients, imposant de surveiller de près la réaction du marché et la tenue des volumes.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22457",
@@ -435,7 +473,7 @@
       "rec_margin": 26870.74,
       "margin_gain_gbp": 3687.37,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit NATURAL SLATE HEART CHALKBOARD, nous recommandons d'ajuster le prix à 2.66 £, soit une variation de -9.83 %. Cette décision s'appuie sur une élasticité-prix de -3.55 qui permet de dynamiser les ventes pour générer un gain de marge attendu de 3687.37 £. Le principal risque commercial réside dans la réaction des clients face à la modification tarifaire et l'ancrage durable à un niveau de prix inférieur.",
+      "llm_justification": "Nous recommandons de positionner le prix du NATURAL SLATE HEART CHALKBOARD à 2.66 £, ce qui représente une variation de -9.83 %. Cette stratégie repose sur une élasticité-prix mesurée à -3.55 qui stimulera la demande pour dégager un gain de marge attendu de 3687.37 £. Le principal risque commercial concerne la perception de la qualité du produit par les clients et la gestion logistique face à la forte hausse des volumes attendue.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -452,7 +490,7 @@
       "rec_margin": 34021.81,
       "margin_gain_gbp": 3338.69,
       "opt_reason": "Ajustement Hausse (Inélastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du JUMBO STORAGE BAG SUKI à 2.28 £, ce qui représente une variation de +9.62 %. Cette décision s'appuie sur une élasticité-prix de -0.79 confirmant le caractère inélastique du produit et permettant de dégager un gain de marge attendu de 3338.69 £. Le principal risque commercial réside dans la sensibilité de certains acheteurs face à cette hausse, imposant un accompagnement commercial ciblé pour préserver les volumes.",
+      "llm_justification": "Pour le produit JUMBO STORAGE BAG SUKI, nous recommandons d'ajuster le prix à 2.28 £, soit une variation de +9.62 %. Cette décision s'appuie sur une élasticité-prix mesurée à -0.79 prouvant le caractère inélastique de la demande, permettant ainsi de générer un gain de marge attendu de 3338.69 £. Il conviendra néanmoins de surveiller la sensibilité des clients à cette hausse afin de prévenir tout risque de friction commerciale.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -469,7 +507,7 @@
       "rec_margin": 27268.47,
       "margin_gain_gbp": 3167.76,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit HEART OF WICKER SMALL, nous recommandons d'ajuster le prix de vente à 1.49 £, soit une variation de -9.70 %. Cette décision est motivée par une forte élasticité-prix de -3.31, laquelle permettra d'accélérer les volumes pour générer un gain de marge attendu de 3167.76 £. Le principal risque commercial réside dans la sensibilité des clients et la dégradation potentielle de la valeur perçue de l'offre.",
+      "llm_justification": "Nous préconisons d'ajuster le prix du produit HEART OF WICKER SMALL à 1.49 £, ce qui correspond à une variation de -9.70 %. Cette décision s'appuie sur une élasticité-prix de -3.31, garantissant une hausse des volumes qui permettra de dégager un gain de marge attendu de 3167.76 £. Le principal risque commercial réside dans la capacité à absorber cette forte augmentation de la demande sans rupture de stock.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -486,7 +524,7 @@
       "rec_margin": 31927.78,
       "margin_gain_gbp": 3120.19,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du PAPER CHAIN KIT VINTAGE CHRISTMAS à 2.66 £, ce qui correspond à une variation de -9.83 %. Cette décision stratégique tire parti d'une élasticité-prix de -3.12 pour générer un gain de marge attendu de 3120.19 £ grâce à la hausse des volumes vendus. Le principal risque commercial réside dans la gestion de la sensibilité des clients et le risque de dévalorisation perçue de l'offre lors des prochaines négociations.",
+      "llm_justification": "Nous recommandons de fixer le prix du PAPER CHAIN KIT VINTAGE CHRISTMAS à 2.66 £, soit une variation de -9.83 %. Cette décision stratégique tire parti d'une élasticité-prix de -3.12 pour générer un gain de marge attendu de 3120.19 £ grâce au volume additionnel. Il conviendra néanmoins de surveiller la sensibilité des clients afin d'éviter un risque d'accoutumance à un niveau de prix inférieur.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -503,7 +541,7 @@
       "rec_margin": 29428.81,
       "margin_gain_gbp": 3061.56,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix de vente à 4.49 £, ce qui représente une variation de -9.29 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.24, favorisant une hausse des volumes permettant d'atteindre un gain de marge attendu de 3061.56 £. Le principal risque commercial réside dans une réaction insuffisante des clients pour compenser cette baisse unitaire si la sensibilité du marché venait à faiblir.",
+      "llm_justification": "Nous recommandons de fixer le prix de vente à 4.49 £, ce qui représente une variation de -9.29 %. Cette décision capitalise sur une élasticité-prix de -3.24 qui stimulera les volumes vendus et générera un gain de marge attendu de 3061.56 £. Le principal risque commercial réside dans la capacité à absorber cette hausse de demande sans rupture de stock et dans la réaction concurrentielle.",
       "control_status": "Validé (2ème essai)"
     }
   ],
@@ -523,7 +561,7 @@
       "rec_margin": 41594.35,
       "margin_gain_gbp": 4641.85,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit EDWARDIAN PARASOL NATURAL, nous recommandons d'ajuster le prix à 5.99 £, soit une variation de -7.70 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.56, permettant de stimuler la demande afin d'obtenir un gain de marge attendu de 4641.85 £. Le principal risque commercial réside dans la perception de la valeur du produit par les clients et une éventuelle réaction concurrentielle agressive face à cette baisse.",
+      "llm_justification": "Pour le produit EDWARDIAN PARASOL NATURAL, nous recommandons de fixer le prix à 5.99 £, soit une variation de -7.70 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.56, permettant de stimuler les volumes de vente afin de dégager un gain de marge attendu de 4641.85 £. Le principal risque commercial réside dans la forte sensibilité des clients et la nécessité de préserver la valeur perçue du produit face à cette baisse.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -541,8 +579,8 @@
       "rec_margin": 53997.36,
       "margin_gain_gbp": 12804.74,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit RED SPOTTY COIR DOORMAT, nous vous recommandons d'adopter un prix de 7.49 £, soit une variation de -9.21 %. Cette décision stratégique repose sur une élasticité-prix de -4.91, ce qui permettra de stimuler la demande pour capter un gain de marge attendu de 12804.74 £. Il conviendra toutefois de maîtriser le risque commercial lié à la sensibilité des clients et à la perception de la valeur de l'offre suite à cette baisse.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du RED SPOTTY COIR DOORMAT à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.91, permettant de générer un gain de marge attendu de 12804.74 £ grâce à la stimulation des volumes. Le principal risque commercial à anticiper concerne la sensibilité des clients et la gestion de leur perception de valeur face à cette baisse tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "20725",
@@ -559,7 +597,7 @@
       "rec_margin": 34224.45,
       "margin_gain_gbp": 242.59,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit LUNCH BAG RED SPOTTY, nous vous recommandons de fixer le tarif à 1.81 £, soit une variation de +9.70 %. Bien que l'élasticité-prix mesurée soit de -1.83, cette revalorisation permet de sécuriser un gain de marge attendu de 242.59 £. Il conviendra toutefois de piloter rigoureusement la relation client afin d'anticiper la sensibilité des acheteurs et le risque d'érosion des volumes.",
+      "llm_justification": "Pour le produit LUNCH BAG RED SPOTTY, nous vous recommandons d'établir le prix à 1.81 £, ce qui correspond à une variation de +9.70 %. Cette décision stratégique permet de viser un gain de marge attendu de 242.59 £ malgré une élasticité-prix mesurée à -1.83. Néanmoins, compte tenu de cette forte sensibilité de la demande, il faudra rester très attentif à la réaction des clients afin de préserver nos volumes de vente.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -577,8 +615,8 @@
       "rec_margin": 23162.74,
       "margin_gain_gbp": 648.16,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le tarif du LUNCH BAG BLACK SKULL à 1.81 £, ce qui représente une variation de +9.70 %. Bien que l'élasticité-prix mesurée à -1.60 caractérise une demande élastique, cette décision est validée par un gain de marge attendu de 648.16 £. Il convient toutefois de piloter attentivement le risque commercial lié à la sensibilité des clients, qui pourrait entraîner une baisse des volumes face à cette hausse.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Pour le produit LUNCH BAG BLACK SKULL, nous recommandons d'ajuster le prix à 1.81 £, soit une variation de +9.70 %. Bien que l'élasticité-prix mesurée soit de -1.60, cette décision permet de cibler un gain de marge attendu de 648.16 £. Il conviendra toutefois de surveiller la sensibilité des clients face à cette hausse afin de limiter les pertes de volumes.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "21137",
@@ -595,7 +633,7 @@
       "rec_margin": 44127.01,
       "margin_gain_gbp": 6813.03,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du produit BLACK RECORD COVER FRAME à 3.49 £, ce qui représente une variation de -6.93 %. Cette décision s'appuie sur une forte élasticité-prix mesurée à -4.42, permettant de stimuler la demande pour dégager un gain de marge attendu de 6813.03 £. Le principal risque commercial à anticiper concerne la gestion des stocks face à cette forte sensibilité de la demande ainsi que l'impact sur l'image de marque.",
+      "llm_justification": "Pour le produit BLACK RECORD COVER FRAME, nous recommandons de fixer le tarif à 3.49 £, ce qui correspond à une variation de -6.93 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.42, garantissant une forte hausse des volumes pour un gain de marge attendu de 6813.03 £. Le principal risque commercial à surveiller concerne la capacité opérationnelle à absorber ce surcroît soudain de demande sans créer de ruptures pour les clients.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -613,8 +651,8 @@
       "rec_margin": 34563.41,
       "margin_gain_gbp": 1660.14,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit PLEASE ONE PERSON METAL SIGN, nous recommandons de fixer le tarif à 2.49 £, soit une variation de -4.60 %. Cette décision s'appuie sur une élasticité-prix de -3.09, permettant de stimuler la demande pour générer un gain de marge attendu de 1660.14 £. Le principal risque commercial réside dans la sensibilité des clients et la nécessité de vérifier que l'augmentation effective des volumes compensera bien cette baisse de prix unitaire.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous recommandons de fixer le prix du produit à 2.49 £, représentant une variation de -4.60 % par rapport au tarif actuel. Cette baisse est motivée par une élasticité-prix de -3.09 qui stimulera les volumes et permettra de générer un gain de marge attendu de 1660.14 £. Le principal risque commercial réside dans la forte sensibilité des clients, qui impose de surveiller étroitement la réactivité réelle de la demande face à ce repositionnement tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21212",
@@ -631,7 +669,7 @@
       "rec_margin": 26071.2,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour cette référence, nous préconisons de maintenir le prix recommandé à 0.55 £, ce qui correspond à une variation de +0.00 %. Ce statu quo s'appuie sur une élasticité-prix non significative de -0.32 associée à un gain de marge attendu de 0.00 £. Cette approche prudente évite tout risque de mécontentement de nos clients face à une hausse injustifiée.",
+      "llm_justification": "Nous recommandons de maintenir le prix unitaire à 0.55 £, soit une variation de +0.00 %. Cette décision s'appuie sur une élasticité non significative de -0.32, qui génère un gain de marge attendu de 0.00 £. Ce statu quo écarte tout risque commercial de friction auprès de nos clients face à une sensibilité de la demande encore incertaine.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -649,7 +687,7 @@
       "rec_margin": 27686.62,
       "margin_gain_gbp": 399.92,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix du produit STRAWBERRY CERAMIC TRINKET BOX à 1.26 £, ce qui représente une variation de -10.00 %. Cette décision stratégique s'appuie sur une forte élasticité-prix mesurée à -2.26, permettant de stimuler la demande afin d'obtenir un gain de marge attendu de 399.92 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'éventuelle dégradation de la valeur perçue suite à cette baisse tarifaire.",
+      "llm_justification": "Pour le produit STRAWBERRY CERAMIC TRINKET BOX, nous recommandons de fixer le prix à 1.26 £, soit une variation de -10.00 %. Cette décision s'appuie sur une élasticité-prix de -2.26 qui stimulera les volumes pour atteindre un gain de marge attendu de 399.92 £. Le principal risque commercial réside dans la sensibilité des clients à cette nouvelle tarification et la capacité opérationnelle à absorber la hausse d'activité.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -667,7 +705,7 @@
       "rec_margin": 29765.84,
       "margin_gain_gbp": 719.84,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit FANCY FONT HOME SWEET HOME DOORMAT à 8.99 £, ce qui correspond à une variation de +9.10 %. Cet arbitrage tarifaire permet de générer un gain de marge attendu de 719.84 £, malgré une élasticité-prix mesurée à -1.64 qui confirme une demande élastique. Il faudra néanmoins surveiller de près le risque de baisse des volumes face à la sensibilité importante des clients à cette hausse.",
+      "llm_justification": "Nous recommandons de fixer le prix du produit à 8.99 £, ce qui représente une variation de +9.10 %. Bien que l'élasticité-prix mesurée à -1.64 signale une demande élastique, cet arbitrage permet de dégager un gain de marge attendu de 719.84 £. Le principal risque commercial réside dans la sensibilité accrue des clients, ce qui nécessite un suivi rigoureux des volumes commandés.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -685,7 +723,7 @@
       "rec_margin": 32538.39,
       "margin_gain_gbp": 3022.14,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit VINTAGE UNION JACK BUNTING, nous vous recommandons de positionner le prix à 7.99 £, soit une variation de -6.00 %. Cette décision tire parti d'une élasticité-prix très réactive de -3.64 afin de stimuler les volumes et d'atteindre un gain de marge attendu de 3022.14 £. Le principal risque commercial réside dans la gestion de la forte sensibilité de la clientèle et la capacité opérationnelle à soutenir cette hausse d'activité.",
+      "llm_justification": "Nous préconisons de fixer le prix du produit VINTAGE UNION JACK BUNTING à 7.99 £, soit une variation de -6.00 %. Cette baisse est justifiée par une forte élasticité-prix de -3.64 qui stimulera la demande pour dégager un gain de marge attendu de 3022.14 £. Le principal risque commercial concerne une réaction agressive des concurrents ou une détérioration perçue du positionnement de la marque.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -703,7 +741,7 @@
       "rec_margin": 35856.0,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour le produit VINTAGE UNION JACK MEMOBOARD, nous préconisons de maintenir le prix recommandé à 9.95 £, ce qui correspond à une variation de +0.00 %. Cette stabilité est motivée par une élasticité-prix de -2.34 qualifiée de non significative, projetant un gain de marge attendu de 0.00 £. Une modification tarifaire exposerait inutilement l'entreprise à un risque commercial de dégradation des volumes auprès de clients sensibles au positionnement prix.",
+      "llm_justification": "Pour le produit VINTAGE UNION JACK MEMOBOARD, nous recommandons de maintenir le prix à 9.95 £, ce qui correspond à une variation de +0.00 %. Cette décision s'explique par une élasticité-prix mesurée à -2.34 considérée comme non significative, pour un gain de marge attendu de 0.00 £. Tout ajustement entraînerait un risque commercial inutile de dégradation de la relation client face à leur sensibilité au prix.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -721,8 +759,8 @@
       "rec_margin": 27038.69,
       "margin_gain_gbp": 2375.24,
       "opt_reason": "Ajustement Hausse (Inélastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du RED TOADSTOOL LED NIGHT LIGHT à 1.81 £, soit une variation de +9.70 %. Cette décision est justifiée par une élasticité-prix de -0.91 confirmant le caractère inélastique du produit et permettant de dégager un gain de marge attendu de 2375.24 £. Il conviendra toutefois d'accompagner ce changement pour prévenir tout risque de mécontentement ou de résistance de la part de vos clients.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de fixer le prix de vente du produit RED TOADSTOOL LED NIGHT LIGHT à 1.81 £, ce qui correspond à une variation de +9.70 %. Cette décision s'appuie sur une demande inélastique mesurée à -0.91, permettant d'obtenir un gain de marge attendu de 2375.24 £. Le principal risque commercial réside dans la sensibilité et la réaction de certains clients face à cette hausse tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21733",
@@ -739,7 +777,7 @@
       "rec_margin": 26458.53,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour le produit RED HANGING HEART T-LIGHT HOLDER, nous recommandons de maintenir le prix à 2.95 £, représentant une variation de +0.00 %. Cette décision s'appuie sur une élasticité-prix non significative de -0.62 qui n'engendrerait aucun gain de marge supplémentaire, soit 0.00 £. Cette stabilité tarifaire écarte ainsi tout risque commercial lié à une sensibilité ou une réaction négative de la clientèle.",
+      "llm_justification": "Pour le produit RED HANGING HEART T-LIGHT HOLDER, nous recommandons de maintenir le prix à 2.95 £, soit une variation de +0.00 %. Ce choix s'explique par une élasticité-prix non significative de -0.62 qui n'offre qu'un gain de marge attendu de 0.00 £. Toute modification tarifaire présenterait un risque commercial inutile quant à la sensibilité des clients, sans apporter de valeur ajoutée.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -757,8 +795,8 @@
       "rec_margin": 28643.31,
       "margin_gain_gbp": 4082.2,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 5.99 £ (variation de -4.2 %). Cette décision repose sur une élasticité mesurée à -5.66 (catégorie Élastique) visant un gain de marge de 4082.20 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Hallucination Regex)"
+      "llm_justification": "Pour le produit HOME BUILDING BLOCK WORD, nous recommandons de fixer le prix à 5.99 £, ce qui représente une variation de -4.16 %. Cette décision s'appuie sur une élasticité-prix mesurée à -5.66 qui stimulera les volumes pour dégager un gain de marge attendu de 4082.20 £. Le principal risque commercial réside dans la très forte sensibilité des clients, imposant de surveiller de près la réaction du marché et la tenue des volumes.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21843",
@@ -775,8 +813,8 @@
       "rec_margin": 38792.45,
       "margin_gain_gbp": 5015.15,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix de vente du produit RETRO SPOT CAKE STAND à 9.99 £, ce qui représente une variation de -6.90 %. Cette baisse tarifaire s'appuie sur une élasticité-prix mesurée à -4.01, un niveau très élastique qui permettra de stimuler la demande pour dégager un gain de marge attendu de 5015.15 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'éventuelle dégradation de la valeur perçue de l'offre.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de fixer le prix du RETRO SPOT CAKE STAND à 9.99 £, ce qui correspond à une variation de -6.90 %. Cette décision s'appuie sur une élasticité-prix mesurée à -4.01, permettant de cibler un gain de marge attendu de 5015.15 £ grâce à la hausse des volumes. Il conviendra toutefois de surveiller la forte sensibilité des clients et les réactions concurrentielles lors du déploiement de cette baisse tarifaire.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "21928",
@@ -793,7 +831,7 @@
       "rec_margin": 25771.2,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous vous recommandons de maintenir le prix de vente du JUMBO BAG SCANDINAVIAN PAISLEY à 2.08 £, soit une variation de +0.00 %. Cette décision s'explique par une élasticité-prix de -1.17 jugée non significative, qui n'apporterait qu'un gain de marge nul de 0.00 £. Dans ce contexte, toute modification tarifaire présenterait un risque commercial inutile en éveillant la sensibilité des clients sans contrepartie financière.",
+      "llm_justification": "Pour le produit JUMBO BAG SCANDINAVIAN PAISLEY, nous préconisons de maintenir le prix de vente à 2.08 £, ce qui correspond à une variation de +0.00 %. Cette décision s'appuie sur une élasticité mesurée à -1.17 jugée non significative et sur un gain de marge attendu de 0.00 £. Ce statu quo permet d'éviter tout risque commercial lié à la sensibilité des clients sans perturber inutilement la relation commerciale.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -811,7 +849,7 @@
       "rec_margin": 30024.58,
       "margin_gain_gbp": 696.56,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit JUMBO BAG PINK VINTAGE PAISLEY, nous préconisons d'ajuster le prix à 2.03 £, ce qui correspond à une variation de -9.78 %. Cette stratégie se justifie par une élasticité-prix mesurée à -2.33, permettant de capter une hausse des volumes pour générer un gain de marge attendu de 696.56 £. Le risque commercial principal concerne toutefois la forte sensibilité des clients et le danger d'habituer le marché à un niveau de prix inférieur en cas de future revalorisation.",
+      "llm_justification": "Pour le produit JUMBO BAG PINK VINTAGE PAISLEY, nous recommandons d'ajuster le prix à 2.03 £, soit une variation de -9.78 %. Cette baisse s'appuie sur une élasticité-prix de -2.33 qui favorisera les volumes et permettra de dégager un gain de marge attendu de 696.56 £. Le principal risque commercial réside toutefois dans la sensibilité de la clientèle et la capacité à atteindre le volume de ventes nécessaire pour rentabiliser cette baisse.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -829,7 +867,7 @@
       "rec_margin": 34021.81,
       "margin_gain_gbp": 3338.69,
       "opt_reason": "Ajustement Hausse (Inélastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du JUMBO STORAGE BAG SUKI à 2.28 £, ce qui représente une variation de +9.62 %. Cette décision s'appuie sur une élasticité-prix de -0.79 confirmant le caractère inélastique du produit et permettant de dégager un gain de marge attendu de 3338.69 £. Le principal risque commercial réside dans la sensibilité de certains acheteurs face à cette hausse, imposant un accompagnement commercial ciblé pour préserver les volumes.",
+      "llm_justification": "Pour le produit JUMBO STORAGE BAG SUKI, nous recommandons d'ajuster le prix à 2.28 £, soit une variation de +9.62 %. Cette décision s'appuie sur une élasticité-prix mesurée à -0.79 prouvant le caractère inélastique de la demande, permettant ainsi de générer un gain de marge attendu de 3338.69 £. Il conviendra néanmoins de surveiller la sensibilité des clients à cette hausse afin de prévenir tout risque de friction commerciale.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -847,8 +885,8 @@
       "rec_margin": 53945.94,
       "margin_gain_gbp": 171.87,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit PAPER CHAIN KIT 50'S CHRISTMAS à 2.80 £, ce qui correspond à une variation de -5.08 %. Cette stratégie se justifie par une élasticité-prix de -2.12 montrant une forte sensibilité au tarif, ce qui permettra de stimuler les volumes pour dégager un gain de marge attendu de 171.87 £. Le principal risque commercial réside dans l'ancrage psychologique de ce nouveau tarif plus bas auprès des clients, rendant de futures augmentations plus complexes.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous recommandons d'ajuster le prix de vente à 2.80 £, ce qui correspond à une variation de -5.08 %. Cette baisse est stratégique car l'élasticité-prix de -2.12 indique une forte réactivité de la demande, permettant de générer un gain de marge attendu de 171.87 £. Le principal risque commercial réside dans la forte sensibilité des clients qui pourrait rendre tout futur réajustement à la hausse difficilement acceptable.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22090",
@@ -865,8 +903,8 @@
       "rec_margin": 28753.34,
       "margin_gain_gbp": 2028.62,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix du produit PAPER BUNTING RETRO SPOTS à 3.49 £, ce qui représente une variation de +9.40 %. Bien que l'élasticité-prix s'établisse à -1.11 dans une catégorie élastique, cette décision permet de capter un gain de marge attendu de 2028.62 £. Une vigilance commerciale reste toutefois indispensable face au risque de sensibilité accrue et de réaction défavorable des clients sur les volumes commandés.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le tarif du PAPER BUNTING RETRO SPOTS à 3.49 £, ce qui représente une variation de +9.40 %. Bien que l'élasticité-prix de -1.11 signale une demande élastique, ce repositionnement permet de capter un gain de marge substantiel de 2028.62 £. Il conviendra néanmoins de piloter attentivement la réaction des clients face à cette sensibilité accrue afin d'éviter une baisse excessive des volumes.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "22111",
@@ -883,7 +921,7 @@
       "rec_margin": 25255.88,
       "margin_gain_gbp": 17.42,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit SCOTTIE DOG HOT WATER BOTTLE, nous recommandons d'établir le prix de vente à 4.99 £, ce qui correspond à une variation maîtrisée de +0.81 %. Bien que l'élasticité-prix mesurée à -1.91 reflète un marché élastique, cet arbitrage permet d'atteindre un gain de marge attendu de 17.42 £. Il conviendra toutefois de surveiller attentivement la réaction des clients afin de prévenir tout risque de désengagement face à leur sensibilité tarifaire.",
+      "llm_justification": "Nous vous recommandons d'ajuster le tarif du produit SCOTTIE DOG HOT WATER BOTTLE à un prix recommandé de 4.99 £, ce qui représente une variation de +0.81 %. Cette décision permet de sécuriser un gain de marge attendu de 17.42 £ tout en tenant compte d'une élasticité-prix mesurée à -1.91. Le risque commercial principal réside toutefois dans la forte sensibilité des clients aux variations tarifaires au sein de cette catégorie élastique.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -901,7 +939,7 @@
       "rec_margin": 28761.91,
       "margin_gain_gbp": 218.59,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit CHOCOLATE HOT WATER BOTTLE à 4.99 £, ce qui représente une variation de +0.81 %. Bien que l'élasticité-prix mesurée soit de -1.05, cette optimisation ciblée permet d'assurer un gain de marge attendu de 218.59 £. Il conviendra toutefois de surveiller attentivement la réaction des clients les plus sensibles au prix afin de préserver nos volumes de vente.",
+      "llm_justification": "Nous vous recommandons de fixer le nouveau prix de vente à 4.99 £, ce qui représente une variation de +0.81 %. Malgré une élasticité-prix de -1.05, cette optimisation permet de générer un gain de marge attendu de 218.59 £. Il conviendra toutefois de surveiller la sensibilité des clients afin de prévenir tout risque de baisse des volumes commandés.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -919,8 +957,8 @@
       "rec_margin": 27031.88,
       "margin_gain_gbp": 487.82,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix de vente à 3.99 £, ce qui représente une variation de -6.12 %. Cette décision s'appuie sur une forte élasticité-prix de -2.35, permettant de stimuler la demande pour dégager un gain de marge attendu de 487.82 £. Le principal risque commercial réside dans la forte sensibilité des clients, exigeant une surveillance attentive des volumes écoulés.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le prix de vente du produit HOT WATER BOTTLE TEA AND SYMPATHY à 3.99 £, soit une variation de -6.12 %. Cette décision s'appuie sur une élasticité-prix de -2.35 confirmant une demande élastique qui permettra de générer un gain de marge attendu de 487.82 £. Le principal risque commercial réside dans la sensibilité des clients qui pourraient ancrer ce niveau de prix plus bas et résister à de futures hausses tarifaires.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "22139",
@@ -937,7 +975,7 @@
       "rec_margin": 29428.81,
       "margin_gain_gbp": 3061.56,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix de vente à 4.49 £, ce qui représente une variation de -9.29 %. Cette décision s'appuie sur une élasticité-prix mesurée à -3.24, favorisant une hausse des volumes permettant d'atteindre un gain de marge attendu de 3061.56 £. Le principal risque commercial réside dans une réaction insuffisante des clients pour compenser cette baisse unitaire si la sensibilité du marché venait à faiblir.",
+      "llm_justification": "Nous recommandons de fixer le prix de vente à 4.49 £, ce qui représente une variation de -9.29 %. Cette décision capitalise sur une élasticité-prix de -3.24 qui stimulera les volumes vendus et générera un gain de marge attendu de 3061.56 £. Le principal risque commercial réside dans la capacité à absorber cette hausse de demande sans rupture de stock et dans la réaction concurrentielle.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -955,7 +993,7 @@
       "rec_margin": 40152.72,
       "margin_gain_gbp": 627.16,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de positionner le prix du VICTORIAN GLASS HANGING T-LIGHT à 1.99 £, ce qui correspond à une variation de +2.05 %. Bien que l'élasticité-prix s'établisse à -1.21, cet ajustement permet d'obtenir un gain de marge significatif de 627.16 £. Il conviendra néanmoins de surveiller avec vigilance la sensibilité des clients pour éviter un ralentissement des volumes sur ce produit élastique.",
+      "llm_justification": "Nous recommandons de fixer le prix du VICTORIAN GLASS HANGING T-LIGHT à 1.99 £, ce qui représente une variation de +2.05 %. Malgré une élasticité-prix mesurée à -1.21, cet arbitrage tarifaire permet de générer un gain de marge attendu de 627.16 £. Le principal risque commercial réside dans la sensibilité de la demande et une éventuelle baisse de volume d'achats chez nos clients.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -973,7 +1011,7 @@
       "rec_margin": 38656.14,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous vous recommandons de maintenir le prix du produit POPCORN HOLDER , SMALL à 0.85 £, ce qui correspond à une variation de +0.00 %. Cette décision s'appuie sur une élasticité-prix mesurée à -0.65 jugée non significative, générant un gain de marge attendu nul de 0.00 £. Modifier ce tarif risquerait de déstabiliser inutilement la perception des clients sans apporter de bénéfice économique direct.",
+      "llm_justification": "Nous recommandons de maintenir le prix à 0.85 £ pour le POPCORN HOLDER , SMALL, ce qui représente une variation de +0.00 %. Cette décision est motivée par une élasticité-prix non significative de -0.65 et un gain de marge nul de 0.00 £ en cas de modification. Ce maintien tarifaire permet d'écarter tout risque commercial lié à la sensibilité des clients sans sacrifier de rentabilité.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -991,7 +1029,7 @@
       "rec_margin": 23064.3,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous préconisons de maintenir le prix recommandé à 2.95 £, soit une variation de +0.00 %. Cette décision s'appuie sur une élasticité-prix non significative de 0.36 et un gain de marge attendu de 0.00 £. Cette stabilité écarte ainsi tout risque commercial lié à la sensibilité des clients face à une hausse non justifiée.",
+      "llm_justification": "Nous vous recommandons de maintenir le prix à 2.95 £, ce qui correspond à une variation de +0.00 %. Cette stabilité tarifaire se justifie par une élasticité non significative de 0.36 et un gain de marge attendu de 0.00 £. Une révision de tarif ferait courir un risque inutile de crispation commerciale auprès des clients sans procurer de levier de rentabilité.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1009,8 +1047,8 @@
       "rec_margin": 15038.32,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous vous recommandons de maintenir le prix de vente à 0.92 £, ce qui représente une variation de +0.00 %. Cette décision est justifiée par une élasticité-prix de -0.24 considérée comme non significatif, pour un gain de marge attendu de 0.00 £. Ce statu quo permet ainsi de préserver la relation commerciale en évitant toute réaction défavorable liée à la sensibilité des clients.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Pour le produit CHARLOTTE BAG , SUKI DESIGN, nous préconisons de maintenir le prix recommandé à 0.92 £, soit une variation de +0.00 %. Cette décision est motivée par une élasticité-prix de -0.24 considérée comme non significative, n'engendrant aucun gain de marge additionnel avec 0.00 £ attendus. Ce maintien tarifaire élimine ainsi tout risque commercial lié à la sensibilité des acheteurs ou à une dégradation de la relation client.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "22386",
@@ -1027,8 +1065,8 @@
       "rec_margin": 42906.82,
       "margin_gain_gbp": 1473.22,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons d'ajuster le prix de vente à 2.28 £, soit une variation de +9.62 %. Cette décision s'appuie sur un gain de marge attendu de 1473.22 £ malgré une élasticité-prix mesurée à -1.54. Compte tenu de cette demande élastique, la force de vente devra toutefois surveiller de près la sensibilité des clients et le risque de baisse des volumes.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Pour le produit JUMBO BAG PINK WITH WHITE SPOTS, nous recommandons d'établir le nouveau prix à 2.28 £, ce qui correspond à une variation de +9.62 %. Bien que l'élasticité-prix s'établisse à -1.54, cette revalorisation demeure hautement profitable en générant un gain de marge attendu de 1473.22 £. Le risque commercial majeur réside toutefois dans la forte sensibilité de la clientèle, susceptible d'entraîner une contraction des volumes en cas de résistance aux prix.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "22411",
@@ -1045,7 +1083,7 @@
       "rec_margin": 28841.28,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour le produit JUMBO SHOPPER VINTAGE RED PAISLEY, nous vous recommandons de maintenir le prix à 2.08 £, soit une variation de +0.00 %. Cette décision s'appuie sur une élasticité-prix de 0.07 jugée non significative, n'offrant aucun levier supplémentaire avec un gain de marge attendu de 0.00 £. Ainsi, cette stabilité évite tout risque commercial lié à la sensibilité des acheteurs et préserve la relation de confiance avec vos clients.",
+      "llm_justification": "Pour le produit JUMBO SHOPPER VINTAGE RED PAISLEY, nous recommandons de maintenir le prix à 2.08 £, soit une variation de +0.00 %. Cette décision s'appuie sur une élasticité-prix de 0.07 jugée non significative, générant un gain de marge attendu de 0.00 £. Cette approche prudente permet ainsi de préserver la relation commerciale en évitant tout risque d'insatisfaction client face à un ajustement non créateur de valeur.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1063,7 +1101,7 @@
       "rec_margin": 202040.69,
       "margin_gain_gbp": 26375.2,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons d'ajuster le prix du REGENCY CAKESTAND 3 TIER à 11.49 £, soit une variation de -9.88 %. Avec une élasticité-prix mesurée à -3.46, cette baisse permettra de stimuler la demande pour dégager un gain de marge attendu de 26375.20 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'éventuelle dégradation de la valeur perçue du produit.",
+      "llm_justification": "Pour le produit REGENCY CAKESTAND 3 TIER, nous préconisons un prix recommandé de 11.49 £, ce qui représente une variation de -9.88 %. Cette décision s'appuie sur une forte élasticité-prix de -3.46, permettant d'accélérer les volumes pour générer un gain de marge attendu de 26375.20 £. Le principal risque commercial réside dans la réaction des clients quant à la perception de la valeur du produit et à la pérennité de ce nouveau positionnement tarifaire.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -1081,7 +1119,7 @@
       "rec_margin": 26870.74,
       "margin_gain_gbp": 3687.37,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit NATURAL SLATE HEART CHALKBOARD, nous recommandons d'ajuster le prix à 2.66 £, soit une variation de -9.83 %. Cette décision s'appuie sur une élasticité-prix de -3.55 qui permet de dynamiser les ventes pour générer un gain de marge attendu de 3687.37 £. Le principal risque commercial réside dans la réaction des clients face à la modification tarifaire et l'ancrage durable à un niveau de prix inférieur.",
+      "llm_justification": "Nous recommandons de positionner le prix du NATURAL SLATE HEART CHALKBOARD à 2.66 £, ce qui représente une variation de -9.83 %. Cette stratégie repose sur une élasticité-prix mesurée à -3.55 qui stimulera la demande pour dégager un gain de marge attendu de 3687.37 £. Le principal risque commercial concerne la perception de la qualité du produit par les clients et la gestion logistique face à la forte hausse des volumes attendue.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1099,7 +1137,7 @@
       "rec_margin": 27268.47,
       "margin_gain_gbp": 3167.76,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit HEART OF WICKER SMALL, nous recommandons d'ajuster le prix de vente à 1.49 £, soit une variation de -9.70 %. Cette décision est motivée par une forte élasticité-prix de -3.31, laquelle permettra d'accélérer les volumes pour générer un gain de marge attendu de 3167.76 £. Le principal risque commercial réside dans la sensibilité des clients et la dégradation potentielle de la valeur perçue de l'offre.",
+      "llm_justification": "Nous préconisons d'ajuster le prix du produit HEART OF WICKER SMALL à 1.49 £, ce qui correspond à une variation de -9.70 %. Cette décision s'appuie sur une élasticité-prix de -3.31, garantissant une hausse des volumes qui permettra de dégager un gain de marge attendu de 3167.76 £. Le principal risque commercial réside dans la capacité à absorber cette forte augmentation de la demande sans rupture de stock.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1117,7 +1155,7 @@
       "rec_margin": 27285.19,
       "margin_gain_gbp": 15.22,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons de fixer le prix du produit HEART OF WICKER LARGE à 2.88 £, ce qui représente une variation de -2.37 %. Cette décision tire parti d'une élasticité de -2.05 pour stimuler les volumes et dégager un gain de marge attendu de 15.22 £. Le principal risque commercial concerne la sensibilité de la clientèle et la difficulté éventuelle à relever ce tarif par la suite.",
+      "llm_justification": "Nous recommandons d'ajuster le prix du HEART OF WICKER LARGE à 2.88 £, soit une variation de -2.37 %. Cette baisse s'appuie sur une forte élasticité-prix de -2.05 qui permettra de stimuler la demande et de dégager un gain de marge attendu de 15.22 £. Le principal risque commercial réside toutefois dans une sensibilité des clients moins dynamique que prévu face à ce changement tarifaire.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1135,7 +1173,7 @@
       "rec_margin": 15225.71,
       "margin_gain_gbp": 446.13,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de porter le prix du PICNIC BASKET WICKER SMALL à 7.99 £, ce qui correspond à une variation de +4.58 %. Bien que la demande présente une élasticité-prix de -1.29, cet ajustement demeure pertinent car il génère un gain de marge attendu de 446.13 £. Il convient toutefois de piloter attentivement la réaction des clients face à cette hausse afin de maîtriser la sensibilité au prix sur ce segment.",
+      "llm_justification": "Pour le produit PICNIC BASKET WICKER SMALL, nous recommandons d'ajuster le tarif à 7.99 £, ce qui représente une variation de +4.58 %. Cette décision permet de viser un gain de marge attendu de 446.13 £ tout en intégrant une élasticité-prix mesurée de -1.29. Le risque commercial principal réside dans la sensibilité accrue des clients face à cette hausse sur une catégorie élastique.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -1153,7 +1191,7 @@
       "rec_margin": 31927.78,
       "margin_gain_gbp": 3120.19,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du PAPER CHAIN KIT VINTAGE CHRISTMAS à 2.66 £, ce qui correspond à une variation de -9.83 %. Cette décision stratégique tire parti d'une élasticité-prix de -3.12 pour générer un gain de marge attendu de 3120.19 £ grâce à la hausse des volumes vendus. Le principal risque commercial réside dans la gestion de la sensibilité des clients et le risque de dévalorisation perçue de l'offre lors des prochaines négociations.",
+      "llm_justification": "Nous recommandons de fixer le prix du PAPER CHAIN KIT VINTAGE CHRISTMAS à 2.66 £, soit une variation de -9.83 %. Cette décision stratégique tire parti d'une élasticité-prix de -3.12 pour générer un gain de marge attendu de 3120.19 £ grâce au volume additionnel. Il conviendra néanmoins de surveiller la sensibilité des clients afin d'éviter un risque d'accoutumance à un niveau de prix inférieur.",
       "control_status": "Validé (1er essai)"
     },
     {
@@ -1171,7 +1209,7 @@
       "rec_margin": 70093.66,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Gain de Marge Défavorable)",
-      "llm_justification": "Nous vous recommandons de maintenir le prix du produit PARTY BUNTING à 4.95 £, soit une variation de +0.00 %. Ce statu quo s'impose compte tenu d'une élasticité de -2.10 et d'un gain de marge attendu de 0.00 £. Toute augmentation tarifaire présenterait un risque commercial majeur de contraction des volumes auprès d'une clientèle hautement sensible au prix.",
+      "llm_justification": "Pour le produit PARTY BUNTING, nous recommandons de maintenir le prix à 4.95 £, soit une variation de +0.00 %. Cette décision est motivée par une forte élasticité-prix de -2.10, rendant tout gain de marge attendu nul à 0.00 £ en cas d'ajustement. Une hausse tarifaire présenterait en effet le risque commercial majeur de dégrader significativement les volumes face à une clientèle très sensible aux prix.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1189,8 +1227,8 @@
       "rec_margin": 59194.54,
       "margin_gain_gbp": 17171.79,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de positionner le prix du DOOR MAT UNION FLAG à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette décision s'appuie sur une élasticité-prix de -5.65 garantissant une hausse des volumes pour générer un gain de marge attendu de 17171.79 £. Le risque commercial principal réside dans la gestion de la chaîne d'approvisionnement face à cette forte sensibilité de la demande pour éviter toute rupture de stock.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons de positionner le DOOR MAT UNION FLAG au prix de 7.49 £, soit une variation de -9.21 %. Cette décision tire parti d'une forte élasticité-prix mesurée à -5.65 pour stimuler les volumes et générer un gain de marge attendu de 17171.79 £. Le principal risque commercial réside dans la réaction des clients et la capacité opérationnelle à absorber la forte hausse de la demande sans dégrader l'image de marque.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "48185",
@@ -1207,7 +1245,7 @@
       "rec_margin": 30822.71,
       "margin_gain_gbp": 12.33,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit DOOR MAT FAIRY CAKE, nous recommandons d'ajuster le prix à 9.49 £, soit une variation de +5.68 %. Cette décision permet de cibler un gain de marge attendu de 12.33 £ malgré une élasticité-prix de -1.94. Il convient néanmoins de surveiller la sensibilité des clients face à cette hausse afin de limiter l'érosion des volumes sur ce produit élastique.",
+      "llm_justification": "Pour le produit DOOR MAT FAIRY CAKE, nous préconisons de fixer le prix à 9.49 £, ce qui correspond à une variation de +5.68 %. Bien que l'élasticité-prix s'établisse à -1.94, cette hausse est justifiée car elle génère un gain de marge attendu de 12.33 £. Le principal risque commercial réside dans la sensibilité des clients et une éventuelle baisse des volumes, nécessitant un suivi attentif lors des négociations.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1225,7 +1263,7 @@
       "rec_margin": 40959.91,
       "margin_gain_gbp": 10294.66,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit DOOR MAT NEW ENGLAND, nous préconisons de fixer le prix à 7.49 £, ce qui correspond à une variation de -9.21 %. Cette baisse tarifaire s'appuie sur une forte élasticité-prix mesurée à -5.10, un levier efficace pour stimuler les volumes et générer un gain de marge attendu de 10294.66 £. Le principal risque commercial à surveiller réside dans la capacité logistique à absorber ce surcroît soudain de demande sans créer de ruptures préjudiciables à la relation client.",
+      "llm_justification": "Nous recommandons de positionner le prix du DOOR MAT NEW ENGLAND à 7.49 £, ce qui représente une variation de -9.21 % par rapport au tarif actuel. Cette baisse stratégique s'appuie sur une forte élasticité-prix de -5.10, permettant de maximiser les volumes pour dégager un gain de marge attendu de 10294.66 £. Le principal risque commercial réside dans la gestion de la sensibilité des clients et le maintien d'une capacité de livraison suffisante face à l'afflux de commandes.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1243,8 +1281,8 @@
       "rec_margin": 40117.75,
       "margin_gain_gbp": 5826.36,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit DOORMAT HEARTS à 7.99 £, soit une variation de -8.58 %. Cette décision stratégique exploite une élasticité-prix de -3.85 pour dynamiser les volumes et dégager un gain de marge attendu de 5826.36 £. Le principal risque commercial réside dans la sensibilité des clients quant à la perception de la qualité du produit suite à cette baisse tarifaire.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous recommandons d'ajuster le tarif du produit DOORMAT HEARTS à 7.99 £, ce qui représente une variation de -8.58 %. Cette décision s'appuie sur une élasticité-prix de -3.85 indiquant une demande élastique, ce qui permettra de générer un gain de marge attendu de 5826.36 £. Le principal risque commercial à surveiller concerne la forte sensibilité des clients ainsi que la capacité à honorer la hausse de volume sans dégrader le niveau de service.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "71477",
@@ -1261,8 +1299,8 @@
       "rec_margin": 36124.8,
       "margin_gain_gbp": 5142.61,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous vous recommandons de fixer le prix de vente à 3.56 £, ce qui correspond à une variation de -9.87 %. Cette décision est motivée par une élasticité-prix mesurée à -3.60, un niveau élastique qui permettra de générer un gain de marge attendu de 5142.61 £. Le risque commercial principal réside dans la sensibilité des clients et le risque d'accoutumance à ce positionnement tarifaire plus bas.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le prix du produit à 3.56 £, ce qui représente une variation de -9.87 %. Cette décision est justifiée par une forte élasticité-prix de -3.60 qui stimulera la demande pour dégager un gain de marge attendu de 5142.61 £. Le principal risque commercial réside dans la sensibilité des clients et la capacité de la demande à compenser immédiatement cette réduction de tarif unitaire.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "79321",
@@ -1279,7 +1317,7 @@
       "rec_margin": 48569.18,
       "margin_gain_gbp": 238.38,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit CHILLI LIGHTS, nous vous recommandons d'ajuster le prix à 5.49 £, soit une variation de -4.52 %. Cette baisse stratégique s'appuie sur une forte élasticité-prix de -2.16 qui permettra de stimuler la demande et de générer un gain de marge attendu de 238.38 £. Le principal risque commercial à surveiller concerne la sensibilité des clients et l'accoutumance du marché à ce niveau de prix plus bas.",
+      "llm_justification": "Nous vous recommandons de positionner le prix de vente à 5.49 £, soit une variation de -4.52 %. Cette décision tire parti d'une élasticité-prix de -2.16 pour dynamiser les volumes et dégager un gain de marge attendu de 238.38 £. Il conviendra toutefois de surveiller la réaction des clients face à cette sensibilité tarifaire afin de sécuriser l'adoption de ce nouveau barème.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1297,7 +1335,7 @@
       "rec_margin": 43884.38,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour le produit WOOD BLACK BOARD ANT WHITE FINISH, nous recommandons de maintenir le prix à 7.95 £, soit une variation de +0.00 %. Cette décision s'explique par une élasticité-prix de -0.54 qualifiée de non significative, n'engendrant aucun potentiel de gain de marge avec une estimation à 0.00 £. Ce choix préserve notre relation commerciale en évitant toute sensibilité ou réaction défavorable de la part de vos clients.",
+      "llm_justification": "Pour le produit WOOD BLACK BOARD ANT WHITE FINISH, nous recommandons de maintenir le prix à 7.95 £, ce qui représente une variation de +0.00 %. Cette stabilité tarifaire se justifie par une élasticité-prix non significative de -0.54 et un gain de marge attendu de 0.00 £ en cas de mouvement. Cette approche prudente neutralise tout risque commercial lié à la sensibilité des clients sans dégrader la rentabilité actuelle.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1315,8 +1353,8 @@
       "rec_margin": 26303.41,
       "margin_gain_gbp": 1105.51,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour la référence RED WOOLLY HOTTIE WHITE HEART, nous recommandons de fixer le prix à 3.99 £, ce qui correspond à une variation de -6.12 %. Compte tenu d'une élasticité-prix de -2.74 très favorable au volume, cet ajustement permettra de dégager un gain de marge attendu de 1105.51 £. Le principal risque commercial à surveiller reste la sensibilité des clients et la capacité à absorber la hausse de la demande sans dégrader le niveau de service.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Pour le produit RED WOOLLY HOTTIE WHITE HEART., nous recommandons d'ajuster le prix à 3.99 £, soit une variation de -6.12 %. Cette décision s'appuie sur une élasticité-prix de -2.74 confirmant une demande élastique, ce qui permettra d'atteindre un gain de marge attendu de 1105.51 £. Le principal risque commercial repose sur la réaction des clients face à cette baisse tarifaire et sur la capacité opérationnelle à absorber la hausse des volumes vendus.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "84347",
@@ -1333,8 +1371,8 @@
       "rec_margin": 42782.91,
       "margin_gain_gbp": 1150.91,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Nous recommandons d'ajuster le prix du ROTATING SILVER ANGELS T-LIGHT HLDR à 2.80 £, ce qui représente une variation de +9.80 %. Bien que l'élasticité-prix mesurée soit de -1.62, cette décision est justifiée par un gain de marge attendu de 1150.91 £. Le risque commercial majeur réside toutefois dans la forte sensibilité des clients, susceptible d'entraîner une baisse des volumes de vente.",
-      "control_status": "Validé (1er essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le tarif à 2.80 £, ce qui correspond à une variation de +9.80 %. Bien que l'élasticité-prix de -1.62 caractérise une demande élastique, cette augmentation permettra d'obtenir un gain de marge attendu de 1150.91 £. Il conviendra toutefois de piloter attentivement la réaction des clients face à cette sensibilité accrue aux prix.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "84946",
@@ -1351,8 +1389,8 @@
       "rec_margin": 25290.54,
       "margin_gain_gbp": 1310.22,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit ANTIQUE SILVER TEA GLASS ETCHED, nous vous recommandons de fixer le prix à 1.37 £, soit une variation de +9.60 %. Malgré une élasticité-prix de -1.32, cette optimisation tarifaire permet de dégager un gain de marge attendu de 1310.22 £. Il conviendra toutefois de surveiller attentivement la sensibilité des clients afin de contenir le risque d'érosion des volumes face à cette demande élastique.",
-      "control_status": "Validé (2ème essai)"
+      "llm_justification": "Nous vous recommandons d'ajuster le prix de l'ANTIQUE SILVER TEA GLASS ETCHED à 1.37 £, ce qui correspond à une variation de +9.60 %. Cette décision est motivée par un gain de marge attendu de 1310.22 £, bien que l'élasticité-prix mesurée à -1.32 traduise une demande élastique. Il conviendra toutefois de surveiller de près la sensibilité des clients afin de prévenir tout risque de contraction excessive des volumes commandés.",
+      "control_status": "Validé (1er essai)"
     },
     {
       "StockCode": "85099B",
@@ -1369,7 +1407,7 @@
       "rec_margin": 102282.96,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Pour le produit JUMBO BAG RED WHITE SPOTTY, nous vous recommandons de maintenir le prix à 2.08 £, ce qui correspond à une variation de +0.00 %. Cette décision s'appuie sur une élasticité mesurée à -0.94 qualifiée de non significative, n'offrant aucun potentiel d'optimisation avec un gain de marge attendu de 0.00 £. Ce maintien tarifaire sécurise vos ventes en évitant toute friction commerciale inutile ou sensibilité négative de la part de vos clients.",
+      "llm_justification": "Pour le produit JUMBO BAG RED WHITE SPOTTY, nous vous recommandons de maintenir le prix à 2.08 £, ce qui correspond à une variation de +0.00 %. Cette décision est motivée par une élasticité-prix de -0.94 considérée comme non significative, n'apportant qu'un gain de marge attendu de 0.00 £. Cette stabilité tarifaire écarte ainsi tout risque de dégradation de la relation commerciale ou de réaction défavorable de la part des clients.",
       "control_status": "Validé (2ème essai)"
     },
     {
@@ -1387,8 +1425,8 @@
       "rec_margin": 33748.92,
       "margin_gain_gbp": 0.0,
       "opt_reason": "Maintien (Non Significatif / Atypique)",
-      "llm_justification": "Nous recommandons un prix ajusté à 2.16 £ (variation de +0.0 %). Cette décision repose sur une élasticité mesurée à -0.29 (catégorie Non significatif) visant un gain de marge de 0.00 £. Le risque principal réside dans la réaction des clients ou l'arbitrage avec les volumes grossistes.",
-      "control_status": "Rejeté (Hallucination Regex)"
+      "llm_justification": "Nous recommandons de maintenir le prix du JUMBO BAG BAROQUE BLACK WHITE à 2.16 £, ce qui correspond à une variation de +0.00 %. Cette décision se justifie par une élasticité-prix non significative de -0.29 et un gain de marge attendu de 0.00 £ en cas de mouvement tarifaire. Nous écartons ainsi le risque commercial majeur d'une sensibilité client négative sans aucun bénéfice économique pour l'entreprise.",
+      "control_status": "Validé (2ème essai)"
     },
     {
       "StockCode": "85099F",
@@ -1405,7 +1443,7 @@
       "rec_margin": 39494.57,
       "margin_gain_gbp": 885.61,
       "opt_reason": "Optimisation Marge (Élastique)",
-      "llm_justification": "Pour le produit JUMBO BAG STRAWBERRY, nous recommandons d'établir le prix à 1.99 £, soit une variation de -4.33 %. Cette décision s'appuie sur une forte élasticité-prix de -2.56 qui stimulera les volumes pour dégager un gain de marge attendu de 885.61 £. Le risque commercial principal réside dans l'accoutumance des clients à ce niveau de prix, ce qui pourrait compliquer de futures hausses tarifaires.",
+      "llm_justification": "Pour le produit JUMBO BAG STRAWBERRY, nous recommandons de fixer le prix à 1.99 £, ce qui correspond à une variation de -4.33 %. Cette décision stratégique tire parti d'une élasticité-prix de -2.56 pour stimuler la demande et générer un gain de marge attendu de 885.61 £. Le risque commercial majeur reste la forte sensibilité des clients B2B, imposant de vérifier que la hausse des volumes compense immédiatement la baisse du prix unitaire.",
       "control_status": "Validé (2ème essai)"
     }
   ]
