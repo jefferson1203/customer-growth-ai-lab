@@ -19,7 +19,7 @@ Laboratoire d'ingénierie et d'analyse de données axé sur l'expérience client
 | **[Projet 1 : Voix du Client IA](./voc/)** | Classification LLM Gemini, NPS Proxy, Matrice Irritants, NPS Prédictif ML (Lift 2.56x) & Exporter PDF. | ✅ **Complété** |
 | **[Projet 2 : Segmentation & Portefeuille](./portfolio/)** | Segmentation RFM, Clustérisation 3D K-Means, Personas LLM (RGPD), Rationalisation SKUs Pareto & Business Cases A/B. | ✅ **Complété** |
 | **[Projet 3 : Pricing & Élasticité Prix](./pricing/)** | Modélisation log-log OLS de l'élasticité prix, optimisation sous garde-fous métiers, justifications LLM anti-hallucination par Regex & journalisation Human-in-the-Loop. | ✅ **Complété** |
-| **[Projet 4 : Copilote Agentique](./copilot/)** | Agent IA décisionnel autonome (AGY SDK / LangGraph) pour requêter les insights du lab. | 📅 **Prochainement** |
+| **[Projet 4 : Copilote Agentique](./copilot/)** | Agent IA décisionnel autonome (AGY SDK / LangGraph) pour requêter les insights du lab (API FastAPI, RAG ChromaDB, n8n & Human-in-the-Loop). | ✅ **Complété** |
 
 ---
 
@@ -131,6 +131,34 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
 
 ---
 
+## 🤖 Projet 4 : Copilote Agentique Commercial Multi-Modèle
+
+Ce module (`copilot/`) déploie un assistant IA commercial agentique intégrant des garde-fous déterministes via une API REST FastAPI backend, un magasin vectoriel RAG basé sur **ChromaDB**, un moteur multi-modèle LLM (Gemini, Claude, ChatGPT, DeepSeek, ou saisie libre), l'intégration d'un workflow n8n et la gestion des escalades avec validation humaine (*Human-in-the-Loop*).
+
+### 🌟 Architecture & Composants Clés
+
+* **API REST Backend Déterministe FastAPI (`copilot/api/`)** :
+  * 7 endpoints REST auto-documentés Swagger (`http://127.0.0.1:8000/docs#/`).
+  * Ingestion déterministe des données clients, produits et tarification.
+  * Calculs financiers instantanés et vérification automatique des plafonds de remise.
+* **Moteur RAG Vector Store avec ChromaDB (`copilot/kb/`)** :
+  * Indexation vectorielle de la politique commerciale de l'entreprise (`politique_commerciale.md`).
+  * Indexation locale persistante dans `copilot/kb/chroma_db` (support fallback d'indexation déterministe par mot-clé).
+* **Moteur LLM Multi-Fournisseurs (`copilot/agent.py`)** :
+  * Support natif des providers **Gemini**, **Claude**, **ChatGPT**, **DeepSeek**, ainsi que tout modèle spécifié par l'utilisateur (valeur par défaut : `gemini-3.8-flash`).
+  * Intégration transparente des outils API et contextes RAG dans l'invite de prompt.
+* **Interface Streamlit Interactive (`copilot/app.py`)** :
+  * Onglet **Assistant & Négociation** : Saisie libre des questions et génération de réponses enrichies par les API et le RAG.
+  * Onglet **Garde-fou & Escalade** : Test de conformité d'une offre commerciale et bouton d'approbation/refus par dérogation Manager (*Human-in-the-Loop*).
+  * Onglet **Journal des Décisions** : Historique d'audit des décisions enregistrées dans `outputs/copilot/decisions.csv`.
+  * Bouton d'accès direct Swagger OpenAPI et URL backend verrouillée en lecture seule.
+* **Automation n8n (`copilot/n8n/workflow.json`)** :
+  * Workflow d'agent autonome prêt à l'emploi requêtant les outils HTTP REST du backend.
+* **Suite d'Évaluation Scénarios Métier (`copilot/tests/test_evaluation_scenarios.py`)** :
+  * Benchmark de 15 scénarios d'évaluation métier (`scenarios.csv`) validés avec `pytest`.
+
+---
+
 ## 📄 Exportation des Supports de Présentation (PDF Paysage)
 
 Chaque projet intègre un moteur d'exportation PDF customisé (`common/pdf_exporter.py`) basé sur `fpdf2` :
@@ -140,6 +168,7 @@ Chaque projet intègre un moteur d'exportation PDF customisé (`common/pdf_expor
   * `Projet1_Voix_du_Client_IA_Slides.pdf` (3 slides)
   * `Projet2_Segmentation_Portefeuille_Slides.pdf` (4 slides)
   * `Projet3_Pricing_Slides.pdf` (3 slides)
+  * `Projet4_Copilote_Agentique_Slides.pdf` (3 slides)
 
 ---
 
@@ -174,11 +203,19 @@ customer-growth-ai-lab/
 │   ├── llm_justification.py# Justifications Gemini & contrôle Regex anti-hallucination
 │   ├── export_summary.py  # Pipeline unifié & export JSON (38 Ko) / Excel (15 Ko)
 │   └── app.py             # Application interactive Streamlit Projet 3
+├── copilot/               # Module Projet 4 : Copilote Agentique Commercial
+│   ├── api/               # FastAPI backend REST (7 endpoints déterministes & schemas)
+│   ├── kb/                # RAG Vector Store (politique_commerciale.md & ChromaDB)
+│   ├── n8n/               # Workflow JSON agentique exporté pour n8n
+│   ├── tests/             # 15 scénarios d'évaluation métier (scenarios.csv & pytest)
+│   ├── agent.py           # Moteur CommercialAgentEngine Multi-LLM
+│   └── app.py             # Application interactive Streamlit Projet 4
 ├── slides/                # Supports de restitution Markdown conseil
 │   ├── Projet1_Voix_du_Client_IA_Slides.md
 │   ├── Projet2_Segmentation_Portefeuille_Slides.md
-│   └── Projet3_Pricing_Slides.md
-├── tests/                 # Suite de tests unitaires pytest (18/18 passés)
+│   ├── Projet3_Pricing_Slides.md
+│   └── Projet4_Copilote_Agentique_Slides.md
+├── tests/                 # Suite complète de tests unitaires pytest (33/33 passés)
 │   ├── test_business_case.py
 │   ├── test_llm.py
 │   ├── test_pricing.py
@@ -188,8 +225,8 @@ customer-growth-ai-lab/
 ├── main.py                # Hub d'entrée Streamlit multi-pages (`st.navigation`)
 ├── config.py              # Configuration centralisée des chemins et constantes
 ├── PROGRESS.md            # Suivi de progression et journal d'apprentissage
-├── Dockerfile             # Containerization pour Google Cloud Run
-└── requirements.txt       # Dépendances du projet (fpdf2, streamlit, scikit-learn, etc.)
+├── Dockerfile             # Containerization multi-services pour Google Cloud Run
+└── requirements.txt       # Dépendances du projet (chromadb, faiss-cpu, streamlit, etc.)
 ```
 
 ---
@@ -228,13 +265,17 @@ LLM_MODEL=gemini-3.8-flash
 # Test du NPS prédictif (Projet 1)
 PYTHONPATH=. .venv/bin/python tests/run_predictive.py
 
-# Tests unitaires Scikit-Learn / Pytest (18 tests)
-.venv/bin/pytest tests/
+# Tests unitaires Pytest (33 tests passés)
+.venv/bin/pytest tests/ copilot/tests/
 ```
 
-### 5. Lancer l'application Streamlit Hub Multi-Projets (Projets 1, 2 & 3)
+### 5. Lancer l'application Streamlit Hub Multi-Projets (Projets 1, 2, 3 & 4)
 
 ```bash
+# Lancer l'API FastAPI backend en arrière-plan
+PYTHONPATH=. .venv/bin/python -m uvicorn copilot.api.main:app --port 8000 &
+
+# Lancer l'application Streamlit Hub Multi-Pages
 PYTHONPATH=. .venv/bin/streamlit run main.py
 ```
 
