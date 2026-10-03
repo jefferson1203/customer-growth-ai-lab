@@ -125,13 +125,13 @@ with tabs[1]:
             {"Segment Client": "Autres Clients", "Prix Unitaire Médian (£)": diag_m['discounts_summary']['median_price_other_clients']}
         ])
         fig_disc = px.bar(df_disc, x="Segment Client", y="Prix Unitaire Médian (£)", color="Segment Client", text_auto=".2f", title="Prix Médian Payé par Segment (£)")
-        st.plotly_chart(fig_disc, use_container_width=True)
+        st.plotly_chart(fig_disc, width="stretch")
 
     with col_diag2:
         st.subheader("Évolution Temporelle du Prix Moyen Mensuel")
         df_trends = pd.DataFrame(diag_m["monthly_trends"])
         fig_trend = px.line(df_trends, x="YearMonth", y="mean_price", title="Prix Moyen Mensuel (£)", markers=True)
-        st.plotly_chart(fig_trend, use_container_width=True)
+        st.plotly_chart(fig_trend, width="stretch")
 
 # ==============================================================================
 # TAB 2 : MODÉLISATION DE L'ÉLASTICITÉ
@@ -144,7 +144,7 @@ with tabs[2]:
         st.subheader("Répartition des SKUs")
         cat_df = pd.DataFrame(list(global_m["category_breakdown"].items()), columns=["Catégorie", "Nombre"])
         fig_pie = px.pie(cat_df, names="Catégorie", values="Nombre", title="Distribution de l'Élasticité", hole=0.4)
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, width="stretch")
 
     with col_cat2:
         st.subheader("Explorateur par Référence (SKU)")
@@ -160,7 +160,7 @@ with tabs[2]:
 
         st.dataframe(
             df_filtered[["StockCode", "Description", "category", "elasticity", "r2", "p_value", "current_price", "rec_price", "price_change_pct"]],
-            use_container_width=True
+            width="stretch"
         )
 
 # ==============================================================================

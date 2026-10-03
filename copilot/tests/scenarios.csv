@@ -1,0 +1,16 @@
+scenario_id,description,customer_id,stock_code,proposed_discount_pct,expected_status
+S01,Vérification de santé du système API,,,,,ok
+S02,Profil d'un client VIP Champion (remise autorisée 5%),10005,22423,5.0,Approuvé automatiquement
+S03,Remise excessive sur client Champion (demande 15%),10005,22423,15.0,Escalade requise (Dépassement plafond)
+S04,Tentative de remise sur référence exclue (POST),10005,POST,3.0,Refusé (Produit exclu)
+S05,Tentative de remise sur carte cadeau exclue (GIFT_0001_30),10005,GIFT_0001_30,5.0,Refusé (Produit exclu)
+S06,Client inconnu dans la base RFM,9999999,22423,5.0,Refusé (Client inconnu)
+S07,Client À risque demandant remise réactivation conforme (5%),10001,22423,5.0,Approuvé automatiquement
+S08,Client À risque sollicitant 20% de remise (dépassant 10%),10001,22423,20.0,Escalade requise (Dépassement plafond)
+S09,Consultation prix et élasticité produit valide,,22423,0.0,200 OK
+S10,Consultation prix produit inconnu,UNKNOWN_SKU,,0.0,404 Not Found
+S11,Consultation politique commerciale globale,,,,200 OK
+S12,Identification des opportunités tarifaires d'un client,10005,,,200 OK
+S13,Remise limite égale au plafond (8.0% Champion),10005,22423,8.0,Approuvé automatiquement
+S14,Remise légèrement supérieure au plafond (8.5% Champion),10005,22423,8.5,Escalade requise (Dépassement plafond)
+S15,Offre à 0% de remise (vérification prix standard),10005,22423,0.0,Approuvé automatiquement

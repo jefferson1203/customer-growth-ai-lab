@@ -123,7 +123,7 @@ with tab0:
         prompt_comp = metrics.get("prompt_eval_comparison", [])
         if prompt_comp:
             df_comp = pd.DataFrame(prompt_comp)
-            st.dataframe(df_comp, use_container_width=True)
+            st.dataframe(df_comp, width="stretch")
 
 # ----------------------------------------------------
 # TAB 1 : SYNTHÈSE & NPS PROXY

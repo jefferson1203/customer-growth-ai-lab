@@ -1,0 +1,269 @@
+{
+  "name": "Copilote Commercial AI Lab - Agent & Garde-fous",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "node-chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Tu es un Copilote Commercial Agentique et Conseiller Stratégique (Technical Mentor Style).\nTu réponds de manière professionnelle et directe en Français.\nChiffres financiers impérativement en Livre Sterling (£).\n\nRÈGLES D'UTILISATION DES OUTILS ET ANTI-HALLUCINATION :\n1. Tu n'inventes AUCUN chiffre : utilise l'outil 'Outil Profil Client' avec l'ID du client (ex: '10005'), l'outil 'Outil Recommandation Prix' avec le code produit (ex: '22423'), et l'outil 'Outil Historique Achats'.\n2. Pour toute question sur les règles ou remises autorisées, utilise l'outil 'Outil Politique Commerciale RAG'.\n3. Si un produit est marqué 'non fiable', indique-le et ne propose pas de prix.\n4. Format de réponse : Fiche d'Appel (Contexte, 3 Points clés, Offre recommandée, Risques) suivi du Projet d'E-mail."
+        }
+      },
+      "id": "node-ai-agent",
+      "name": "AI Agent Copilote",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [340, 300]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash"
+      },
+      "id": "node-lm-gemini",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [340, 520],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "gemini-cred-id",
+          "name": "Google Gemini API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Récupère le profil client, le segment RFM et la Next Best Action. Nécessite 'customer_id' comme paramètre URL (ex: '10005').",
+        "method": "GET",
+        "url": "=http://127.0.0.1:8000/clients/{{ $fromAI('customer_id', 'L\\'identifiant du client comme 10005') }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "dev-secret-key"
+            }
+          ]
+        }
+      },
+      "id": "tool-client-profile",
+      "name": "Outil Profil Client",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1,
+      "position": [560, 200]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Récupère l'historique des articles achetés par le client. Nécessite 'customer_id' (ex: '10005').",
+        "method": "GET",
+        "url": "=http://127.0.0.1:8000/clients/{{ $fromAI('customer_id', 'L\\'identifiant du client comme 10005') }}/achats?top=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "dev-secret-key"
+            }
+          ]
+        }
+      },
+      "id": "tool-client-purchases",
+      "name": "Outil Historique Achats",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1,
+      "position": [560, 340]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Récupère la recommandation de prix et l'élasticité d'un produit. Nécessite 'stock_code' (ex: '22423').",
+        "method": "GET",
+        "url": "=http://127.0.0.1:8000/produits/{{ $fromAI('stock_code', 'Le code produit comme 22423') }}/prix",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "dev-secret-key"
+            }
+          ]
+        }
+      },
+      "id": "tool-product-pricing",
+      "name": "Outil Recommandation Prix",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1,
+      "position": [560, 480]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Consulte les règles de la politique commerciale, les remises autorisées par segment et les produits exclus.",
+        "method": "GET",
+        "url": "http://127.0.0.1:8000/politique-commerciale",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "dev-secret-key"
+            }
+          ]
+        }
+      },
+      "id": "tool-commercial-policy-rag",
+      "name": "Outil Politique Commerciale RAG",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1,
+      "position": [560, 620]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Nœud Code n8n : Contrôle déterministe post-agent\nconst responseText = $input.first().json.output || '';\nconst discountMatch = responseText.match(/(\\d+(\\.\\d+)?)\\s*%/);\nconst proposedDiscount = discountMatch ? parseFloat(discountMatch[1]) : 0.0;\nconst maxAllowedDiscount = 8.0; // Plafond maximal de la politique commercial\n\nlet status = 'Approuvé';\nlet requiresEscalation = false;\n\nif (proposedDiscount > maxAllowedDiscount) {\n  status = 'Escalade requise (Remise excessive)';\n  requiresEscalation = true;\n}\n\nreturn {\n  json: {\n    agent_response: responseText,\n    proposed_discount_pct: proposedDiscount,\n    max_allowed_discount_pct: maxAllowedDiscount,\n    status: status,\n    requires_escalation: requiresEscalation,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "node-code-guardrail",
+      "name": "Contrôle Déterministe Post-Agent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.requires_escalation }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "node-if-escalation",
+      "name": "Si Escalade Requise",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1020, 300]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {}
+      },
+      "id": "node-human-approval",
+      "name": "Validation Humaine (Human-in-the-Loop)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1240, 220]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outil Profil Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outil Historique Achats": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outil Recommandation Prix": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outil Politique Commerciale RAG": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Copilote",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Copilote": {
+      "main": [
+        [
+          {
+            "node": "Contrôle Déterministe Post-Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contrôle Déterministe Post-Agent": {
+      "main": [
+        [
+          {
+            "node": "Si Escalade Requise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Si Escalade Requise": {
+      "main": [
+        [
+          {
+            "node": "Validation Humaine (Human-in-the-Loop)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
