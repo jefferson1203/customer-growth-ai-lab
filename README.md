@@ -135,6 +135,15 @@ Ce module (`pricing/`) modélise l'élasticité-prix de la demande par économé
 
 Ce module (`copilot/`) déploie un assistant IA commercial agentique intégrant des garde-fous déterministes via une API REST FastAPI backend, un magasin vectoriel RAG basé sur **ChromaDB**, un moteur multi-modèle LLM (Gemini, Claude, ChatGPT, DeepSeek, ou saisie libre), l'intégration d'un workflow n8n et la gestion des escalades avec validation humaine (*Human-in-the-Loop*).
 
+### 🎯 Cadrage Métier & Recommandations Stratégiques
+
+* **Objectif Business** : Accélérer les cycles de négociation commerciale B2B tout en éradiquant les risques financiers liés aux remises excessives ou non autorisées.
+* **Garde-fous Déterministes vs LLM** : Séparation stricte des responsabilités — le LLM assure la compréhension naturelle et la synthèse stratégique, tandis que l'API FastAPI impose les règles déterministes (plafonds de remises par segment RFM, statut client et marge minimale).
+* **Escalade et Validation Humaine (*Human-in-the-Loop*)** : Toute proposition dépassant les seuils autorisés est bloquée automatiquement par le système et soumise à dérogation explicite par un Manager Sales, avec journalisation d'audit complète dans `outputs/copilot/decisions.csv`.
+* **Recommandations d'Intégration & Déploiement** :
+  * **Déploiement Cloud Run** : Conteneur hybride Uvicorn + Streamlit déployé sur Google Cloud Run pour une scalabilité automatique et une haute disponibilité.
+  * **Workflows d'Automation n8n** : Connexion de l'API déterministe aux canaux de messagerie (Slack/Teams/Email) et CRM (Salesforce/HubSpot) pour notifier immédiatement les managers lors des demandes d'escalade.
+
 ### 🌟 Architecture & Composants Clés
 
 * **API REST Backend Déterministe FastAPI (`copilot/api/`)** :
