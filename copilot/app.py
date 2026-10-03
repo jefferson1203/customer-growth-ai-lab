@@ -85,6 +85,8 @@ api_base_url = st.sidebar.text_input(
     help="Adresse de l'API FastAPI backend déterministe (lecture seule)."
 )
 
+st.sidebar.link_button("Accéder à la Doc Swagger (OpenAPI)", "http://127.0.0.1:8000/docs#/")
+
 st.sidebar.markdown("---")
 st.sidebar.info(
     "Garde-Fou Déterministe : Les calculs financiers, prix recommandés et plafonds de remises "
