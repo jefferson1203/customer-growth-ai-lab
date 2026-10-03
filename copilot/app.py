@@ -81,7 +81,8 @@ api_key = st.sidebar.text_input(
 api_base_url = st.sidebar.text_input(
     "URL de l'API REST",
     value="http://127.0.0.1:8000",
-    help="Adresse de l'API FastAPI backend déterministe."
+    disabled=True,
+    help="Adresse de l'API FastAPI backend déterministe (lecture seule)."
 )
 
 st.sidebar.markdown("---")
@@ -137,35 +138,53 @@ with tab2:
             method="POST",
             payload={"customer_id": c_id, "stock_code": s_code, "proposed_discount_pct": disc_pct}
         )
-        
         if "error" in res:
             st.error(res["error"])
         else:
-            is_comp = res.get("is_compliant", False)
-            status_text = res.get("status", "")
-            explanation = res.get("explanation", "")
-            max_allowed = res.get("max_allowed_discount_pct", 0.0)
+            st.session_state["verified_offer"] = {
+                "c_id": c_id,
+                "s_code": s_code,
+                "disc_pct": disc_pct,
+                "res": res
+            }
 
-            if is_comp:
-                st.success(f"OFFRE APPROUVÉE AUTOMATIQUEMENT\n\n{explanation}")
-                log_decision(c_id, s_code, disc_pct, status_text, "Système Déterministe", provider)
-            else:
-                st.warning(f"{status_text.upper()}\n\n{explanation}")
+    if "verified_offer" in st.session_state:
+        vo = st.session_state["verified_offer"]
+        res = vo["res"]
+        c_id = vo["c_id"]
+        s_code = vo["s_code"]
+        disc_pct = vo["disc_pct"]
+        
+        is_comp = res.get("is_compliant", False)
+        status_text = res.get("status", "")
+        explanation = res.get("explanation", "")
+        max_allowed = res.get("max_allowed_discount_pct", 0.0)
+
+        if is_comp:
+            st.success(f"OFFRE APPROUVÉE AUTOMATIQUEMENT\n\n{explanation}")
+            log_decision(c_id, s_code, disc_pct, status_text, "Système Déterministe", provider)
+            del st.session_state["verified_offer"]
+        else:
+            st.warning(f"{status_text.upper()}\n\n{explanation}")
+            
+            if "Escalade" in status_text:
+                st.markdown("---")
+                st.markdown("### Validation Humaine requise (Human-In-The-Loop)")
+                st.write(f"La remise de {disc_pct}% dépasse le plafond autorisé de {max_allowed}%.")
                 
-                if "Escalade" in status_text:
-                    st.markdown("---")
-                    st.markdown("### Validation Humaine requise (Human-In-The-Loop)")
-                    st.write(f"La remise de {disc_pct}% dépasse le plafond autorisé de {max_allowed}%.")
-                    
-                    col_app, col_rej = st.columns(2)
-                    with col_app:
-                        if st.button("Approuver par dérogation (Manager Sales)"):
-                            log_decision(c_id, s_code, disc_pct, "Approuvé par dérogation Manager", "Manager Sales", provider)
-                            st.success("Offre approuvée par dérogation et enregistrée dans le journal d'audit.")
-                    with col_rej:
-                        if st.button("Refuser l'escalade"):
-                            log_decision(c_id, s_code, disc_pct, "Refusé par Manager", "Manager Sales", provider)
-                            st.error("Offre refusée et enregistrée.")
+                col_app, col_rej = st.columns(2)
+                with col_app:
+                    if st.button("Approuver par dérogation (Manager Sales)", key="btn_app"):
+                        log_decision(c_id, s_code, disc_pct, "Approuvé par dérogation Manager", "Manager Sales", provider)
+                        st.success("Offre approuvée par dérogation et enregistrée dans le journal d'audit !")
+                        del st.session_state["verified_offer"]
+                        st.rerun()
+                with col_rej:
+                    if st.button("Refuser l'escalade", key="btn_rej"):
+                        log_decision(c_id, s_code, disc_pct, "Refusé par Manager", "Manager Sales", provider)
+                        st.error("Offre refusée et enregistrée dans le journal d'audit !")
+                        del st.session_state["verified_offer"]
+                        st.rerun()
 
 with tab3:
     st.subheader("Journal des Décisions et Négociations Commerciales")
