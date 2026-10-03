@@ -19,7 +19,7 @@ Laboratoire d'ingénierie et d'analyse de données axé sur l'expérience client
 | **[Projet 1 : Voix du Client IA](./voc/)** | Classification LLM Gemini, NPS Proxy, Matrice Irritants, NPS Prédictif ML (Lift 2.56x) & Exporter PDF. | ✅ **Complété** |
 | **[Projet 2 : Segmentation & Portefeuille](./portfolio/)** | Segmentation RFM, Clustérisation 3D K-Means, Personas LLM (RGPD), Rationalisation SKUs Pareto & Business Cases A/B. | ✅ **Complété** |
 | **[Projet 3 : Pricing & Élasticité Prix](./pricing/)** | Modélisation log-log OLS de l'élasticité prix, optimisation sous garde-fous métiers, justifications LLM anti-hallucination par Regex & journalisation Human-in-the-Loop. | ✅ **Complété** |
-| **[Projet 4 : Copilote Agentique](./copilot/)** | Agent IA décisionnel autonome (AGY SDK / LangGraph) pour requêter les insights du lab (API FastAPI, RAG ChromaDB, n8n & Human-in-the-Loop). | ✅ **Complété** |
+| **[Projet 4 : Copilote Agentique](./copilot/)** | Agent IA décisionnel autonome (Moteur Multi-LLM / n8n) pour requêter les insights du lab (API FastAPI, RAG ChromaDB & Human-in-the-Loop). | ✅ **Complété** |
 
 ---
 
