@@ -14,7 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie de l'application et de la configuration Streamlit
 COPY . .
 
-ENV PORT=8080
-EXPOSE 8080
-
-CMD ["sh", "-c", "streamlit run main.py --server.port=${PORT} --server.address=0.0.0.0"]
+CMD ["sh", "-c", "uvicorn copilot.api.main:app --host 127.0.0.1 --port 8000 & streamlit run main.py --server.port=${PORT} --server.address=0.0.0.0"]

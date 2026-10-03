@@ -26,7 +26,6 @@ filelock==3.29.0
 fonttools==4.66.1
 fpdf2==2.8.9
 formulaic==1.2.2
-
 google-auth==2.59.0
 google-genai==2.25.0
 graphviz==0.20.3

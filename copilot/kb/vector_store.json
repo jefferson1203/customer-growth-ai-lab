@@ -1,0 +1,42 @@
+[
+  {
+    "chunk_id": "sec_1",
+    "text": "# Politique Commerciale & Directives Négociation — Customer & Growth AI Lab\n\n## 1. Cadre Général & Plafonds de Remises par Segment RFM\n\nLa politique tarifaire et les remises accordées aux clients sont strictement régies par leur classification RFM (Recency, Frequency, Monetary). \nToute remise proposée par un commercial ou le Copilote AI doit respecter les plafonds maximaux ci-dessous :\n\n| Segment RFM | Plafond Remise Max (%) | Conditions d'Eligibilité | Action Recommandée (Next Best Action) |\n| :",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_2",
+    "text": "| :",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_3",
+    "text": "| :",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_4",
+    "text": "| :",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_5",
+    "text": "|\n| **Champions** | **8.0 %** | Commandes > £500 | Accès VIP Concierge, Ventes privées avant-première |\n| **Fidèles** | **6.0 %** | Fréquence >= 5 commandes | Cross-selling sur catégories complémentaires |\n| **À risque** | **10.0 %** | Offre spéciale réactivation (1ère commande post-inactivité) | Campagne urgente de reconquête personnalisée |\n| **En sommeil** | **5.0 %** | Soumis à réactivation téléphonique préalable | Questionnaire d'insatisfaction + offre timide |\n| **Prometteurs** | **5.0 %** | Valable sur le 2ème achat | Parcours de bienvenue & découverte produit |\n| **Nouveaux** | **5.0 %** | Offre de bienvenue premier réachat | Accompagnement prise en main + frais de port offerts |",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_6",
+    "text": "## 2. Garde-fous et Produits Exclus de Remises\n\n### Produits Exclus (Strict Discount Exclusion)\nCertaines références d'articles et codes administratifs sont **strictement exclus** de tout geste commercial ou remise tarifaire :\n- Codes administratifs : `TEST001`, `POST` (Frais de port), `MANUAL` (Ajustement manuel), `M` (Frais bancaires / manuels).\n- Cartes / Chèques cadeaux : `GIFT_0001_30`, `GIFT_0001_20`.\n\n> **Règle absolue** : Toute tentative d'appliquer une remise même de 1% sur une référence exclue doit être automatiquement rejetée par l'API et le Copilote (`status: Refusé (Produit exclu)`).",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_7",
+    "text": "## 3. Matrice de Procédure d'Escalade et Validation Humaine\n\nLorsqu'un commercial souhaite accorder un geste supérieur aux plafonds autorisés :\n1. **Dépassement <= Plafond Segment** : Approbation automatique déterministe via l'API.\n2. **Dépassement > Plafond Segment** : Statut `Escalade requise (Dépassement plafond)`. La demande doit être validée par le Directeur Commercial via l'interface du Copilote.\n3. **Escalade pour Client à Risque** : Une remise jusqu'à 15% peut être accordée exceptionnellement à un client *À risque* uniquement après accord écrit du VP Sales.",
+    "source": "copilot/kb/politique_commerciale.md"
+  },
+  {
+    "chunk_id": "sec_8",
+    "text": "## 4. Stratégie d'Optimisation Tarifaire & Élasticités\n\n- **Produits Élastiques (e < -1.0)** : Les baisses de prix mesurées stimulent fortement la demande en volume et maximisent la marge brute globale.\n- **Produits Inélastiques (-1.0 <= e <= 0)** : Les prix peuvent être réhaussés sans perte majeure de volume pour capturer de la marge directe.\n- **Produits à Faible Fiabilité Statistique (p-value > 0.05)** : Recommandation de prix verrouillée par sécurité (maintien du prix actuel).",
+    "source": "copilot/kb/politique_commerciale.md"
+  }
+]

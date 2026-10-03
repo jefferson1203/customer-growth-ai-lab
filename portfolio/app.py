@@ -125,7 +125,7 @@ with tab0:
         
     with st.expander("Slide 2 : Personas & Next Best Actions — Stratégie d'activation personnalisée par segment", expanded=False):
         nba_df = build_next_best_action_table(data["personas_cache"], data["rfm_summary"])
-        st.dataframe(nba_df, use_container_width=True)
+        st.dataframe(nba_df, width="stretch")
 
     with st.expander("Slide 3 : Portefeuille Produits — 52,8 % de références C ne génèrent que 5 % du CA et 176 produits doivent être supprimés", expanded=False):
         cand_summary = data["candidates_summary"]
@@ -181,15 +181,15 @@ with tab1:
         "recence_moyenne": "{:.0f} j",
         "frequence_moyenne": "{:.1f}",
         "ca_moyen_client": "£{:,.2f}"
-    }), use_container_width=True)
+    }), width="stretch")
     
     col_rfm1, col_rfm2 = st.columns(2)
     with col_rfm1:
         fig_pie = px.pie(summary, values="pct_ca", names="segment", title="Part du Chiffre d'Affaires par Segment RFM", hole=0.4)
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, width="stretch")
     with col_rfm2:
         fig_bar = px.bar(summary, x="segment", y="pct_clients", title="Part des Clients par Segment (%)", text_auto=".1f%")
-        st.plotly_chart(fig_bar, use_container_width=True)
+        st.plotly_chart(fig_bar, width="stretch")
 
 # ----------------------------------------------------
 # TAB 2 : CLUSTERS K-MEANS VS RÈGLES
@@ -198,7 +198,7 @@ with tab2:
     st.subheader("Comparaison Clustering Non-Supervisé (K-Means) vs Règles Métiers")
     st.info(f" Score de Silhouette K-Means (k=5) : **{data['silhouette_score']:.4f}**")
     
-    st.dataframe(data["rfm_vs_kmeans"], use_container_width=True)
+    st.dataframe(data["rfm_vs_kmeans"], width="stretch")
     st.caption("Matrice de contingence entre les 5 segments déterministes RFM et les 5 clusters découverts par K-Means.")
 
 
@@ -222,7 +222,7 @@ with tab3:
             "ca_total": "£{:,.2f}",
             "pct_references": "{:.1f}%",
             "pct_ca": "{:.1f}%"
-        }), use_container_width=True)
+        }), width="stretch")
         
     st.divider()
     st.subheader("Top 20 des Références Candidates à la Déréférenciation")
@@ -230,7 +230,7 @@ with tab3:
     st.dataframe(cand_top20.style.format({
         "ca_total": "£{:,.2f}",
         "quantity_total": "{:,}"
-    }), use_container_width=True)
+    }), width="stretch")
 
     st.divider()
     st.subheader("Tables de Sensibilité des Business Cases")
@@ -238,10 +238,10 @@ with tab3:
     col_sens1, col_sens2 = st.columns(2)
     with col_sens1:
         st.markdown("#### Sensibilité Case A : Response Rate vs Margin Rate (£ Net)")
-        st.dataframe(data["sens_a"], use_container_width=True)
+        st.dataframe(data["sens_a"], width="stretch")
     with col_sens2:
         st.markdown("#### Sensibilité Case B : Transfer Rate vs Cost per SKU (£ Net)")
-        st.dataframe(data["sens_b"], use_container_width=True)
+        st.dataframe(data["sens_b"], width="stretch")
 
     st.divider()
     excel_path = Path(data["excel_path"])
