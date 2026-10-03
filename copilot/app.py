@@ -97,7 +97,59 @@ st.sidebar.info(
 st.title("Copilote Agentique & Assistant Décisionnel Commercial")
 st.caption("Customer & Growth AI Lab - Système Multi-Agents pour la Négociation et l'Optimisation Tarifaire")
 
-tab1, tab2, tab3 = st.tabs(["Assistant & Négociation", "Garde-fou & Escalade", "Journal des Décisions"])
+tab0, tab1, tab2, tab3 = st.tabs([
+    "Cadrage & Recommandations",
+    "Assistant & Négociation",
+    "Garde-fou & Escalade",
+    "Journal des Décisions"
+])
+
+with tab0:
+    st.header("Cadrage Stratégique & Recommandations Copilote Agentique")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Problématique & Objectifs Business")
+        st.markdown("""
+        - **Enjeu Commercial** : Accélérer la préparation des rendez-vous B2B (réduction de 25 min à 10 min par appel, soit **-60% de temps de préparation**).
+        - **Éradication des Risques** : Sécuriser les propositions tarifaires et empêcher les sur-remises non autorisées.
+        - **Gouvernance & AI Act** : Supervision humaine obligatoire (*Human-in-the-Loop*) sur tout dépassement de plafond avec journal d'audit complet.
+        """)
+        
+    with col2:
+        st.subheader("Architecture & Sécurité Déterministe")
+        st.markdown("""
+        - **Séparation des Responsabilités** : Le LLM assure le dialogue naturel et la synthèse, l'API FastAPI déterministe impose les règles financières à 100%.
+        - **RAG Vector Store (ChromaDB)** : Interrogation de la politique commerciale de l'entreprise (`politique_commerciale.md`).
+        - **Moteur Multi-LLM & Automation n8n** : Compatibilité transparente Gemini, Claude, ChatGPT, DeepSeek et workflows n8n.
+        """)
+
+    st.divider()
+
+    st.subheader("Slides de Synthèse Stratégique Direction")
+    
+    SLIDES_PDF_PATH = Path("slides/Projet4_Copilote_Agentique_Slides.pdf")
+    if SLIDES_PDF_PATH.exists():
+        with open(SLIDES_PDF_PATH, "rb") as f_pdf:
+            st.download_button(
+                label="📄 Télécharger les Slides de Synthèse Stratégique Copilote Agentique (PDF A4 Paysage)",
+                data=f_pdf.read(),
+                file_name="Projet4_Copilote_Agentique_Slides.pdf",
+                mime="application/pdf",
+                help="Télécharger le support de présentation executive au format PDF A4 Paysage (3 slides)."
+            )
+    else:
+        st.warning("Support PDF introuvable : slides/Projet4_Copilote_Agentique_Slides.pdf")
+
+    st.divider()
+
+    st.subheader("Plan de Déploiement Pilote & Indicateurs de Performance")
+    st.info("""
+    **Prochaines Étapes Opérationnelles** :
+    1. **Déploiement Pilote (4 semaines)** : Test auprès d'une équipe référente de 5 commerciaux B2B.
+    2. **Indicateurs de Performance (KPIs)** : Taux d'acceptation sans modification (> 80%), réduction du temps de préparation, baisse des dérogations hors plafond.
+    3. **Industrialisation GCP** : Hébergement du conteneur Uvicorn + Streamlit sur Google Cloud Run avec intégration n8n.
+    """)
 
 with tab1:
     st.subheader("Discussion et Recommandations Stratégiques")
