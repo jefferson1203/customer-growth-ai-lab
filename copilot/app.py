@@ -143,12 +143,12 @@ with tab0:
 
     st.divider()
 
-    st.subheader("Plan de Déploiement Pilote & Indicateurs de Performance")
+    st.subheader("Déploiement GCP Cloud Run & Indicateurs de Performance")
     st.info("""
-    **Prochaines Étapes Opérationnelles** :
-    1. **Déploiement Pilote (4 semaines)** : Test auprès d'une équipe référente de 5 commerciaux B2B.
-    2. **Indicateurs de Performance (KPIs)** : Taux d'acceptation sans modification (> 80%), réduction du temps de préparation, baisse des dérogations hors plafond.
-    3. **Industrialisation GCP** : Hébergement du conteneur Uvicorn + Streamlit sur Google Cloud Run avec intégration n8n.
+    **Déploiement GCP Cloud Run (Actif)** :
+    1. **Production GCP Cloud Run** : L'application Streamlit et l'API REST déterministe FastAPI sont déployées et actives sur Google Cloud Run (`https://customer-growth-voc-tgdklsc2vq-ew.a.run.app/`).
+    2. **Indicateurs de Performance (KPIs)** : Taux d'acceptation sans modification (> 80%), réduction du temps de préparation (-60%), baisse des dérogations hors plafond.
+    3. **Workflows n8n & Automation** : Connexion directe avec les workflows d'agent autonome n8n.
     """)
 
 with tab1:

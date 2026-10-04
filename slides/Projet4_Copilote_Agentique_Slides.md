@@ -45,13 +45,13 @@ Commercial (Chat n8n / Web UI) ──► Agent IA (LLM + Mémoire + RAG)
 
 ---
 
-## Slide 3 : Plan de Déploiement Pilote & Gouvernance
+## Slide 3 : Déploiement GCP Cloud Run & Gouvernance
 ### Industrialisation, Indicateurs & Conformité
 
-- **Phase Pilote (4 semaines)** : Déploiement auprès d'une équipe de 5 commerciaux référents.
+- **Déploiement GCP Cloud Run** : Conteneur hybride Uvicorn + Streamlit déployé et actif en production sur Google Cloud Run.
 - **Indicateurs de Performance (KPIs)** :
   1. Taux d'acceptation sans modification des brouillons d'e-mails (Cible > 80%).
-  2. Temps moyen de préparation des appels.
+  2. Temps moyen de préparation des appels (-60% de gain de temps).
   3. Évolution des remises moyennes accordées (Cible : baisse des dérogations hors plafond).
 - **Gouvernance & RGPD** :
   - Minimisation des données : seuls des identifiants clients anonymisés sont manipulés.
