@@ -1,5 +1,5 @@
 """
-copilot/tests/test_evaluation_scenarios.py - Exécuteur automatique de la suite des 15 scénarios d'évaluation.
+copilot/tests/test_business_rules.py - Suite d'évaluation des 15 règles métier déterministes de l'API REST.
 """
 
 import csv

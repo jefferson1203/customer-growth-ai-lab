@@ -166,12 +166,48 @@ with tab1:
         if not api_key:
             st.error("Veuillez d'abord saisir votre clé API LLM dans la barre latérale.")
         else:
-            with st.spinner("Analyse du profil, interrogation des API déterministes et RAG en cours..."):
+            with st.spinner("Analyse du profil, interrogation des API déterministes et RAG ChromaDB en cours..."):
                 engine = CommercialAgentEngine(provider=provider, api_key=api_key, api_base_url=api_base_url, model_name=model_name)
                 result = engine.run_query(user_query, customer_id=cust_input, stock_code=prod_input)
                 
-                st.markdown("### Réponse du Copilote")
+                st.markdown("### Réponse du Copilote Ancré")
                 st.info(result.get("answer", "Aucune réponse générée."))
+                st.caption(f"Source RAG : {result.get('rag_source', 'Index Vectoriel')}")
+
+                # Contrôle déterministe post-assistant : Détection automatique de remise dans la question/réponse
+                import re
+                disc_matches = re.findall(r'(\d+(?:\.\d+)?)\s*%', user_query + " " + result.get("answer", ""))
+                if disc_matches and cust_input:
+                    detected_disc = float(disc_matches[0])
+                    st.markdown("---")
+                    st.markdown("#### Garde-Fou Déterministe Automatique (Post-Assistant)")
+                    check_res = engine._call_api_endpoint(
+                        "/offres/verifier",
+                        method="POST",
+                        payload={
+                            "customer_id": cust_input,
+                            "stock_code": prod_input or "22423",
+                            "proposed_discount_pct": detected_disc
+                        }
+                    )
+                    if "error" not in check_res:
+                        if check_res.get("is_compliant"):
+                            st.success(f"GARDE-FOU VALIDA : Remise de {detected_disc:.1f}% CONFORME (Plafond : {check_res.get('max_allowed_discount_pct')}%)")
+                            log_decision(cust_input, prod_input or "N/A", detected_disc, check_res.get("status", ""), "Système Déterministe", provider)
+                        else:
+                            st.warning(f"GARDE-FOU ESCALADE : Remise de {detected_disc:.1f}% DÉPASSE LE PLAFOND (Plafond : {check_res.get('max_allowed_discount_pct')}%)")
+                            st.write(check_res.get("explanation"))
+                            col_a, col_r = st.columns(2)
+                            with col_a:
+                                if st.button("Approuver par dérogation Manager", key="btn_chat_app"):
+                                    log_decision(cust_input, prod_input or "N/A", detected_disc, "Approuvé par dérogation Manager (Chat)", "Manager Sales", provider)
+                                    st.success("Offre approuvée par dérogation !")
+                                    st.rerun()
+                            with col_r:
+                                if st.button("Refuser l'escalade", key="btn_chat_rej"):
+                                    log_decision(cust_input, prod_input or "N/A", detected_disc, "Refusé par Manager (Chat)", "Manager Sales", provider)
+                                    st.error("Offre refusée !")
+                                    st.rerun()
 
 with tab2:
     st.subheader("Vérification Déterministe de Conformité & Escalade")
@@ -242,6 +278,7 @@ with tab2:
 
 with tab3:
     st.subheader("Journal des Décisions et Négociations Commerciales")
+    st.caption("Journal d'audit des décisions enregistrées localement (Stockage éphémère du conteneur Cloud Run).")
     if DECISIONS_FILE.exists():
         df_dec = pd.read_csv(DECISIONS_FILE)
         if len(df_dec) > 0:

@@ -1,6 +1,5 @@
 """
-copilot/agent.py - Agent commercial multi-fournisseurs (Gemini, Claude, OpenAI/ChatGPT, DeepSeek).
-Recherche RAG dans la politique commerciale + appels d'outils REST déterministes.
+copilot/agent.py - Assistant commercial multi-fournisseurs avec RAG ChromaDB & API REST déterministe.
 """
 
 import os
@@ -11,7 +10,8 @@ from typing import Dict, Any, List, Optional, Tuple
 from google import genai
 from google.genai import types
 
-# Tenter d'importer optionnellement anthropic et openai
+from copilot.kb.chroma_rag import query_chroma_rag
+
 try:
     import anthropic
 except ImportError:
@@ -25,7 +25,7 @@ except ImportError:
 
 class CommercialAgentEngine:
     """
-    Moteur d'agent copilote commercial capable de faire du RAG et d'invoquer les API déterministes.
+    Assistant commercial ancré (Prompt-Anchored Assistant) avec RAG ChromaDB et intégration d'outils REST.
     Prend en charge : Gemini, Claude (Anthropic), ChatGPT (OpenAI) et DeepSeek.
     """
 
@@ -35,18 +35,19 @@ class CommercialAgentEngine:
         self.api_base_url = api_base_url.rstrip("/")
         self.model_name = model_name
         
-        # Charger la base de connaissances RAG
+        # Base de connaissances fallback
         kb_path = Path(__file__).parent / "kb" / "politique_commerciale.md"
         if kb_path.exists():
             with open(kb_path, "r", encoding="utf-8") as f:
-                self.kb_content = f.read()
+                self.kb_fallback = f.read()
         else:
-            self.kb_content = "Politique commerciale indisponible."
+            self.kb_fallback = "Politique commerciale indisponible."
 
     def _call_api_endpoint(self, endpoint: str, method: str = "GET", payload: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Appel HTTP helper vers l'API FastAPI déterministe."""
         url = f"{self.api_base_url}{endpoint}"
-        headers = {"X-API-Key": "dev-secret-key", "Content-Type": "application/json"}
+        copilot_key = os.getenv("COPILOT_API_KEY", os.getenv("DEFAULT_DEV_KEY", "dev-secret-key"))
+        headers = {"X-API-Key": copilot_key, "Content-Type": "application/json"}
         try:
             if method == "POST":
                 res = requests.post(url, json=payload, headers=headers, timeout=5)
@@ -60,9 +61,18 @@ class CommercialAgentEngine:
 
     def run_query(self, user_prompt: str, customer_id: Optional[str] = None, stock_code: Optional[str] = None) -> Dict[str, Any]:
         """
-        Traite la requête utilisateur en orchestrant la récupération de données déterministes et RAG.
+        Traite la requête utilisateur en orchestrant la récupération de données déterministes et la recherche RAG ChromaDB.
         """
-        # 1. Collecte de données contextuelles déterministes depuis l'API
+        # 1. Recherche RAG sémantique dans ChromaDB
+        chroma_chunks = query_chroma_rag(user_prompt, top_k=2)
+        if chroma_chunks:
+            rag_context = "\n---\n".join(chroma_chunks)
+            rag_source = "Recherche Vectorielle ChromaDB (Collection 'politique_commerciale')"
+        else:
+            rag_context = self.kb_fallback
+            rag_source = "Document Politique Commerciale de référence"
+
+        # 2. Collecte de données contextuelles déterministes depuis l'API REST
         context_data = {}
         if customer_id:
             context_data["profile"] = self._call_api_endpoint(f"/clients/{customer_id}")
@@ -76,8 +86,8 @@ class CommercialAgentEngine:
             "Tu es un Copilote Commercial Expert et Conseiller Stratégique (Technical Mentor Style).\n"
             "Tu réponds de manière professionnelle, précise et directe en Français.\n"
             "Chiffres financiers impérativement en Livre Sterling (£).\n\n"
-            "--- BASE DE CONNAISSANCES DE LA POLITIQUE COMMERCIALES (RAG) ---\n"
-            f"{self.kb_content}\n\n"
+            f"--- RECHERCHE VECTORIELLE RAG ({rag_source}) ---\n"
+            f"{rag_context}\n\n"
             "--- DONNÉES DÉTERMINISTES EN TEMPS RÉEL DE L'API REST ---\n"
             f"{context_data}\n\n"
             "CONSIGNES :\n"
@@ -86,20 +96,24 @@ class CommercialAgentEngine:
             "3. Si la remise dépasse le plafond ou touche un produit exclu, indique clairement qu'une escalade/validation humaine est requise."
         )
 
-        # 2. Dispatching selon le LLM Provider choisi
+        # 3. Dispatching selon le LLM Provider choisi
         if "gemini" in self.provider:
-            return self._run_gemini(system_instruction, user_prompt)
+            res = self._run_gemini(system_instruction, user_prompt)
         elif "claude" in self.provider or "anthropic" in self.provider:
-            return self._run_claude(system_instruction, user_prompt)
+            res = self._run_claude(system_instruction, user_prompt)
         elif "chatgpt" in self.provider or "openai" in self.provider:
-            return self._run_openai(system_instruction, user_prompt, base_url=None)
+            res = self._run_openai(system_instruction, user_prompt, base_url=None)
         elif "deepseek" in self.provider:
-            return self._run_openai(system_instruction, user_prompt, base_url="https://api.deepseek.com")
+            res = self._run_openai(system_instruction, user_prompt, base_url="https://api.deepseek.com")
         else:
-            return {
+            res = {
                 "answer": f"Fournisseur LLM '{self.provider}' non supporté.",
-                "context": context_data
+                "status": "error"
             }
+        
+        res["rag_source"] = rag_source
+        res["context_data"] = context_data
+        return res
 
     def _run_gemini(self, system_instruction: str, user_prompt: str) -> Dict[str, Any]:
         """Exécution via SDK Gemini (google-genai)."""
@@ -121,7 +135,7 @@ class CommercialAgentEngine:
             return {"answer": "Le package 'anthropic' n'est pas installé dans le virtuel environment.", "status": "error"}
         try:
             client = anthropic.Anthropic(api_key=self.api_key)
-            target_model = self.model_name or "claude-3-5-sonnet-20241022"
+            target_model = self.model_name or "claude-sonnet-5.5"
             res = client.messages.create(
                 model=target_model,
                 max_tokens=1024,
@@ -139,7 +153,7 @@ class CommercialAgentEngine:
             return {"answer": "Le package 'openai' n'est pas installé dans le virtuel environment.", "status": "error"}
         try:
             client = openai.OpenAI(api_key=self.api_key, base_url=base_url)
-            target_model = self.model_name or ("deepseek-chat" if base_url else "gpt-4o-mini")
+            target_model = self.model_name or ("deepseek-v4.1-flash" if base_url else "gpt-4.1-turbo")
             res = client.chat.completions.create(
                 model=target_model,
                 messages=[

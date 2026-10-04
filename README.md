@@ -151,20 +151,21 @@ Ce module (`copilot/`) déploie un assistant IA commercial agentique intégrant 
   * Ingestion déterministe des données clients, produits et tarification.
   * Calculs financiers instantanés et vérification automatique des plafonds de remise.
 * **Moteur RAG Vector Store avec ChromaDB (`copilot/kb/`)** :
-  * Indexation vectorielle de la politique commerciale de l'entreprise (`politique_commerciale.md`).
-  * Indexation locale persistante dans `copilot/kb/chroma_db` (support fallback d'indexation déterministe par mot-clé).
-* **Moteur LLM Multi-Fournisseurs (`copilot/agent.py`)** :
-  * Support natif des providers **Gemini**, **Claude**, **ChatGPT**, **DeepSeek**, ainsi que tout modèle spécifié par l'utilisateur (valeur par défaut : `gemini-3.8-flash`).
-  * Intégration transparente des outils API et contextes RAG dans l'invite de prompt.
+  * Indexation vectorielle et recherche sémantique en temps réel dans ChromaDB (`politique_commerciale.md` indexé par sections).
+* **Assistant Commercial Ancré Multi-Fournisseurs (`copilot/agent.py`)** :
+  * Support natif des providers **Gemini**, **Claude**, **ChatGPT**, **DeepSeek**, ainsi que tout modèle spécifié (par défaut : `gemini-3.8-flash`).
+  * Intégration transparente des outils API et contexte RAG ChromaDB dynamique.
 * **Interface Streamlit Interactive (`copilot/app.py`)** :
-  * Onglet **Assistant & Négociation** : Saisie libre des questions et génération de réponses enrichies par les API et le RAG.
-  * Onglet **Garde-fou & Escalade** : Test de conformité d'une offre commerciale et bouton d'approbation/refus par dérogation Manager (*Human-in-the-Loop*).
-  * Onglet **Journal des Décisions** : Historique d'audit des décisions enregistrées dans `outputs/copilot/decisions.csv`.
+  * Onglet **Cadrage & Recommandations** : Enjeux business, architecture, plan de déploiement et bouton de téléchargement des slides PDF.
+  * Onglet **Assistant & Négociation** : Dialogue avec l'assistant et contrôle déterministe automatique en temps réel dès qu'une remise est proposée.
+  * Onglet **Garde-fou & Escalade** : Test déterministe d'une remise commerciale et dérogation Manager (*Human-in-the-Loop*).
+  * Onglet **Journal des Décisions** : Historique d'audit des décisions enregistrées dans `outputs/copilot/decisions.csv` (stockage éphémère Cloud Run).
   * Bouton d'accès direct Swagger OpenAPI et URL backend verrouillée en lecture seule.
-* **Automation n8n (`copilot/n8n/workflow.json`)** :
-  * Workflow d'agent autonome prêt à l'emploi requêtant les outils HTTP REST du backend.
-* **Suite d'Évaluation Scénarios Métier (`copilot/tests/test_evaluation_scenarios.py`)** :
-  * Benchmark de 15 scénarios d'évaluation métier (`scenarios.csv`) validés avec `pytest`.
+* **Workflow Agentique Autonome n8n (`copilot/n8n/workflow.json`)** :
+  * Workflow d'agent autonome avec boucle de Tool-Calling HTTP REST et contrôle déterministe post-agent.
+* **Double Suite d'Évaluation (43/43 Tests Pytest Passés)** :
+  * `copilot/tests/test_business_rules.py` : 15 scénarios déterministes validant les règles métier de l'API REST.
+  * `copilot/tests/test_agent_evaluation.py` : 10 scénarios d'évaluation E2E de l'Agent LLM (collecte d'outils, RAG ChromaDB, fidélité numérique £ GBP et respect des garde-fous de remises).
 
 ---
 
@@ -214,17 +215,17 @@ customer-growth-ai-lab/
 │   └── app.py             # Application interactive Streamlit Projet 3
 ├── copilot/               # Module Projet 4 : Copilote Agentique Commercial
 │   ├── api/               # FastAPI backend REST (7 endpoints déterministes & schemas)
-│   ├── kb/                # RAG Vector Store (politique_commerciale.md & ChromaDB)
-│   ├── n8n/               # Workflow JSON agentique exporté pour n8n
-│   ├── tests/             # 15 scénarios d'évaluation métier (scenarios.csv & pytest)
-│   ├── agent.py           # Moteur CommercialAgentEngine Multi-LLM
+│   ├── kb/                # RAG Vector Store (ChromaDB collection & politique_commerciale.md)
+│   ├── n8n/               # Workflow JSON agentique autonome pour n8n
+│   ├── tests/             # Double suite de tests (test_business_rules.py & test_agent_evaluation.py)
+│   ├── agent.py           # Moteur CommercialAgentEngine Multi-LLM (Ancré & RAG ChromaDB)
 │   └── app.py             # Application interactive Streamlit Projet 4
 ├── slides/                # Supports de restitution Markdown conseil
 │   ├── Projet1_Voix_du_Client_IA_Slides.md
 │   ├── Projet2_Segmentation_Portefeuille_Slides.md
 │   ├── Projet3_Pricing_Slides.md
 │   └── Projet4_Copilote_Agentique_Slides.md
-├── tests/                 # Suite complète de tests unitaires pytest (33/33 passés)
+├── tests/                 # Suite complète de tests unitaires pytest (43/43 passés)
 │   ├── test_business_case.py
 │   ├── test_llm.py
 │   ├── test_pricing.py
@@ -244,7 +245,7 @@ customer-growth-ai-lab/
 
 ### 1. Prérequis
 - Python 3.12+
-- Une clé API Gemini (`LLM_API_KEY`) dans un fichier `.env`
+- Une clé API Gemini (`LLM_API_KEY`) et `COPILOT_API_KEY` dans un fichier `.env`
 
 ### 2. Installation de l'environnement
 
@@ -265,6 +266,7 @@ pip install -r requirements.txt
 Créer un fichier `.env` à la racine :
 ```env
 LLM_API_KEY=votre_cle_api_gemini
+COPILOT_API_KEY=votre_cle_api_copilot_securisee
 LLM_MODEL=gemini-3.8-flash
 ```
 
@@ -272,10 +274,10 @@ LLM_MODEL=gemini-3.8-flash
 
 ```bash
 # Test du NPS prédictif (Projet 1)
-PYTHONPATH=. .venv/bin/python tests/run_predictive.py
+PYTHONPATH=. python3 tests/run_predictive.py
 
-# Tests unitaires Pytest (33 tests passés)
-.venv/bin/pytest tests/ copilot/tests/
+# Tests unitaires Pytest complets (43/43 tests passés)
+PYTHONPATH=. pytest tests/ copilot/tests/
 ```
 
 ### 5. Lancer l'application Streamlit Hub Multi-Projets (Projets 1, 2, 3 & 4)

@@ -37,8 +37,11 @@ app = FastAPI(
 
 def verify_api_key(api_key: str = Security(api_key_header)):
     """Vérifie la clé API transmise dans l'en-tête HTTP X-API-Key."""
-    expected_key = os.getenv("COPILOT_API_KEY", "dev-secret-key")
-    if api_key != expected_key:
+    expected_key = os.getenv("COPILOT_API_KEY")
+    # Si la variable d'environnement n'est pas définie, accepter la clé de dev par défaut uniquement en dev local
+    if not expected_key:
+        expected_key = os.getenv("DEFAULT_DEV_KEY", "dev-secret-key")
+    if not api_key or api_key != expected_key:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Clé d'API invalide ou manquante dans l'en-tête X-API-Key."

@@ -208,7 +208,14 @@ def verify_offer_compliance_service(customer_id: str, stock_code: str, proposed_
 
     segment = profile["segment"]
     rule = next((r for r in POLICY_RULES if r["segment"] == segment), None)
-    max_discount = rule["max_discount_pct"] if rule else 5.0
+    if not rule:
+        return {
+            "is_compliant": False,
+            "status": "Refusé (Segment inconnu)",
+            "max_allowed_discount_pct": 0.0,
+            "explanation": f"Le segment '{segment}' n'a aucune règle de remise définie dans la politique commerciale."
+        }
+    max_discount = rule["max_discount_pct"]
 
     if proposed_discount_pct <= max_discount:
         return {
